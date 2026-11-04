@@ -1,98 +1,197 @@
 (function(){
 'use strict';
-const D=window.QUIZ_DATA, E=window.QuizEngine, KEY='maidian-renshe-v07', app=document.querySelector('#app'), modal=document.querySelector('#modal');
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const paths={cart:'M4 5h3l3 14h13l3-11H8 M12 25h.01 M22 25h.01',spark:'M16 3l3.5 9.5L29 16l-9.5 3.5L16 29l-3.5-9.5L3 16l9.5-3.5z',ticket:'M4 7h24v6a3 3 0 0 0 0 6v6H4v-6a3 3 0 0 0 0-6z M19 7v3m0 4v4m0 4v3',clock:'M16 7v10l6 3 M16 3a13 13 0 1 0 0 26 13 13 0 0 0 0-26',search:'M14 4a10 10 0 1 0 0 20 10 10 0 0 0 0-20 M21 21l8 8 M10 14h8m-4-4v8',heart:'M16 27S3 19 3 10c0-7 10-9 13-1 3-8 13-6 13 1 0 9-13 17-13 17z',sun:'M16 8a8 8 0 1 0 0 16 8 8 0 0 0 0-16 M16 2v2m0 24v2M2 16h2m24 0h2M6 6l2 2m16 16l2 2M6 26l2-2M24 8l2-2',star:'M16 3l4 8 9 1.5-6.5 6.5 1.5 9-8-4-8 4 1.5-9L3 12.5l9-1.5z',bolt:'M18 2L6 18h9l-1 12 12-17h-9z',wallet:'M4 8h24v20H4V8l20-5v5 M28 14H18v8h10 M22 18h.1',flag:'M7 29V4h20l-4 7 4 7H7',note:'M6 3h16l5 5v21H6z M20 3v7h7 M11 15h11m-11 5h11m-11 5h6',arrow:'M5 16h22m-8-8 8 8-8 8',back:'M27 16H5m8-8-8 8 8 8',check:'M7 16l6 6L26 8',close:'M8 8l16 16M24 8 8 24',smile:'M10 11v3m12-3v3M9 21q7 7 14 0 M16 2a14 14 0 1 0 0 28 14 14 0 0 0 0-28',sliders:'M4 8h24M4 16h24M4 24h24M11 4v8M22 12v8M13 20v8',layers:'M16 3L3 10l13 7 13-7z M3 17l13 7 13-7 M3 24l13 6 13-6',download:'M16 3v17m-7-7 7 7 7-7M5 22v7h22v-7'};
-function icon(name,cls=''){return `<svg class="${cls}" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.spark}"/></svg>`;}
-let storageOK=true, restored=false, legacyPresent=false, s=fresh(), currentView='', activeSince=null, activeId=null, advanceTimer=null;
-function fresh(){return{version:D.version,answers:{},index:0,startedAt:null,completedAt:null,timing:{},visits:{},changes:[],questionFeedback:{},feedback:{}};}
-try{legacyPresent=localStorage.getItem('maidian-renshe-v05')!==null;const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(E.validSession(D,saved)){s={...fresh(),...saved};s.feedback=(saved.feedback&&typeof saved.feedback==='object')?saved.feedback:{};s.questionFeedback=(saved.questionFeedback&&typeof saved.questionFeedback==='object')?saved.questionFeedback:{};s.timing=(saved.timing&&typeof saved.timing==='object')?saved.timing:{};s.visits=(saved.visits&&typeof saved.visits==='object')?saved.visits:{};s.changes=Array.isArray(saved.changes)?saved.changes.slice(-500):[];restored=true;}}catch{storageOK=false;}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(s));}catch{storageOK=false;}}
+const D=window.QUIZ_DATA,E=window.PaytiV09Engine,C=window.AXIS_COPY;
+const KEY='payti:0.9:answers',app=document.querySelector('#app'),modal=document.querySelector('#modal');
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const paths={cart:'M4 5h3l3 14h13l3-11H8 M12 25h.01 M22 25h.01',arrow:'M5 16h22m-8-8 8 8-8 8',back:'M27 16H5m8-8-8 8 8 8',check:'M7 16l6 6L26 8',close:'M8 8l16 16M24 8 8 24'};
+const icon=name=>`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.cart}"/></svg>`;
+const axes={T:{label:'时间倾向',ends:[['N','即刻兑现'],['L','接受等待']]},V:{label:'价值取向',ends:[['U','功能实用'],['E','情绪意义']]},D:{label:'决策方式',ends:[['I','整体感受'],['A','逐项比较']]},S:{label:'参照来源',ends:[['S','个人偏好'],['O','外部参照']]}};
+const statusLabels={answered:'已作答',not_applicable:'无相关经历',skipped:'已跳过',unanswered:'待处理'};
+let storageOK=true,legacyPresent=false,s=fresh(),currentView='',advanceTimer=null,shareURL=null,shareFile=null,shareRevision=0;
+function fresh(){return{version:D.version,answers:{},index:0,startedAt:null,completedAt:null,questionFeedback:{}};}
+try{
+ legacyPresent=['maidian-renshe-v05','maidian-renshe-v07','maidian-renshe-v08'].some(k=>localStorage.getItem(k)!==null);
+ const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+ if(E.validSession(D,saved))s={...fresh(),answers:saved.answers,index:saved.index,startedAt:saved.startedAt||null,completedAt:saved.completedAt||null,questionFeedback:saved.questionFeedback&&typeof saved.questionFeedback==='object'?saved.questionFeedback:{}};
+}catch{storageOK=false;}
 const envelope=()=>({version:D.version,answers:s.answers});
-const answered=()=>Object.values(s.answers).filter(a=>a.status==='answered').length;
-function flush(){if(activeId&&activeSince!==null){s.timing[activeId]=(Number(s.timing[activeId])||0)+Math.round(performance.now()-activeSince);}activeSince=null;activeId=null;}
-function enterItem(){activeId=D.items[s.index].id;activeSince=document.hidden?null:performance.now();s.visits[activeId]=(Number(s.visits[activeId])||0)+1;save();}
-function navigate(view){cancelAdvance();flush();save();if(location.hash!==`#${view}`)location.hash=view;else render();}
-function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('#toast').classList.remove('show'),3000);}
-function focusHeading(){requestAnimationFrame(()=>{document.querySelector('#main h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});});}
-function render(){cancelAdvance();flush();currentView=location.hash.slice(1)||'home';if(currentView==='test'&&!s.startedAt)s.startedAt=new Date().toISOString();if(currentView==='result'&&(!s.completedAt||!answered())){currentView=answered()?'review':'home';history.replaceState(null,'','#'+currentView);}document.body.dataset.view=currentView;({home:home,intro:intro,test:question,review:review,result:result}[currentView]||home)();save();focusHeading();}
-function home(){const progress=answered();app.innerHTML=`<main id="main" class="home"><section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="dot"></span> SOME HABITS ARE A WHOLE PERSONALITY.</div><h1 tabindex="-1">这很难评，<br><em>测一下。</em></h1><p class="hero-desc">有人买了就用，有人先放购物车。<br>有人为爱充值，有人等一个好价格。<br>你花钱的样子，可能比你想的更有意思。</p><div class="hero-actions"><button class="primary" data-action="${progress?'resume':'start'}">${progress?`继续上次 · ${progress}/${D.items.length}`:'测测我的消费人格'} ${icon('arrow')}</button>${progress?'<button class="text-button" data-action="restart">重新开始</button>':'<span style="font-size:11px;color:var(--muted);line-height:1.9">不用算账<br>凭真实的自己选</span>'}</div><div class="hero-note">${icon('check')} <span>没有标准答案，也没有消费优等生。</span></div></div><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="receipt"><div class="receipt-top"><span>PERSONALITY RECEIPT</span><span>No. 007</span></div><div class="receipt-face">${icon('cart')}</div><h2>你的消费<br>有点个性。</h2><div class="receipt-line"><span>生活里的小选择</span><span>× ${D.items.length}</span></div><div class="receipt-line"><span>意料之外的自己</span><span>待发现</span></div><div class="receipt-end"><span>本次收获</span><span>一点自我认识 ↗</span></div><div class="barcode"></div></div><div class="floating-tag tag-one">✳ 人类购物车</div><div class="floating-tag tag-two">↗ 先爽再说</div><div class="floating-tag tag-three">⌁ 这个真的需要</div><div class="hero-spark">✳</div></div></section>${legacyPresent&&!progress?'<div class="notice">题库已更新为44题。上次32题的记录保留在本机，这次请按新题重新作答。</div>':''}<div class="home-meta"><div class="meta-item"><strong>${D.items.length}<span>道题</span></strong><p>具体生活场景<br>想象一下，或回想一下</p></div><div class="meta-item"><strong>${D.personas.length}<span>种人设</span></strong><p>从你的回答出发<br>得到一个消费人格</p></div><div class="meta-item"><strong>按你<span>的节奏</span></strong><p>可以返回修改<br>进度保存在这台设备</p></div></div><section class="peek-section"><div class="section-top"><h2>有些习惯，已经很有画面了。</h2><span>A LITTLE SNEAK PEEK ↘</span></div><div class="peek-grid">${['P03','P04','P08','P12'].map(id=>{const p=D.personas.find(p=>p.id===id);return`<article class="peek" style="--tint:${p.color}"><div class="peek-icon">${icon(p.icon)}</div><h3>${p.name}</h3><p>${p.quote}</p></article>`;}).join('')}</div><div class="peek-footer"><span>先凭真实反应作答，名字留到最后揭晓。</span><button class="text-button" data-action="about">这是什么测试？ ↗</button></div></section></main>`;document.querySelector('.hero-note svg').style.cssText='width:13px;height:13px;flex-shrink:0';}
-function intro(){app.innerHTML=`<main id="main" class="review intro"><div class="eyebrow"><span class="dot"></span> BEFORE WE BEGIN.</div><h1 tabindex="-1" style="margin-top:20px">按真实的你来就好。</h1><p class="review-intro">有些题请你想象一下，有些题需要回想。<br>不用为了得到一个人设，选“应该选”的答案。</p><div class="intro-list"><article><b>01</b><div><h2>假设一下，开销在范围内。</h2><p>假设生活必需开销已安排好，题里的购买在你能自由安排的范围内，不需要借钱。价格只是说明场景，不要求与你平时一样。</p></div></article><article><b>02</b><div><h2>回想一下，按实际发生的选。</h2><p>按题目指定的时间和实际经历回答。没有相关经历，或无法概括通常情况，可以通过右上角题目目录留空。圆点表达倾向，不换算成精确次数。</p></div></article><article><b>03</b><div><h2>中立，和没有经历，是两回事。</h2><p>左边是 A，右边是 B，中间代表两边对你的概括接近。点选后自动进入下一题；可以用“上一题”修改。不知道、没经历或无法代入，可通过右上角题目目录跳过，不用勉强选中立。</p></div></article><article><b>04</b><div><h2>想的是谁，留在你心里。</h2><p>第17—18题想同一个人或作品，第19—20题想同一种心情。前题无法回答，后题也可以留空。第27、28、42题需要曾安排过自由预算，没有安排过就不用猜。无需填写名字、账户或真实金额。</p></div></article></div><div class="review-actions"><button class="primary" data-action="begin">准备好了，开始 ${icon('arrow')}</button><button class="text-button" data-action="home">先回首页</button></div></main>`;}
-function question(){const i=D.items[s.index],a=s.answers[i.id],ends=E.displayEndpoints(i),selected=E.displayValue(i,a?.value);app.innerHTML=`<main id="main" class="quiz"><div class="quiz-progress-head"><button class="back-link" data-action="home">${icon('back')} 暂存，回首页</button><button class="progress-count" data-action="directory" aria-label="打开题目目录，当前第${s.index+1}题"><strong>${String(s.index+1).padStart(2,'0')}</strong> / ${D.items.length} ▦</button></div><div class="progress-bar" role="progressbar" aria-label="已作答题数" aria-valuemin="0" aria-valuemax="${D.items.length}" aria-valuenow="${answered()}"><div class="progress-fill" style="width:${answered()/D.items.length*100}%"></div></div><article class="question question-enter"><div class="question-tag"><span>${esc(i.context)}</span> 第 ${String(i.number).padStart(2,'0')} 个生活小片段</div><h1 tabindex="-1">${esc(i.title)}</h1><div class="scenario">${i.html}</div><div class="answer-area"><p class="answer-prompt">哪一边更像你？</p><div class="endpoint-row"><div><span class="end-dot"></span>A · ${esc(ends.left)}</div><div><span class="end-dot"></span>B · ${esc(ends.right)}</div></div><fieldset class="scale"><legend class="sr-only">请选择从明显偏左到明显偏右的五个位置之一</legend>${[1,2,3,4,5].map((v,k)=>`<label style="--scale-color:${v<3?'#6961bc':v>3?'#5f856b':'#93998a'};--size:${[38,30,24,30,38][k]}px"><input type="radio" name="answer" value="${v}" ${selected===v?'checked':''} aria-label="${['明显偏左','稍微偏左','中立，两边差不多','稍微偏右','明显偏右'][k]}${v===3?'':`：${esc(v<3?ends.left:ends.right)}`}"><span class="circle-target"><span class="circle">${icon('check')}</span></span><span class="scale-label">${['明显偏左','稍微偏左','中立','稍微偏右','明显偏右'][k]}</span></label>`).join('')}</fieldset></div></article><div class="quiz-nav"><button class="back-link" data-action="previous" ${s.index===0?'disabled':''}>${icon('back')} 上一题</button></div><div class="question-bottom"><span>${storageOK?'已在本机暂存 · 随时回来接着答':'当前浏览器无法暂存，请保持页面打开'}</span><button data-action="question-feedback">${s.questionFeedback[i.id]?'已记录这题的反馈 ✓':'这题有点不好懂'}</button></div></main>`;syncAnswer();enterItem();}
-function syncAnswer(){const i=D.items[s.index],value=E.displayValue(i,s.answers[i.id]?.value);document.querySelectorAll('input[name="answer"]').forEach(r=>r.checked=Number(r.value)===value);const bar=$('.progress-bar');if(bar){$('.progress-fill').style.width=answered()/D.items.length*100+'%';bar.setAttribute('aria-valuenow',answered());}}
-function record(displayed){const item=D.items[s.index],id=item.id,value=E.displayValue(item,displayed),prev=s.answers[id];if(prev&&(prev.value!==value))s.changes.push({id,from:prev.value,to:value,at:new Date().toISOString()});s.answers[id]={status:value===null?'skipped':'answered',value};s.completedAt=null;save();syncAnswer();}
+const processed=()=>D.items.filter(q=>s.answers[q.id]&&s.answers[q.id].status!=='unanswered').length;
+const score=()=>E.score(D,envelope());
+function save(){try{localStorage.setItem(KEY,JSON.stringify(s));}catch{storageOK=false;}}
 function cancelAdvance(){clearTimeout(advanceTimer);advanceTimer=null;}
-function chooseAnswer(displayed){
+function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('#toast').classList.remove('show'),4000);}
+function navigate(view){cancelAdvance();closeDialog();save();if(location.hash!==`#${view}`)location.hash=view;else render();}
+function focusHeading(){requestAnimationFrame(()=>{$('#main h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});});}
+function render(){
+ cancelAdvance();closeDialog();currentView=location.hash.slice(1)||'home';
+ if(currentView==='intro'||currentView==='review')currentView='test';
+ if(!['home','test','result'].includes(currentView))currentView='home';
+ if(currentView==='result'&&(!s.completedAt||!score().can_submit))currentView=processed()?'test':'home';
+ if(location.hash!==`#${currentView}`)history.replaceState(null,'','#'+currentView);
+ if(currentView==='test'&&!s.startedAt)s.startedAt=new Date().toISOString();
+ document.body.dataset.view=currentView;({home,test:question,result}[currentView])();save();focusHeading();
+}
+function home(){const progress=processed();app.innerHTML=`<main id="main" class="home"><section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="dot"></span> SOME HABITS ARE A WHOLE PERSONALITY.</div><h1 tabindex="-1">这很难评，<br><em>测一下。</em></h1><p class="hero-desc">有人买了就用，有人先放购物车。<br>有人为爱充值，有人等一个好价格。<br>你花钱的样子，可能比你想的更有意思。</p><div class="hero-actions"><button class="primary" data-action="${progress?'resume':'start'}">${progress?`继续上次 · ${progress}/${D.items.length}`:'测测我的消费人格'} ${icon('arrow')}</button>${progress?'<button class="text-button" data-action="restart">重新开始</button>':'<span style="font-size:11px;color:var(--muted);line-height:1.9">不用算账<br>凭真实的自己选</span>'}</div><div class="hero-note">${icon('check')} <span>没有标准答案，也没有消费优等生。</span></div></div><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="receipt"><div class="receipt-top"><span>PERSONALITY RECEIPT</span><span>No. 009</span></div><div class="receipt-face">${icon('cart')}</div><h2>你的消费<br>有点个性。</h2><div class="receipt-line"><span>生活里的小选择</span><span>× ${D.items.length}</span></div><div class="receipt-line"><span>意料之外的自己</span><span>待发现</span></div><div class="receipt-end"><span>本次收获</span><span>一点自我认识 ↗</span></div><div class="barcode"></div></div><div class="floating-tag tag-one">✳ 人类购物车</div><div class="floating-tag tag-two">↗ 先爽再说</div><div class="floating-tag tag-three">⌁ 这个真的需要</div><div class="hero-spark">✳</div></div></section>${legacyPresent&&!progress?'<div class="notice">题库已更新为50题。旧版记录仍保留在本机，新版请重新作答。</div>':''}<div class="home-meta"><div class="meta-item"><strong>${D.items.length}<span>道题</span></strong><p>具体生活场景<br>想象一下，或回想一下</p></div><div class="meta-item"><strong>${D.personas.length}<span>种人设</span></strong><p>从你的回答出发<br>得到一个消费人格</p></div><div class="meta-item"><strong>按你<span>的节奏</span></strong><p>可以返回修改<br>进度保存在这台设备</p></div></div></main>`;document.querySelector('.hero-note svg').style.cssText='width:13px;height:13px;flex-shrink:0';}
+function question(){
+ const q=D.items[s.index],a=s.answers[q.id],ends=E.displayEndpoints(q),value=a?.status==='answered'?a.value:null;
+ app.innerHTML=`<main id="main" class="quiz"><div class="quiz-progress-head"><button class="back-link" data-action="home">${icon('back')} 暂存，回首页</button><button class="progress-count" data-action="directory" aria-label="打开题目目录，当前第${s.index+1}题，共50题"><strong>${String(s.index+1).padStart(2,'0')}</strong> / ${D.items.length} ▦</button></div>
+ <article class="question question-enter" data-question="${q.id}"><h1 tabindex="-1">${esc(q.title)}</h1><div class="scenario">${q.html}</div><div class="answer-area"><p class="answer-prompt">哪一边更像你？</p><div class="endpoint-row"><div>${esc(ends.left)}</div><div>${esc(ends.right)}</div></div>
+ <fieldset class="scale"><legend class="sr-only">从偏左到偏右，选择最像你的程度；中间代表中立</legend>${[1,2,3,4,5].map((v,k)=>`<label style="--scale-color:${v<3?'#6961bc':v>3?'#5f856b':'#93998a'};--size:${[42,34,26,34,42][k]}px"><input type="radio" name="answer" value="${v}" ${value===v?'checked':''} aria-label="${['明显偏左','稍微偏左','中立，两边差不多','稍微偏右','明显偏右'][k]}${v===3?'':`：${esc(v<3?ends.left:ends.right)}`}"><span class="circle-target"><span class="circle">${icon('check')}</span></span></label>`).join('')}</fieldset></div>
+ <div class="missing-options"><button class="missing-choice" data-action="not-applicable" aria-pressed="${a?.status==='not_applicable'}">无相关经历</button><button class="missing-choice" data-action="skip" aria-pressed="${a?.status==='skipped'}">跳过</button></div><p class="missing-hint">${q.recall?'回想最近半年，有类似机会时的实际情况。':'请代入情境；无法代入时可以跳过。'} 中间圆圈代表中立。</p></article>
+ <div id="question-actions"></div><div class="question-bottom"><span id="storage-note">${storageOK?'进度已在本机暂存':'浏览器无法暂存，请保持页面打开'}</span><button data-action="question-feedback">${s.questionFeedback[q.id]?'这题的备注已保存 ✓':'这题有点不好懂'}</button></div></main>`;
+ syncActions();
+}
+function syncActions(){
+ const a=s.answers[D.items[s.index].id],handled=a&&a.status!=='unanswered',complete=processed()===D.items.length;
+ const finish=handled&&(s.index===D.items.length-1||complete);
+ $('#question-actions').innerHTML=`<div class="quiz-nav"><button class="back-link" data-action="previous" ${s.index===0?'disabled':''}>${icon('back')} 上一题</button>${!finish&&handled&&s.index<D.items.length-1?'<button class="back-link" data-action="next">下一题 →</button>':''}</div>${finish?`<div class="finish-area"><button class="primary" data-action="finish">看看我的消费人格 ${icon('arrow')}</button></div>`:''}`;
+ if(!storageOK)$('#storage-note').textContent='浏览器无法暂存，请保持页面打开';
+}
+function record(status,value){
+ s.answers[D.items[s.index].id]={status,value};s.completedAt=null;save();
+ document.querySelectorAll('input[name="answer"]').forEach(r=>r.checked=status==='answered'&&Number(r.value)===value);
+ $('[data-action="not-applicable"]').setAttribute('aria-pressed',String(status==='not_applicable'));
+ $('[data-action="skip"]').setAttribute('aria-pressed',String(status==='skipped'));
+ syncActions();
+}
+function chooseAnswer(status,value=null){
  if(currentView!=='test'||modal.open)return;
- record(displayed);
- cancelAdvance();
- const index=s.index,id=D.items[index].id;
+ cancelAdvance();record(status,value);
+ const index=s.index;
+ // A completed answer set stays on the edited item so the updated result is one click away.
+ if(index===D.items.length-1||processed()===D.items.length)return;
  advanceTimer=setTimeout(()=>{
   advanceTimer=null;
-  if(currentView!=='test'||location.hash!=='#test'||modal.open||document.hidden||s.index!==index||D.items[s.index].id!==id)return;
-  flush();
-  if(index<D.items.length-1){s.index++;navigate('test');}else navigate('review');
- },250);
+  if(currentView==='test'&&location.hash==='#test'&&!modal.open&&!document.hidden&&s.index===index){s.index++;navigate('test');}
+ },350);
 }
-function navGrid(){return`<div class="review-grid">${D.items.map((i,k)=>`<button class="q-nav-btn ${s.answers[i.id]?.status==='answered'?'done':s.answers[i.id]?'na':''} ${k===s.index?'current':''}" data-action="jump" data-index="${k}" aria-label="第${i.number}题 ${esc(i.title)}，${s.answers[i.id]?.status==='answered'?'已作答':s.answers[i.id]?'已留空':'未作答'}">${String(i.number).padStart(2,'0')}</button>`).join('')}</div><div class="review-legend"><span><i></i>已作答</span><span><i class="na-dot"></i>已留空</span><span><i class="blank-dot"></i>未作答</span></div>`;}
-function review(){const n=Object.values(s.answers).filter(a=>a.status==='answered').length;app.innerHTML=`<main id="main" class="review"><div class="eyebrow"><span class="dot"></span> ONE LAST LOOK.</div><h1 tabindex="-1" style="margin-top:20px">答案收好啦。</h1><p class="review-intro">已作答 ${n}/${D.items.length} 道题。点下面的序号，可以继续或修改。${n<D.items.length?'<br>跳过的题会保留为空，仍会依据已答内容给出一个人格，并标明已答题数。':''}</p>${navGrid()}<div class="review-actions"><button class="primary" data-action="finish" ${n?'':'disabled'}>看看我的消费人格 ${icon('arrow')}</button>${n<D.items.length?`<button class="secondary" data-action="unanswered">继续未答题</button>`:''}<button class="secondary" data-action="home">先保存，回首页</button></div></main>`;}
-const axisCopy={T:{label:'时间取向',low:'更愿意等一个合适的安排',high:'更愿意早点兑现心愿',mixed:'两种时间安排，各有吸引力'},V:{label:'价值取向',low:'实用功能的分量更大',high:'审美和纪念意义的分量更大',mixed:'实用与喜欢，各有分量'},D:{label:'决策方式',low:'更依靠整体感受形成决定',high:'更依靠逐项比较形成决定',mixed:'感受和比较，都会参与'},S:{label:'参照来源',low:'更偏向自己原先的喜欢',high:'他人选择更容易影响偏好',mixed:'自己的喜欢与外部参照，分量接近'}};
-function evidenceLine(i,value){if(value===null||value===undefined)return'这题没有足够信息';return value===3?'两边对你的概括接近':`${value===1||value===5?'明显':'稍微'}偏向「${value<3?i.left:i.right}」`;}
-function detail(p){
- if(p.kind!=='specific')return '';
- return `<details class="evidence-details"><summary>哪些回答留下了这个线索？</summary>${p.signals.map(id=>{const i=D.items.find(i=>i.id===id);return `<p>第${i.number}题 · ${esc(i.title)}<br>${esc(evidenceLine(i,s.answers[id]?.value))} <button class="text-button" data-action="jump" data-index="${i.number-1}">回看</button></p>`;}).join('')}</details>`;
+function navGrid(){return`<div class="review-grid">${D.items.map((q,k)=>{const state=s.answers[q.id]?.status||'unanswered';return`<button class="q-nav-btn ${state} ${k===s.index?'current':''}" data-action="jump" data-index="${k}" aria-label="第${k+1}题 ${esc(q.title)}，${statusLabels[state]}">${String(k+1).padStart(2,'0')}</button>`;}).join('')}</div><div class="directory-legend"><span><i class="answered"></i>已作答</span><span><i class="not_applicable"></i>无经历</span><span><i class="skipped"></i>已跳过</span><span><i></i>待处理</span></div>`;}
+function directory(){openDialog('回看／修改答案',`<p class="modal-prose">已处理 ${processed()}/50 题。点序号回到原题；改完后可重新查看结果。</p>${navGrid()}<div class="modal-actions">${score().can_submit?'<button class="primary" data-action="finish">看看我的消费人格</button>':''}<button class="secondary" data-action="close">继续作答</button></div>`);}
+function finish(){
+ const r=score();
+ if(!r.can_submit){
+  const pending=D.items.findIndex(q=>!s.answers[q.id]||s.answers[q.id].status==='unanswered');
+  if(pending>=0){s.index=pending;navigate('test');toast('还有题目待处理，请作答、选择无相关经历或跳过。');}
+  else{s.index=D.items.findIndex(q=>q.role==='inclination'||q.role==='behavior');navigate('test');toast('还需要至少回答一道消费习惯题，才能生成人格结果。');}
+  return;
+ }
+ s.completedAt=new Date().toISOString();navigate('result');
+}
+function axisText(key,r){
+ const v=E.decode(D,envelope()).values,pair=D.axes[key].map(id=>v[id]??'_').join(','),mode=r.reference_only?'reference':'matched';
+ const indices=C.map[key][pair][r.primary][mode];return indices.map(i=>C.fragments[i]).join('');
+}
+function axisMeta(a){
+ if(a.state==='insufficient')return'尚无有效回答 · 暂不显示方向';
+ if(a.letter_basis==='fixed_tiebreak')return'两端 50/50 · 字母按中立同分规则显示，不代表偏向';
+ if(a.letter_basis==='primary_item_tiebreak')return'两端 50/50 · 字母按主场景方向显示';
+ if(a.answered===1)return'依据较少 · 仅 1/2 题有效';
+ return({opposing:'两个场景的方向不同',partly_neutral:'一个场景有倾向，一个场景中立',consistent:'两个场景的方向一致'})[a.pattern]||'';
+}
+function axisCard(key,r){
+ const a=r.axes[key],d=axes[key],has=a.percentages!==null,first=d.ends[0][0];
+ return`<article class="axis-card" data-axis="${key}" data-pattern="${a.pattern}"><div class="axis-title"><span>${d.label}</span><b>${a.letter||'—'}</b></div><div class="axis-endpoints">${d.ends.map(([letter,name])=>`<div class="${has&&a.percentages[letter]>50?'dominant':''}"><span>${letter} · ${name}</span><strong>${has?`${a.percentages[letter]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages[first]}%"></span></div>`:'<div class="axis-no-data">没有有效答案，保留空位。</div>'}<p class="axis-state">${axisMeta(a)}</p><p class="axis-long">${esc(axisText(key,r))}</p></article>`;
 }
 function result(){
- const r=E.score(D,envelope()),card=r.result_cards[0],p=D.personas.find(p=>p.id===card.id);
- app.innerHTML=`<main id="main" class="result"><div class="result-top"><div><div class="eyebrow"><span class="dot"></span> YOUR PERSONALITY RECEIPT.</div><h1 tabindex="-1">你的消费人格。</h1><p class="result-intro">${r.evidence_mode==='complete_answers'?'44个生活小片段，拼成了这次的你。':`根据已答的 ${r.coverage.answered}/44 题生成。补充或修改答案后，结果可能变化。`}</p></div><div class="result-stamp">本次人设<br>↘<br>已经揭晓</div></div>
- <article class="persona-card primary-persona" data-persona="${p.id}" style="--tint:${p.color}"><div class="persona-meta"><span>消费人格 / ${p.id.slice(1)}</span><span>${esc(card.scope)}</span></div><div class="persona-symbol">${icon(p.icon)}</div><h2>${esc(p.name)}</h2><p class="persona-quote">${esc(p.quote)}</p><p class="persona-claim">${esc(card.description)}</p>${detail(p)}<div class="persona-actions"><span>一张属于这次回答的人格卡</span><button data-action="share" data-id="${p.id}" ${card.can_share?'':'disabled'}>保存我的人格卡 ↗</button></div></article>
- <section class="result-section"><details class="axis-details"><summary>看看选择背后的四个切面</summary><p class="section-copy">每个切面来自两道题，只描述这次场景中的方向。</p><div class="axis-grid">${Object.entries(r.axes).map(([key,a])=>`<article class="axis-card"><div class="axis-title"><b>${key}</b>${axisCopy[key].label}</div><h3>${a.state==='insufficient'?'这个切面的信息还不完整':axisCopy[key][a.state]}</h3><p>${a.state==='insufficient'?'有题目暂时无法判断，没有用中立分补上。':a.difference?'你在这两个场景的选择不同，平均后的方向并不代表每次都一样。':'这里只保留宽泛方向，不给你的习惯打高低分。'}</p></article>`).join('')}</div></details></section><section class="result-section"><div class="section-top" style="margin-bottom:0"><h2>给这次试测留点反馈？</h2><span>OPTIONAL</span></div><p class="section-copy">名字有没有趣、描述像不像你，可以分开说。反馈保存在本机，下载后可交给邀请你试测的人。</p><div class="feedback-form">${[['recognition','这个结果像我'],['humor','这个名字有意思'],['sharing','我愿意分享这份结果']].map(([key,label])=>`<div class="rating-row"><span>${label}</span><div class="rating-options" role="radiogroup" aria-label="${label}">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="feedback-${key}" value="${v}" ${s.feedback[key]===v?'checked':''} aria-label="${label}：${v}分"><span>${v}</span></label>`).join('')}</div></div>`).join('')}<p class="rating-caption">1＝完全不同意，5＝非常同意；可以不选。</p><div><label class="field-label" for="result-note">哪里像你，哪里不像？也欢迎留下读不懂的地方。</label><textarea class="textarea" id="result-note" maxlength="1200" placeholder="比如：我是等等党，但也会为喜欢的演出马上买票……">${esc(s.feedback.note||'')}</textarea></div><div class="feedback-actions"><button class="primary" data-action="export">${icon('download')} 下载试测记录</button><span>含原始答案、修改记录、停留时间与反馈</span></div></div></section><div class="notice">这是一份娱乐性消费画像试测，尚未完成真人测量验证。结果描述的是这次回答中的习惯，不能概括你的全部，也不是理财建议。</div><div class="result-actions"><button class="secondary" data-action="review">回看 / 修改答案</button><button class="secondary" data-action="restart">重新测试</button><button class="text-button" data-action="home">回到首页</button></div></main>`;}
-function openDialog(title,content){cancelAdvance();$('#modal-content').innerHTML=`<div class="modal-header"><h2 id="modal-title">${title}</h2><button class="close-button" data-action="close" aria-label="关闭">${icon('close')}</button></div>${content}`;if(!modal.open)modal.showModal();}
-function shareResult(id){
- const card=E.score(D,envelope()).result_cards[0];
- if(!s.completedAt||!card.can_share||card.id!==id)return null;
- return {card,p:D.personas.find(p=>p.id===id)};
+ const r=score(),card=r.result_cards[0],p=D.personas.find(x=>x.id===r.primary);
+ app.innerHTML=`<main id="main" class="result"><article class="persona-card primary-persona" data-persona="${p.id}" data-reference="${r.reference_only}" style="--tint:${p.color}"><p class="result-kicker">${r.reference_only?'本次参考类型':'你的消费人格'}</p><img class="persona-art" src="${p.art}" alt="${esc(p.art_alt)}" width="1254" height="1254" fetchpriority="high"><h1 tabindex="-1">${esc(p.name)}</h1><p class="persona-quote">${esc(p.quote)}</p>${r.reference_only?`<p class="reference-note">${esc(card.evidence_note)}</p>`:''}<p class="persona-claim">${esc(card.description)}</p><div class="persona-meta"><span>${r.reference_only?'参考介绍 · 不代表已确认个人行为':'本次回答支持这一消费模式'}</span><span>已作答 ${r.coverage.answered}/50 题</span></div><button class="primary" data-action="share">保存我的人格卡 ${icon('arrow')}</button></article>
+ <section class="result-section"><div class="axes-heading"><div><h2>你的四个消费切面</h2><p class="section-copy">百分比来自这次回答，不是概率或准确率。</p></div><span class="axis-code" aria-label="四维方向代码 ${r.axis_code}">${r.axis_code}</span></div><div class="axis-grid">${Object.keys(axes).map(key=>axisCard(key,r)).join('')}</div></section><div class="result-actions"><button class="secondary" data-action="directory">回看／修改答案</button><button class="secondary" data-action="restart">重新测试</button><button class="text-button" data-action="home">回首页</button></div></main>`;
 }
-function showShare(id){
- const match=shareResult(id);if(!match)return;const {p,card}=match;
- openDialog('你的消费人格卡。',`<div class="share-preview" data-persona="${p.id}" style="--tint:${p.color}"><div class="share-top">买点人设 · MY CONSUMPTION CHARACTER</div><div class="share-icon">${icon(p.icon)}</div><p style="font-size:11px">我的消费人格</p><h3>${esc(p.name)}</h3><p class="quote">${esc(p.quote)}</p><div class="share-bottom">${esc(card.scope)}<br>一张属于这次回答的人格卡。</div></div><p class="share-help">${card.scope} · 消费人格试测 v${D.version}</p><div class="modal-actions"><button class="primary" data-action="save-card" data-id="${id}">保存图片 ${icon('download')}</button><button class="secondary" data-action="copy-card" data-id="${id}">复制分享文案</button></div>`);
+function closeDialog(){if(modal.open)modal.close();releaseShare();$('#modal-content').replaceChildren();}
+function releaseShare(){shareRevision++;shareFile=null;if(shareURL){URL.revokeObjectURL(shareURL);shareURL=null;}}
+function openDialog(title,html){cancelAdvance();releaseShare();$('#modal-content').innerHTML=`<div class="modal-header"><h2 id="modal-title">${esc(title)}</h2><button class="close-button" data-action="close" aria-label="关闭">${icon('close')}</button></div>${html}`;if(!modal.open)modal.showModal();}
+function restartDialog(){openDialog('重新开始这次测试？','<p class="modal-prose">这次的50题答案和备注将被清除。旧版记录仍保留。</p><div class="modal-actions"><button class="primary" data-action="confirm-restart">重新开始</button><button class="secondary" data-action="close">保留当前记录</button></div>');}
+function wrap(ctx,text,width){
+ const lines=[];let line='';
+ for(const ch of text){if(ch==='\n'){lines.push(line);line='';continue;}if(line&&ctx.measureText(line+ch).width>width){lines.push(line);line=ch;}else line+=ch;}
+ if(line)lines.push(line);return lines;
 }
-function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();}
-async function cardBlob(p,card){await document.fonts.ready;const c=document.createElement('canvas');c.width=1080;c.height=1440;const ctx=c.getContext('2d');ctx.fillStyle=p.color;ctx.fillRect(0,0,1080,1440);ctx.fillStyle='#20231d';ctx.textAlign='center';ctx.font='600 27px sans-serif';ctx.fillText('买 点 人 设',540,110);ctx.font='20px sans-serif';ctx.fillText('SPENDING, WITH CHARACTER.',540,150);ctx.lineWidth=3;ctx.strokeStyle='#20231d';ctx.strokeRect(48,48,984,1344);ctx.save();ctx.translate(390,270);ctx.scale(300/32,300/32);ctx.lineWidth=1.25;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke(new Path2D(paths[p.icon]));ctx.restore();ctx.font='26px sans-serif';ctx.fillText('我的消费人格',540,665);ctx.font='800 89px sans-serif';ctx.fillText(p.name,540,790,940);ctx.font='32px sans-serif';let line='',y=895;for(const ch of p.quote){if(ctx.measureText(line+ch).width>840){ctx.fillText(line,540,y);y+=52;line='';}line+=ch;}ctx.fillText(line,540,y);ctx.setLineDash([8,9]);ctx.beginPath();ctx.moveTo(110,1080);ctx.lineTo(970,1080);ctx.stroke();ctx.setLineDash([]);ctx.font='25px sans-serif';ctx.fillText(card.scope,540,1155);ctx.fillText('一张属于这次回答的人格卡。',540,1200);ctx.font='20px sans-serif';ctx.fillText('44 道生活小片段  ·  消费人格试测 v0.7',540,1310);return new Promise(resolve=>c.toBlob(resolve,'image/png'));}
-function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000);}
-async function saveCard(id){const match=shareResult(id);if(!match)return;const {p,card}=match;try{const blob=await cardBlob(p,card);if(!blob)throw Error();download(blob,`买点人设-${p.name}.png`);toast('图片已生成，请查看下载；手机上可保存到相册。');}catch{toast('图片暂时无法保存，可以先截图或复制文案。');}}
-async function copyText(text){try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);else{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-9999px';document.body.append(ta);ta.select();if(!document.execCommand('copy'))throw Error();ta.remove();}toast('分享文案已复制');}catch{openDialog('复制这段分享文案',`<textarea class="textarea" readonly>${esc(text)}</textarea>`);}}
-function exportRecord(){flush();save();const record={schema:'consumption-personality-trial',version:D.version,presentationVersion:D.presentationVersion,answerEncoding:'v0.7: 1=A/left to 5=B/right; missing remains null',exportedAt:new Date().toISOString(),startedAt:s.startedAt,completedAt:s.completedAt,answers:D.items.map(i=>({questionId:i.id,number:i.number,displayPosition:E.displayValue(i,s.answers[i.id]?.value),answer:s.answers[i.id]??{status:'unanswered',value:null},activeTimeMs:Number(s.timing[i.id])||0,visits:Number(s.visits[i.id])||0,feedback:s.questionFeedback[i.id]||null})),changes:s.changes,result:E.score(D,envelope()),feedback:s.feedback,note:'由答题者主动导出；没有集中上传。停留时长不代表答题质量。'};download(new Blob([JSON.stringify(record,null,2)],{type:'application/json;charset=utf-8'}),`消费人格试测-v0.7-${new Date().toISOString().replace(/[:.]/g,'-')}.json`);toast('试测记录已下载。可自行发给邀请你试测的人。');}
-function restartDialog(){openDialog('重新开始这次测试？',`<div class="modal-prose"><p>这会清除这台设备上的当前答案与反馈。需要保留的话，可以先下载记录。</p></div><div class="modal-actions"><button class="primary" data-action="confirm-restart">清除并重新开始</button><button class="secondary" data-action="close">保留当前记录</button></div>`);}
-document.addEventListener('click',event=>{if(event.target.matches('input[name="answer"]')){if(event.detail>1){event.preventDefault();return;}chooseAnswer(Number(event.target.value));return;}const b=event.target.closest('[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;switch(action){
-case'about':openDialog('花钱的样子，也有一点个性。',`<div class="modal-prose"><p>用44道具体生活场景，观察四个消费切面，从14类中得到一个消费人格。名字有点好笑，回答照着真实的自己就好。</p><p><strong>开始前知道三件事：</strong></p><p>① 假设题里的开销都在可自由安排的范围内。<br>② 左 A 右 B，中间代表两边接近；没经历或看不懂，可通过右上角题目目录跳过。<br>③ 点选后自动进入下一题；可以返回修改、暂存再答，最后会得到一个消费人格，不需要再挑选标签。</p><p>这是一份试测稿，还需要真人反馈。没有“消费优等生”，也不提供准确率或理财判断。</p></div><div class="modal-actions"><button class="primary" data-action="close">明白了</button></div>`);break;
-case'privacy':openDialog('答案留在这台设备。',`<div class="modal-prose"><p>这个版本在你的浏览器里计算结果，并把进度、答案、修改记录、可见页面停留时间和自愿反馈保存在本机。</p><p>没有集中收集答案，也不要求姓名、账户或真实消费金额。你可以在结果页主动下载试测记录，再自行交给邀请你的人。</p><p>换浏览器或清理网站数据后，进度可能无法恢复。同一设备交给下一位试测者前，请清除当前记录。</p></div><div class="modal-actions"><button class="secondary" data-action="clear-dialog">清除本机记录</button><button class="primary" data-action="close">知道了</button></div>`);break;
-case'start':navigate('intro');break;
-case'begin':if(!s.startedAt)s.startedAt=new Date().toISOString();navigate('test');break;
-case'resume':navigate(s.completedAt?'result':'test');break;
-case'home':navigate('home');break;
-case'previous':if(s.index>0){flush();s.index--;navigate('test');}break;
-case'directory':openDialog('回看或跳过一个小片段',`<p class="modal-prose">点序号前往任意一题；没有经历的题可以先留空。</p>${navGrid()}<div class="modal-actions"><button class="secondary" data-action="review">查看作答情况</button></div>`);break;
-case'jump':flush();s.index=Math.max(0,Math.min(D.items.length-1,Number(b.dataset.index)));modal.close();navigate('test');break;
-case'review':modal.close();navigate('review');break;
-case'unanswered':flush();s.index=D.items.findIndex(i=>s.answers[i.id]?.status!=='answered');if(s.index<0)s.index=0;navigate('test');break;
-case'finish':if(Object.values(s.answers).some(a=>a.status==='answered')){s.completedAt=new Date().toISOString();navigate('result');}break;
-case'close':modal.close();break;
-case'restart':restartDialog();break;
-case'confirm-restart':flush();s=fresh();save();modal.close();navigate('intro');break;
-case'clear-dialog':openDialog('清除当前本机记录？',`<div class="modal-prose"><p>当前答案和反馈将从这个浏览器移除。</p></div><div class="modal-actions"><button class="primary" data-action="clear">清除记录</button><button class="secondary" data-action="close">取消</button></div>`);break;
-case'clear':flush();s=fresh();try{localStorage.removeItem(KEY);}catch{}modal.close();navigate('home');toast('当前记录已清除');break;
-case'question-feedback':{const i=D.items[s.index];openDialog(`第${i.number}题，哪里卡住了？`,`<p class="modal-prose">题目太长、场景不像生活，或不知道两个选项怎么分，都可以写。不会改变这题的答案。</p><label class="field-label" for="question-note" style="margin-top:18px">你的反馈（选填）</label><textarea class="textarea" id="question-note" maxlength="800" data-id="${i.id}" placeholder="我不太明白……">${esc(s.questionFeedback[i.id]||'')}</textarea><div class="modal-actions"><button class="primary" data-action="save-question-note">保存反馈</button><button class="secondary" data-action="close">先不写</button></div>`);break;}
-case'save-question-note':{const t=$('#question-note');s.questionFeedback[t.dataset.id]=t.value.trim();save();modal.close();const fb=$('[data-action="question-feedback"]');if(fb)fb.textContent=t.value.trim()?'已记录这题的反馈 ✓':'这题有点不好懂';toast('反馈已保存在本机');break;}
-case'share':showShare(b.dataset.id);break;
-case'save-card':saveCard(b.dataset.id);break;
-case'copy-card':{const match=shareResult(b.dataset.id);if(!match)break;const {p,card}=match;const url=location.protocol.startsWith('http')&&!['localhost','127.0.0.1'].includes(location.hostname)?`\n来测测你的消费人格：${location.origin}${location.pathname}`:'';copyText(`我的消费人格：${p.name}。\n${p.quote}\n${card.scope}。\n一张属于这次回答的人格卡。${url}`);break;}
-case'export':exportRecord();break;
-}});
-document.addEventListener('change',e=>{if(e.target.name==='answer')chooseAnswer(Number(e.target.value));if(e.target.name?.startsWith('feedback-')){s.feedback[e.target.name.replace('feedback-','')]=Number(e.target.value);save();}});
-document.addEventListener('input',e=>{if(e.target.id==='result-note'){s.feedback.note=e.target.value;save();}});
+async function cardBlob(r){
+ const p=D.personas.find(x=>x.id===r.primary),card=r.result_cards[0],img=new Image();img.src=p.art;
+ await img.decode();await document.fonts.ready;
+ const canvas=document.createElement('canvas');canvas.width=900;canvas.height=2200;const c=canvas.getContext('2d');
+ const font=(size,weight=400)=>{c.font=`${weight} ${size}px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif`;};
+ const center=(t,y,size=24,weight=400)=>{font(size,weight);c.textAlign='center';c.fillStyle='#20231d';c.fillText(t,450,y);};
+ c.fillStyle='#f6f5ef';c.fillRect(0,0,900,2200);c.fillStyle=p.color;c.fillRect(36,36,828,2128);
+ center('买点人设  /  PERSONALITY RECEIPT',85,21,600);
+ center(r.reference_only?'本次参考类型':'你的消费人格',139,24);
+ c.drawImage(img,210,150,480,480);
+ let nameSize=58;font(nameSize,750);while(c.measureText(p.name).width>730){nameSize-=2;font(nameSize,750);}center(p.name,680,nameSize,750);
+ font(26,500);let y=738;for(const line of wrap(c,p.quote,718)){center(line,y,26,500);y+=40;}
+ y+=20;
+ if(r.reference_only){
+  font(22);const lines=wrap(c,card.evidence_note,690);c.fillStyle='#fffef9';c.fillRect(78,y-5,744,lines.length*34+34);
+  y+=26;for(const line of lines){center(line,y,22);y+=34;}y+=27;
+ }else{center('本次回答支持这一消费模式',y+20,22);y+=64;}
+ c.textAlign='left';
+ for(const [key,d] of Object.entries(axes)){
+  const a=r.axes[key];font(23,650);c.fillStyle='#20231d';c.fillText(d.label,88,y);
+  c.textAlign='right';c.fillText(a.letter||'—',810,y);c.textAlign='left';y+=38;
+  font(21);const label=([letter,name])=>`${letter} ${name}  ${a.percentages===null?'无数据':a.percentages[letter]+'%'}`;
+  c.fillText(label(d.ends[0]),88,y);c.textAlign='right';c.fillText(label(d.ends[1]),810,y);c.textAlign='left';y+=29;
+  if(a.percentages){c.fillStyle='#acc9b4';c.fillRect(88,y,724,8);c.fillStyle='#6961bc';c.fillRect(88,y,724*a.percentages[d.ends[0][0]]/100,8);}
+  y+=30;
+  if(a.letter_basis!=='greater_percentage'||a.answered===1){font(17);c.fillStyle='#52574d';for(const line of wrap(c,axisMeta(a),724)){c.fillText(line,88,y);y+=23;}}
+  y+=26;
+ }
+ // Crop only the unused bottom; content height follows the reference and axis notes.
+ const bottom=y+122,output=document.createElement('canvas');output.width=900;output.height=bottom;
+ const ctx=output.getContext('2d');ctx.fillStyle='#f6f5ef';ctx.fillRect(0,0,900,bottom);ctx.fillStyle=p.color;ctx.fillRect(36,36,828,bottom-72);ctx.drawImage(canvas,0,0,900,y,0,0,900,y);
+ ctx.fillStyle='#4d5546';ctx.textAlign='center';ctx.font='19px -apple-system, "PingFang SC", sans-serif';ctx.fillText('50 道生活场景 · v0.9 · 本次已作答 '+r.coverage.answered+'/50 题',450,y+31);ctx.font='17px -apple-system, "PingFang SC", sans-serif';ctx.fillText('基于本次回答的自我观察 · 不是心理诊断',450,y+65);
+ return new Promise((resolve,reject)=>output.toBlob(blob=>blob?resolve(blob):reject(new Error('图片生成失败')),'image/png'));
+}
+async function showShare(){
+ const r=score();if(!s.completedAt||!r.can_submit)return;const p=D.personas.find(x=>x.id===r.primary);
+ openDialog('保存我的人格卡','<div id="share-body"><p class="modal-prose" role="status">正在准备人物和分享图…</p></div>');const revision=shareRevision;
+ try{
+  const blob=await cardBlob(r);if(revision!==shareRevision||!modal.open)return;
+  shareFile=new File([blob],`买点人设-${p.name}-v0.9.png`,{type:'image/png'});shareURL=URL.createObjectURL(blob);
+  const native=!!navigator.canShare?.({files:[shareFile]});
+  $('#share-body').innerHTML=`<img class="share-image" src="${shareURL}" alt="${esc(r.result_cards[0].title)}，含四维百分比${r.reference_only?'及参考说明':''}"><div class="modal-actions"><button class="primary" data-action="save-card">保存图片</button>${native?'<button class="secondary" data-action="native-share">分享图片</button>':''}<button class="secondary" data-action="copy-card">复制结果文字</button></div><p class="share-help">手机也可以长按图片保存。${r.reference_only?'这次是参考类型，图片和文字都会保留说明。':'分享内容与本次结果一致。'}</p>`;
+ }catch{if(revision===shareRevision&&modal.open)$('#share-body').innerHTML='<p class="modal-prose">人物图片暂时未能加载，无法完整生成分享卡。</p><button class="secondary" data-action="share">重新生成</button>';}
+}
+async function copyResult(){
+ const r=score();if(!r.can_submit||!s.completedAt)return;
+ const p=D.personas.find(x=>x.id===r.primary),text=`${r.result_cards[0].share_caption}\n${p.quote}\n四维：${r.axis_code}\n买点人设 · 50题 · v0.9`;
+ try{await navigator.clipboard.writeText(text);toast('结果文字已复制');}
+ catch{openDialog('复制结果文字',`<label class="field-label" for="copy-result">长按或全选后复制</label><textarea id="copy-result" class="textarea" readonly>${esc(text)}</textarea>`);$('#copy-result').select();}
+}
+function start(){if(!s.startedAt)s.startedAt=new Date().toISOString();navigate('test');}
+document.addEventListener('click',async event=>{
+ if(event.target.matches('input[name="answer"]')){chooseAnswer('answered',Number(event.target.value));return;}
+ const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
+ switch(b.dataset.action){
+ case'about':openDialog('花钱的样子，也有一点个性。','<div class="modal-prose"><p>50道生活场景，14种消费人格。从这次回答中，看看最突出的消费模式。</p><p>两端代表不同选择，中间代表中立。按题目描述选择；回忆题按最近半年、有类似机会时的实际情况回答。没有经历或无法代入，可以分别选择“无相关经历”或“跳过”。</p><p>点选后自动进入下一题，可以随时返回修改。50题都处理完、且至少回答一道消费习惯题后，点击“看看我的消费人格”。不会追加题目。</p><p>结果只给一个人格；信息有限或仍然并列时，会标明“参考类型”。四维百分比独立来自你的回答，不是概率或准确率。</p><p>这是供自我观察和交流的测试，没有消费优等生，不是心理诊断或理财建议。</p></div>');break;
+ case'privacy':openDialog('答案留在这台设备。','<div class="modal-prose"><p>答案在你的浏览器里计算。新版进度、答案和你自愿留下的单题备注保存在本机，没有集中收集答案。</p><p>无需填写姓名、账号或真实消费金额。分享图片和文字需由你主动操作。</p><p>旧版记录单独保留，不转换为新版50题答案。换浏览器或清理网站数据后，进度可能无法恢复。</p></div><div class="modal-actions"><button class="secondary" data-action="clear-dialog">清除本次记录</button><button class="primary" data-action="close">知道了</button></div>');break;
+ case'start':start();break;
+ case'resume':navigate(s.completedAt&&score().can_submit?'result':'test');break;
+ case'home':navigate('home');break;
+ case'previous':if(s.index>0){s.index--;navigate('test');}break;
+ case'next':if(s.index<D.items.length-1){s.index++;navigate('test');}break;
+ case'not-applicable':chooseAnswer('not_applicable');break;
+ case'skip':chooseAnswer('skipped');break;
+ case'directory':directory();break;
+ case'jump':s.index=Math.max(0,Math.min(D.items.length-1,Number(b.dataset.index)));navigate('test');break;
+ case'finish':finish();break;
+ case'close':closeDialog();break;
+ case'restart':restartDialog();break;
+ case'confirm-restart':s=fresh();save();start();break;
+ case'clear-dialog':openDialog('清除本次记录？','<p class="modal-prose">新版50题答案与单题备注会被清除。旧版记录保留。</p><div class="modal-actions"><button class="primary" data-action="clear">清除</button><button class="secondary" data-action="close">取消</button></div>');break;
+ case'clear':s=fresh();save();navigate('home');toast('本次记录已清除');break;
+ case'question-feedback':{const q=D.items[s.index];openDialog('这道题，哪里卡住了？',`<p class="modal-prose">这条备注只保存在本机，不会发送，也不影响答案。</p><label class="field-label" for="question-note">第${s.index+1}题 · ${esc(q.title)}</label><textarea class="textarea" id="question-note" maxlength="800">${esc(s.questionFeedback[q.id]||'')}</textarea><div class="modal-actions"><button class="primary" data-action="save-question-note">保存在本机</button></div>`);break;}
+ case'save-question-note':s.questionFeedback[D.items[s.index].id]=$('#question-note').value.trim();save();closeDialog();question();toast('备注已保存在本机');break;
+ case'share':await showShare();break;
+ case'save-card':if(shareFile&&shareURL){const a=document.createElement('a');a.href=shareURL;a.download=shareFile.name;document.body.append(a);a.click();a.remove();}break;
+ case'native-share':if(shareFile){try{await navigator.share({files:[shareFile],title:'我的消费人格',text:score().result_cards[0].share_caption});}catch(err){if(err.name!=='AbortError')toast('暂时无法调用分享，请保存图片后分享。');}}break;
+ case'copy-card':await copyResult();break;
+ }
+});
+// Arrow keys on a focused radio also emit change; repeated records are harmless and reset one timer.
+document.addEventListener('change',event=>{if(event.target.name==='answer')chooseAnswer('answered',Number(event.target.value));});
+modal.addEventListener('cancel',releaseShare);
+modal.addEventListener('close',()=>{if(!modal.open){releaseShare();$('#modal-content').replaceChildren();}});
 window.addEventListener('hashchange',render);
-document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAdvance();flush();save();}else if(currentView==='test'){activeId=D.items[s.index].id;activeSince=performance.now();}});
-window.addEventListener('pagehide',()=>{cancelAdvance();flush();save();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAdvance();save();}});
+window.addEventListener('pagehide',()=>{cancelAdvance();save();});
 render();
 })();
