@@ -77,20 +77,15 @@ function finish(){
  }
  s.completedAt=new Date().toISOString();navigate('result');
 }
-function axisText(key,r){
- const v=E.decode(D,envelope()).values,pair=D.axes[key].map(id=>v[id]??'_').join(','),mode='matched';
- const indices=C.map[key][pair][r.primary][mode];return indices.map(i=>C.fragments[i]).join('');
+function axisEntry(key,r){
+ const v=E.decode(D,envelope()).values,pair=D.axes[key].map(id=>v[id]??'_').join(',');
+ return C.map[key][pair][r.primary];
 }
-function axisMeta(a){
- if(a.state==='insufficient')return'尚无有效回答 · 暂不显示方向';
- if(a.letter_basis==='fixed_tiebreak')return'两端 50/50 · 字母按中立同分规则显示，不代表偏向';
- if(a.letter_basis==='primary_item_tiebreak')return'两端 50/50 · 字母按主场景方向显示';
- if(a.answered===1)return'已作答 1/2 题';
- return({opposing:'两个场景的方向不同',partly_neutral:'一个场景有倾向，一个场景中立',consistent:'两个场景的方向一致'})[a.pattern]||'';
-}
+function axisText(key,r){return axisEntry(key,r).matched.map(i=>C.fragments[i]).join('');}
+function axisMeta(key,r){return C.fragments[axisEntry(key,r).subtitle];}
 function axisCard(key,r){
- const a=r.axes[key],d=axes[key],has=a.percentages!==null,first=d.ends[0][0];
- return`<article class="axis-card" data-axis="${key}" data-pattern="${a.pattern}"><div class="axis-title"><span>${d.label}</span><b>${a.letter||'—'}</b></div><div class="axis-endpoints">${d.ends.map(([letter,name])=>`<div class="${has&&a.percentages[letter]>50?'dominant':''}"><span>${letter} · ${name}</span><strong>${has?`${a.percentages[letter]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages[first]}%"></span></div>`:'<div class="axis-no-data">没有有效答案，保留空位。</div>'}<p class="axis-state">${axisMeta(a)}</p><p class="axis-long">${esc(axisText(key,r))}</p></article>`;
+ const a=r.axes[key],d=axes[key],has=a.percentages!==null,first=d.ends[0][0],entry=axisEntry(key,r);
+ return`<article class="axis-card" data-axis="${key}" data-pattern="${a.pattern}"><div class="axis-title"><span>${d.label}</span><b>${a.letter||'—'}</b></div><p class="axis-question">${esc(C.axes[key].plain)}</p><div class="axis-endpoints">${d.ends.map(([letter,name])=>`<div class="${has&&a.percentages[letter]>50?'dominant':''}"><span>${letter} · ${name}</span><strong>${has?`${a.percentages[letter]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages[first]}%"></span></div>`:'<div class="axis-no-data">这一项暂时留空。</div>'}<p class="axis-state">${esc(axisMeta(key,r))}</p><h3 class="axis-reading-title">${esc(C.fragments[entry.title])}</h3><p class="axis-long">${esc(axisText(key,r))}</p></article>`;
 }
 function result(){
  const r=score(),p=D.personas.find(x=>x.id===r.primary);
@@ -127,7 +122,7 @@ async function cardBlob(r){
   c.fillText(label(d.ends[0]),88,y);c.textAlign='right';c.fillText(label(d.ends[1]),810,y);c.textAlign='left';y+=29;
   if(a.percentages){c.fillStyle='#acc9b4';c.fillRect(88,y,724,8);c.fillStyle='#6961bc';c.fillRect(88,y,724*a.percentages[d.ends[0][0]]/100,8);}
   y+=30;
-  if(a.letter_basis!=='greater_percentage'||a.answered===1){font(17);c.fillStyle='#52574d';for(const line of wrap(c,axisMeta(a),724)){c.fillText(line,88,y);y+=23;}}
+  if(a.letter_basis!=='greater_percentage'||a.answered===1||a.pattern==='opposing'){font(17);c.fillStyle='#52574d';for(const line of wrap(c,axisMeta(key,r),724)){c.fillText(line,88,y);y+=23;}}
   y+=26;
  }
  // Crop only the unused bottom; content height follows the axis overview.
