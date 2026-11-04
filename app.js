@@ -107,7 +107,7 @@ async function cardBlob(r){
  const canvas=document.createElement('canvas');canvas.width=900;canvas.height=2200;const c=canvas.getContext('2d');
  const font=(size,weight=400)=>{c.font=`${weight} ${size}px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif`;};
  const center=(t,y,size=24,weight=400)=>{font(size,weight);c.textAlign='center';c.fillStyle='#20231d';c.fillText(t,450,y);};
- c.fillStyle='#f6f5ef';c.fillRect(0,0,900,2200);c.fillStyle=p.color;c.fillRect(36,36,828,2128);
+ c.fillStyle='#ffffff';c.fillRect(0,0,900,2200);c.fillStyle=p.color;c.fillRect(36,36,828,2128);
  center('买点人设  /  PERSONALITY RECEIPT',85,21,600);
  center('你的消费人格',139,24);
  c.drawImage(img,210,150,480,480);
@@ -127,7 +127,7 @@ async function cardBlob(r){
  }
  // Crop only the unused bottom; content height follows the axis overview.
  const bottom=y+122,output=document.createElement('canvas');output.width=900;output.height=bottom;
- const ctx=output.getContext('2d');ctx.fillStyle='#f6f5ef';ctx.fillRect(0,0,900,bottom);ctx.fillStyle=p.color;ctx.fillRect(36,36,828,bottom-72);ctx.drawImage(canvas,0,0,900,y,0,0,900,y);
+ const ctx=output.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,900,bottom);ctx.fillStyle=p.color;ctx.fillRect(36,36,828,bottom-72);ctx.drawImage(canvas,0,0,900,y,0,0,900,y);
  ctx.fillStyle='#4d5546';ctx.textAlign='center';ctx.font='19px -apple-system, "PingFang SC", sans-serif';ctx.fillText('50 道生活场景 · v0.9 · 本次已作答 '+r.coverage.answered+'/50 题',450,y+31);ctx.font='17px -apple-system, "PingFang SC", sans-serif';ctx.fillText('基于本次回答的自我观察 · 不是心理诊断',450,y+65);
  return new Promise((resolve,reject)=>output.toBlob(blob=>blob?resolve(blob):reject(new Error('图片生成失败')),'image/png'));
 }
