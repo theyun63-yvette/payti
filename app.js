@@ -78,14 +78,14 @@ function finish(){
  s.completedAt=new Date().toISOString();navigate('result');
 }
 function axisText(key,r){
- const v=E.decode(D,envelope()).values,pair=D.axes[key].map(id=>v[id]??'_').join(','),mode=r.reference_only?'reference':'matched';
+ const v=E.decode(D,envelope()).values,pair=D.axes[key].map(id=>v[id]??'_').join(','),mode='matched';
  const indices=C.map[key][pair][r.primary][mode];return indices.map(i=>C.fragments[i]).join('');
 }
 function axisMeta(a){
  if(a.state==='insufficient')return'尚无有效回答 · 暂不显示方向';
  if(a.letter_basis==='fixed_tiebreak')return'两端 50/50 · 字母按中立同分规则显示，不代表偏向';
  if(a.letter_basis==='primary_item_tiebreak')return'两端 50/50 · 字母按主场景方向显示';
- if(a.answered===1)return'依据较少 · 仅 1/2 题有效';
+ if(a.answered===1)return'已作答 1/2 题';
  return({opposing:'两个场景的方向不同',partly_neutral:'一个场景有倾向，一个场景中立',consistent:'两个场景的方向一致'})[a.pattern]||'';
 }
 function axisCard(key,r){
@@ -93,8 +93,8 @@ function axisCard(key,r){
  return`<article class="axis-card" data-axis="${key}" data-pattern="${a.pattern}"><div class="axis-title"><span>${d.label}</span><b>${a.letter||'—'}</b></div><div class="axis-endpoints">${d.ends.map(([letter,name])=>`<div class="${has&&a.percentages[letter]>50?'dominant':''}"><span>${letter} · ${name}</span><strong>${has?`${a.percentages[letter]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages[first]}%"></span></div>`:'<div class="axis-no-data">没有有效答案，保留空位。</div>'}<p class="axis-state">${axisMeta(a)}</p><p class="axis-long">${esc(axisText(key,r))}</p></article>`;
 }
 function result(){
- const r=score(),card=r.result_cards[0],p=D.personas.find(x=>x.id===r.primary);
- app.innerHTML=`<main id="main" class="result"><article class="persona-card primary-persona" data-persona="${p.id}" data-reference="${r.reference_only}" style="--tint:${p.color}"><p class="result-kicker">${r.reference_only?'本次参考类型':'你的消费人格'}</p><img class="persona-art" src="${p.art}" alt="${esc(p.art_alt)}" width="1254" height="1254" fetchpriority="high"><h1 tabindex="-1">${esc(p.name)}</h1><p class="persona-quote">${esc(p.quote)}</p>${r.reference_only?`<p class="reference-note">${esc(card.evidence_note)}</p>`:''}<p class="persona-claim">${esc(card.description)}</p><div class="persona-meta"><span>${r.reference_only?'参考介绍 · 不代表已确认个人行为':'本次回答支持这一消费模式'}</span><span>已作答 ${r.coverage.answered}/50 题</span></div><button class="primary" data-action="share">保存我的人格卡 ${icon('arrow')}</button></article>
+ const r=score(),p=D.personas.find(x=>x.id===r.primary);
+ app.innerHTML=`<main id="main" class="result"><article class="persona-card primary-persona" data-persona="${p.id}" data-result="assigned" style="--tint:${p.color}"><p class="result-kicker">你的消费人格</p><img class="persona-art" src="${p.art}" alt="${esc(p.art_alt)}" width="1254" height="1254" fetchpriority="high"><h1 tabindex="-1">${esc(p.name)}</h1><p class="persona-quote">${esc(p.quote)}</p><p class="persona-claim">${esc(p.result_description)}</p><div class="persona-meta"><span>买点人设 · v0.9</span><span>已作答 ${r.coverage.answered}/50 题</span></div><button class="primary" data-action="share">保存我的人格卡 ${icon('arrow')}</button></article>
  <section class="result-section"><div class="axes-heading"><div><h2>你的四个消费切面</h2><p class="section-copy">百分比来自这次回答，不是概率或准确率。</p></div><span class="axis-code" aria-label="四维方向代码 ${r.axis_code}">${r.axis_code}</span></div><div class="axis-grid">${Object.keys(axes).map(key=>axisCard(key,r)).join('')}</div></section><div class="result-actions"><button class="secondary" data-action="directory">回看／修改答案</button><button class="secondary" data-action="restart">重新测试</button><button class="text-button" data-action="home">回首页</button></div></main>`;
 }
 function closeDialog(){if(modal.open)modal.close();releaseShare();$('#modal-content').replaceChildren();}
@@ -107,22 +107,18 @@ function wrap(ctx,text,width){
  if(line)lines.push(line);return lines;
 }
 async function cardBlob(r){
- const p=D.personas.find(x=>x.id===r.primary),card=r.result_cards[0],img=new Image();img.src=p.art;
+ const p=D.personas.find(x=>x.id===r.primary),img=new Image();img.src=p.art;
  await img.decode();await document.fonts.ready;
  const canvas=document.createElement('canvas');canvas.width=900;canvas.height=2200;const c=canvas.getContext('2d');
  const font=(size,weight=400)=>{c.font=`${weight} ${size}px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif`;};
  const center=(t,y,size=24,weight=400)=>{font(size,weight);c.textAlign='center';c.fillStyle='#20231d';c.fillText(t,450,y);};
  c.fillStyle='#f6f5ef';c.fillRect(0,0,900,2200);c.fillStyle=p.color;c.fillRect(36,36,828,2128);
  center('买点人设  /  PERSONALITY RECEIPT',85,21,600);
- center(r.reference_only?'本次参考类型':'你的消费人格',139,24);
+ center('你的消费人格',139,24);
  c.drawImage(img,210,150,480,480);
  let nameSize=58;font(nameSize,750);while(c.measureText(p.name).width>730){nameSize-=2;font(nameSize,750);}center(p.name,680,nameSize,750);
  font(26,500);let y=738;for(const line of wrap(c,p.quote,718)){center(line,y,26,500);y+=40;}
  y+=20;
- if(r.reference_only){
-  font(22);const lines=wrap(c,card.evidence_note,690);c.fillStyle='#fffef9';c.fillRect(78,y-5,744,lines.length*34+34);
-  y+=26;for(const line of lines){center(line,y,22);y+=34;}y+=27;
- }else{center('本次回答支持这一消费模式',y+20,22);y+=64;}
  c.textAlign='left';
  for(const [key,d] of Object.entries(axes)){
   const a=r.axes[key];font(23,650);c.fillStyle='#20231d';c.fillText(d.label,88,y);
@@ -134,7 +130,7 @@ async function cardBlob(r){
   if(a.letter_basis!=='greater_percentage'||a.answered===1){font(17);c.fillStyle='#52574d';for(const line of wrap(c,axisMeta(a),724)){c.fillText(line,88,y);y+=23;}}
   y+=26;
  }
- // Crop only the unused bottom; content height follows the reference and axis notes.
+ // Crop only the unused bottom; content height follows the axis overview.
  const bottom=y+122,output=document.createElement('canvas');output.width=900;output.height=bottom;
  const ctx=output.getContext('2d');ctx.fillStyle='#f6f5ef';ctx.fillRect(0,0,900,bottom);ctx.fillStyle=p.color;ctx.fillRect(36,36,828,bottom-72);ctx.drawImage(canvas,0,0,900,y,0,0,900,y);
  ctx.fillStyle='#4d5546';ctx.textAlign='center';ctx.font='19px -apple-system, "PingFang SC", sans-serif';ctx.fillText('50 道生活场景 · v0.9 · 本次已作答 '+r.coverage.answered+'/50 题',450,y+31);ctx.font='17px -apple-system, "PingFang SC", sans-serif';ctx.fillText('基于本次回答的自我观察 · 不是心理诊断',450,y+65);
@@ -147,12 +143,13 @@ async function showShare(){
   const blob=await cardBlob(r);if(revision!==shareRevision||!modal.open)return;
   shareFile=new File([blob],`买点人设-${p.name}-v0.9.png`,{type:'image/png'});shareURL=URL.createObjectURL(blob);
   const native=!!navigator.canShare?.({files:[shareFile]});
-  $('#share-body').innerHTML=`<img class="share-image" src="${shareURL}" alt="${esc(r.result_cards[0].title)}，含四维百分比${r.reference_only?'及参考说明':''}"><div class="modal-actions"><button class="primary" data-action="save-card">保存图片</button>${native?'<button class="secondary" data-action="native-share">分享图片</button>':''}<button class="secondary" data-action="copy-card">复制结果文字</button></div><p class="share-help">手机也可以长按图片保存。${r.reference_only?'这次是参考类型，图片和文字都会保留说明。':'分享内容与本次结果一致。'}</p>`;
+  $('#share-body').innerHTML=`<img class="share-image" src="${shareURL}" alt="你的消费人格：${esc(p.name)}，含四维百分比"><div class="modal-actions"><button class="primary" data-action="save-card">保存图片</button>${native?'<button class="secondary" data-action="native-share">分享图片</button>':''}<button class="secondary" data-action="copy-card">复制结果文字</button></div><p class="share-help">手机也可以长按图片保存。分享内容与本次结果一致。</p>`;
  }catch{if(revision===shareRevision&&modal.open)$('#share-body').innerHTML='<p class="modal-prose">人物图片暂时未能加载，无法完整生成分享卡。</p><button class="secondary" data-action="share">重新生成</button>';}
 }
+function shareCaption(r){const p=D.personas.find(x=>x.id===r.primary);return `我的消费人格：${p.name}。\n${p.quote}`;}
 async function copyResult(){
  const r=score();if(!r.can_submit||!s.completedAt)return;
- const p=D.personas.find(x=>x.id===r.primary),text=`${r.result_cards[0].share_caption}\n${p.quote}\n四维：${r.axis_code}\n买点人设 · 50题 · v0.9`;
+ const text=`${shareCaption(r)}\n四维：${r.axis_code}\n买点人设 · 50题 · v0.9`;
  try{await navigator.clipboard.writeText(text);toast('结果文字已复制');}
  catch{openDialog('复制结果文字',`<label class="field-label" for="copy-result">长按或全选后复制</label><textarea id="copy-result" class="textarea" readonly>${esc(text)}</textarea>`);$('#copy-result').select();}
 }
@@ -161,7 +158,7 @@ document.addEventListener('click',async event=>{
  if(event.target.matches('input[name="answer"]')){chooseAnswer('answered',Number(event.target.value));return;}
  const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
  switch(b.dataset.action){
- case'about':openDialog('花钱的样子，也有一点个性。','<div class="modal-prose"><p>50道生活场景，14种消费人格。从这次回答中，看看最突出的消费模式。</p><p>两端代表不同选择，中间代表中立。按题目描述选择；回忆题按最近半年、有类似机会时的实际情况回答。没有经历或无法代入，可以分别选择“无相关经历”或“跳过”。</p><p>点选后自动进入下一题，可以随时返回修改。50题都处理完、且至少回答一道消费习惯题后，点击“看看我的消费人格”。不会追加题目。</p><p>结果只给一个人格；信息有限或仍然并列时，会标明“参考类型”。四维百分比独立来自你的回答，不是概率或准确率。</p><p>这是供自我观察和交流的测试，没有消费优等生，不是心理诊断或理财建议。</p></div>');break;
+ case'about':openDialog('花钱的样子，也有一点个性。','<div class="modal-prose"><p>50道生活场景，14种消费人格。从这次回答中，看看最突出的消费模式。</p><p>两端代表不同选择，中间代表中立。按题目描述选择；回忆题按最近半年、有类似机会时的实际情况回答。没有经历或无法代入，可以分别选择“无相关经历”或“跳过”。</p><p>点选后自动进入下一题，可以随时返回修改。50题都处理完、且至少回答一道消费习惯题后，点击“看看我的消费人格”。不会追加题目。</p><p>结果会直接给出一个消费人格，附上人物插画与性格介绍。四维百分比独立来自你的回答，不是概率或准确率。</p><p>这是供自我观察和交流的测试，没有消费优等生，不是心理诊断或理财建议。</p></div>');break;
  case'privacy':openDialog('答案留在这台设备。','<div class="modal-prose"><p>答案在你的浏览器里计算。新版进度、答案和你自愿留下的单题备注保存在本机，没有集中收集答案。</p><p>无需填写姓名、账号或真实消费金额。分享图片和文字需由你主动操作。</p><p>旧版记录单独保留，不转换为新版50题答案。换浏览器或清理网站数据后，进度可能无法恢复。</p></div><div class="modal-actions"><button class="secondary" data-action="clear-dialog">清除本次记录</button><button class="primary" data-action="close">知道了</button></div>');break;
  case'start':start();break;
  case'resume':navigate(s.completedAt&&score().can_submit?'result':'test');break;
@@ -182,7 +179,7 @@ document.addEventListener('click',async event=>{
  case'save-question-note':s.questionFeedback[D.items[s.index].id]=$('#question-note').value.trim();save();closeDialog();question();toast('备注已保存在本机');break;
  case'share':await showShare();break;
  case'save-card':if(shareFile&&shareURL){const a=document.createElement('a');a.href=shareURL;a.download=shareFile.name;document.body.append(a);a.click();a.remove();}break;
- case'native-share':if(shareFile){try{await navigator.share({files:[shareFile],title:'我的消费人格',text:score().result_cards[0].share_caption});}catch(err){if(err.name!=='AbortError')toast('暂时无法调用分享，请保存图片后分享。');}}break;
+ case'native-share':if(shareFile){try{await navigator.share({files:[shareFile],title:'我的消费人格',text:shareCaption(score())});}catch(err){if(err.name!=='AbortError')toast('暂时无法调用分享，请保存图片后分享。');}}break;
  case'copy-card':await copyResult();break;
  }
 });
