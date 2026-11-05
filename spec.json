@@ -1,2076 +1,811 @@
 {
-  "version": "0.9",
-  "date": "2026-11-03",
-  "presentation": "fixed-50-role-interleaved",
+  "version": "0.10",
+  "form_id": "payti-22-2026-11-05",
+  "date": "2026-11-05",
+  "status": "offline_only",
+  "scope": "固定22题的消费场景组合分类；不是已验证的心理量表。",
+  "question_freeze": "用户逐题确认稿；替换Q02为手表、Q04为朋友审美意见，Q03差价1100。Q09仅修正句中误句号。",
+  "instructions": {
+    "scale": [
+      "明显偏左",
+      "比较偏左",
+      "中间",
+      "比较偏右",
+      "明显偏右"
+    ],
+    "middle": "两种想法都沾一点，或没有明显偏好",
+    "not_applicable": "确实无法代入时单独选择不适用"
+  },
   "items": [
     {
-      "id": "T1",
-      "title": "同一场演出，你更想安排在近期还是以后？",
-      "body": "你想看的一场演出，本周六和一个月后的周六都有场次，内容、座位和128元票价相同。两天你都有空，这次只去一场。",
-      "left": "选本周六，早点把期待的体验安排上。",
-      "right": "选一个月后，把这次体验留到以后。",
-      "target_side": "left",
-      "kind": "axis",
-      "purpose": "相同体验与价格下的时间倾向，减少演出与旅行品类差异。",
-      "recall": false,
-      "source": 1,
-      "risk": "仍可能受提前规划和期待感影响；与P01共享时间倾向，计分分开不代表统计独立。",
-      "legacy_number": 1,
+      "id": "Q01",
       "number": 1,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "axis",
-      "axis_id": "T",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "相同体验与价格下的时间倾向，减少演出与旅行品类差异。",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "仍可能受提前规划和期待感影响；与P01共享时间倾向，计分分开不代表统计独立。"
-      },
-      "v08_number": 1
+      "orientation": "canonical",
+      "body": "你的手机用了三年，聊天、刷视频、导航都没什么问题，就是摄像头越来越模糊了。逛店时，你试了试新款，发现夜景拍得明显更清楚，颜色也很合心意。价格在你咬咬牙能接受的范围内。",
+      "prompt": "回头看看手里的旧手机，你更接近哪种想法？",
+      "left": "现在这部用着没问题，先接着用，再等等。",
+      "right": "新款用起来更喜欢，现在就换。",
+      "facet": "换新取舍",
+      "left_observation": "延后换新",
+      "right_observation": "现在升级",
+      "boundary": "摄像头已退化，价格要咬牙接受；不能解释成旧物完全够用却盲目冲动。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "V1",
-      "title": "基本保温都够用，你更在意额外保温还是外观？",
-      "body": "你通常在出门后3小时内喝完热饮。两只129元、500毫升的杯子都防漏，材质和做工相近：\n\n- 素色款：保温约6小时，外观普通。\n- 插画款：保温约4小时，图案很合你心意。",
-      "left": "选素色款，额外的保温能力更有吸引力。",
-      "right": "选插画款，日常保温够用，喜欢的外观更有吸引力。",
-      "target_side": "right",
-      "kind": "axis",
-      "purpose": "基本用途均满足后的功能余量与审美价值取舍。",
-      "recall": false,
-      "source": 2,
-      "risk": "功能余量也可能被认为是浪费，应通过访谈检查两端是否均有人合理选择。",
-      "legacy_number": 2,
+      "id": "Q02",
       "number": 2,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "axis",
-      "axis_id": "V",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "基本用途均满足后的功能余量与审美价值取舍。",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "功能余量也可能被认为是浪费，应通过访谈检查两端是否均有人合理选择。"
-      },
-      "v08_number": 2
+      "orientation": "canonical",
+      "body": "你给自己买了一块心仪很久的手表，3000元。戴上试了试，很喜欢，但也想到：平时天天戴，难免留下磕碰、划痕。",
+      "prompt": "以后什么时候戴它，你更接近哪种想法？",
+      "left": "喜欢就经常戴，平时出门也戴它。",
+      "right": "平时戴原来的，这块留着聚会、约会时戴。",
+      "facet": "珍爱物品的使用",
+      "left_observation": "日常佩戴",
+      "right_observation": "特殊场合佩戴",
+      "boundary": "两端都会使用，不将特殊场合使用说成闲置或浪费。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P01_A",
-      "title": "临时空出一个下午，你想现在去玩还是另找一天？",
-      "body": "你一直想去一家陶艺工作室，单次体验128元。今天临时空出一个下午，工作室正好有位置。\n\n你以后也有空，价格不会变；今天去需要现在出门。",
-      "left": "趁今天有空，马上安排这次体验。",
-      "right": "先记下来，另外挑一天再安排。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "机会出现时希望较早兑现体验",
-      "recall": false,
-      "source": 9,
-      "risk": "临时出门的方便程度和预约偏好也会影响选择，不把一次临时安排推广为所有消费都即时兑现。",
-      "legacy_number": 9,
+      "id": "Q03",
       "number": 3,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P01",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "机会出现时希望较早兑现体验",
-        "distinct_from_other_items": "真实活动的安排时间; 为提前体验接受小幅日程调整",
-        "remaining_risk": "临时出门的方便程度和预约偏好也会影响选择，不把一次临时安排推广为所有消费都即时兑现。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 3
+      "orientation": "canonical",
+      "body": "你准备买一台游戏机。全新的1800元，支持七天退货一年保修；二手平台上同款700元，配件齐全。二手机身有几道划痕，但功能正常，不影响玩游戏。但是保修期已过，没有质量问题不退换。",
+      "prompt": "这1100元的差价，你会怎么选？",
+      "left": "买全新的有保障。",
+      "right": "省1100元，我选二手。",
+      "facet": "二手价格与保障",
+      "left_observation": "全新保障",
+      "right_observation": "接受无保修二手",
+      "boundary": "差价1100元；成色、保修及退换同时变化，不能单独归因为虚荣、洁癖或节俭。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P02_C",
-      "title": "去掉满减门槛后，你还会加买这盒零食吗？",
-      "body": "你本来准备为了凑满减，多付19元加一盒零食。付款前发现：不加零食，日用品也能拿到同样优惠；零食仍然可以19元单买。\n\n现在加不加零食，都不会影响其他东西的价格。",
-      "left": "仍想加上，主要是确实想要这盒零食。",
-      "right": "更想去掉；不用凑门槛，就不必多买了。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "去掉优惠门槛后，额外商品的吸引力变化",
-      "recall": false,
-      "source": null,
-      "risk": "偏右只核实本场景门槛作用；低分不等于绝不凑单。",
-      "legacy_number": 34,
+      "id": "Q04",
       "number": 4,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P02",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "去掉优惠门槛后，额外商品的吸引力变化",
-        "distinct_from_other_items": "实际寻找并下单原计划外的凑单品; 回看订单时，优惠完成感与商品自身价值的注意焦点",
-        "remaining_risk": "偏右只核实本场景门槛作用；低分不等于绝不凑单。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 46
+      "orientation": "canonical",
+      "body": "你在店里试了一件绿色外套，照镜子觉得很适合自己，已经准备买了。\n\n你把试穿照发给朋友，对方回复：“绿色有点显老，旁边那件黑色更适合你。”两种颜色价格一样。",
+      "prompt": "最后决定买哪件时，你更接近哪种想法？",
+      "left": "我自己看着喜欢，还是买绿色。",
+      "right": "朋友这么一说，我会更倾向买黑色。",
+      "facet": "审美意见的影响",
+      "left_observation": "维持自己喜欢的颜色",
+      "right_observation": "参考朋友意见改选",
+      "boundary": "只涉及朋友的审美反馈，不代表追逐热度或缺乏主见。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P03_C",
-      "title": "等到自己定的价格，你会下单吗？",
-      "body": "你看中一把399元键盘，之前定好“到329元就买”。今天官方店降到329元，你仍喜欢这一款，需求和预算也没变。",
-      "left": "条件到了，就把这次购买完成。",
-      "right": "还想留在收藏里，再看看其他款式。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "明确购买条件满足后是否结束等待",
-      "recall": false,
-      "source": null,
-      "risk": "右端不自动给人类购物车加分。",
-      "legacy_number": 35,
+      "id": "Q05",
       "number": 5,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P03",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "明确购买条件满足后是否结束等待",
-        "distinct_from_other_items": "条件未到时实际等待还是提前购买; 等待目标商品时，是否另买临时替代品",
-        "remaining_risk": "右端不自动给人类购物车加分。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 47
+      "orientation": "canonical",
+      "body": "你平时买包一般花几百元，最近却看中了一只4800元的品牌包。去店里试背过，回家以后还是惦记。\n\n你算了一下，每个月强制储蓄800元，半年可以买到。",
+      "prompt": "想到要为它攒钱半年，你更接近哪种想法？",
+      "left": "真喜欢这一只，我愿意慢慢攒到它。",
+      "right": "喜欢归喜欢，该花钱还是得花。",
+      "facet": "目标储蓄",
+      "left_observation": "愿意为包逐月储蓄",
+      "right_observation": "语义多解",
+      "boundary": "右端“该花钱还是得花”可能指维持日常消费，也可能指买包；保留文案，只把偏左当作目标储蓄的支持，偏右不作反证。",
+      "evidence_policy": "left_support_only",
+      "type": "scenario_choice"
     },
     {
-      "id": "P04_A",
-      "title": "测评结论不一样时，你更愿意怎么判断？",
-      "body": "你在看两款299元的空气炸锅：甲款4升、抽屉炸篮；乙款5升、可拆烤盘。两款都够用，你最关心清洗是否方便。\n\n几篇测评推荐不同，但都有清洗过程的实拍。",
-      "left": "自己对照清洗实拍，再判断更能接受哪款。",
-      "right": "采用自己更信赖的测评者的推荐。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "推荐不一致时是否自己核对依据",
-      "recall": false,
-      "source": 15,
-      "risk": "信赖测评者不等于跟风；单独愿意核对资料不构成测评传教士的完整核心支持。",
-      "legacy_number": 15,
+      "id": "Q06",
       "number": 6,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P04",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "推荐不一致时是否自己核对依据",
-        "distinct_from_other_items": "实际向别人解释比较结果; 新使用反馈出现后是否更新适配结论",
-        "remaining_risk": "信赖测评者不等于跟风；单独愿意核对资料不构成测评传教士的完整核心支持。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 4
+      "orientation": "canonical",
+      "body": "你选好了一副1200元的耳机，准备付款，手头的钱也够一次付清。\n\n页面上还有一个选项：分12期，每个月100元，没有利息和手续费，总共仍然是1200元。",
+      "prompt": "两种付法，你更喜欢哪一种？",
+      "left": "每月付100元，对现金流的影响更小。",
+      "right": "一次付清吧，之后不用再惦记这笔钱。",
+      "facet": "付款安排",
+      "left_observation": "无息分期",
+      "right_observation": "一次结清",
+      "boundary": "已负担得起，总价相同；选分期不能推断负债压力、冲动或预算失控。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P05_A",
-      "title": "换成没有这个IP的类似商品，你还会想买吗？",
-      "body": "回想最近半年买过的一件周边或联名商品，比如徽章、水杯或衣服。请以你最常买相关商品的那个人或作品（IP）为对象。假如有一件同样合你眼缘、用途和价格也相近，但与这个IP无关的商品，你还会想买吗？",
-      "left": "购买欲会降低，这个IP是我想买的重要原因。",
-      "right": "还是会想买，商品本身已经足够吸引我。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "去掉情感关联后，商品吸引力如何变化",
-      "recall": true,
-      "source": 17,
-      "risk": "保留用途、价格及喜欢程度相近的假设；不买周边或没有购买机会不等于缺少情感连接。",
-      "legacy_number": 17,
-      "revised_in": "0.8",
-      "anchor_group": "same_attachment",
-      "anchor_prompt": "始终回想最近半年最常买相关商品的同一个人或作品。",
+      "id": "Q07",
       "number": 7,
-      "display_context": "回想经历",
-      "role": "inclination",
-      "persona_id": "P05",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "去掉情感关联后，商品吸引力如何变化",
-        "distinct_from_other_items": "是否在不同时间为同一热爱继续购买; 没有额外商品回报时，对情感支持型付费的态度",
-        "remaining_risk": "保留用途、价格及喜欢程度相近的假设；不买周边或没有购买机会不等于缺少情感连接。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 5
+      "orientation": "canonical",
+      "body": "你参加活动，中了2000元现金。你想起收藏夹里那双一直没舍得买的鞋，正好也是2000元。\n\n如果这2000元是你工作赚来的，你可能还会再考虑一下。",
+      "prompt": "面对这笔奖金，你更接近哪种想法？",
+      "left": "都是我的钱，加到小金库里慢慢用。",
+      "right": "正好拿下这双鞋。",
+      "facet": "意外收入用途",
+      "left_observation": "留在可用资金中",
+      "right_observation": "兑现鞋子心愿",
+      "boundary": "题干预设劳动所得可能更犹豫，没有实际测量同一个人的劳动收入选择；只能描述奖金去向，不证明来源造成行为变化。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P06_A",
-      "title": "心情变化时，你会突然想买点什么吗？",
-      "body": "回想最近半年，你最容易联想到消费的一种心情：比如事情不顺，或终于忙完一个项目。\n\n这种心情出现后，原本没准备买的甜品、小物或礼物，会不会突然变得很想买？",
-      "left": "购买念头通常和原来差不多。",
-      "right": "常会临时想买点什么安慰或奖励自己。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "同一种心情是否带来计划外购买念头",
-      "recall": true,
-      "source": 19,
-      "risk": "开心或低落任一种路径均可；情绪题始终回想最容易让自己想到消费的同一种心情。",
-      "legacy_number": 19,
-      "anchor_group": "same_mood",
-      "anchor_prompt": "始终回想最近半年最容易让自己想到消费的同一种心情，开心或低落均可。",
+      "id": "Q08",
       "number": 8,
-      "display_context": "回想经历",
-      "role": "inclination",
-      "persona_id": "P06",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "同一种心情是否带来计划外购买念头",
-        "distinct_from_other_items": "是否因这种心情实际购买; 情绪平复后，购买意愿是否随之减弱",
-        "remaining_risk": "开心或低落任一种路径均可；情绪题始终回想最容易让自己想到消费的同一种心情。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 6
+      "orientation": "canonical",
+      "body": "你在外卖软件上选好了常吃的鸡腿饭，正要付款，发现送到家33元，到店自取只要25元。\n\n店就在附近，走过去拿了再回来，大概20分钟；等外卖送到，也差不多要20分钟。",
+      "prompt": "看着这8块钱的差价，你心里更接近哪句？",
+      "left": "时间差不多，省下8块我自己跑。",
+      "right": "8块就不用出门，这钱我愿意花。",
+      "facet": "小额便利支出",
+      "left_observation": "自取省钱",
+      "right_observation": "付费免出门",
+      "boundary": "两者到手时间相近，主要是少跑一趟，不宣称用户节约了20分钟等待时间。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P07_C",
-      "title": "不用选同款也一样好用时，你会看重“大家都在用”吗？",
-      "body": "你原本想买79元的素色手机壳。另一款同价的透明波纹壳最近很热门，保护性相同，你对两种外观的喜欢程度也差不多。\n\n你有需要换壳，但没有人提供新的质量信息。",
-      "left": "更想选热门同款，和大家用一样的有吸引力。",
-      "right": "是否同款影响不大，仍选原先那款。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "共同使用本身是否增加吸引力",
-      "recall": false,
-      "source": null,
-      "risk": "不以购买热门物品本身证明跟风；与S背景不重复累计。",
-      "legacy_number": 39,
+      "id": "Q09",
       "number": 9,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P07",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "共同使用本身是否增加吸引力",
-        "distinct_from_other_items": "是否实际因热度购买; 热度退出后，原有购买意愿是否保持",
-        "remaining_risk": "不以购买热门物品本身证明跟风；与S背景不重复累计。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 37
+      "orientation": "canonical",
+      "body": "你走进常去的饮品店，本来准备点每次都喝的芋泥奶茶。菜单上多了一杯同价格的新品，名字和图片挺吸引你，但你不确定合不合你的口味。",
+      "prompt": "轮到你点单时，你更可能怎么选？",
+      "left": "还是老样子吧，我确定好喝。",
+      "right": "试试新的，好奇是什么味道。",
+      "facet": "口味尝新",
+      "left_observation": "熟悉口味",
+      "right_observation": "尝试未知口味",
+      "boundary": "限于饮品口味，不扩展到投资或重大风险倾向。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P08_A",
-      "title": "购物车里喜欢的东西，会一直留着不决定吗？",
-      "body": "回想最近半年你买得起、仍喜欢，也没在等明确优惠的非急需品，比如桌面灯或包。",
-      "left": "不少放了几周，仍没决定买或不买。",
-      "right": "多数会较快决定买下，或不再考虑。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "待购项长期没有去留决定",
-      "recall": true,
-      "source": 23,
-      "risk": "排除了预算与明确促销等待，仍不能据此诊断决策障碍；关注的是未决定的待购项。",
-      "legacy_number": 23,
+      "id": "Q10",
       "number": 10,
-      "display_context": "回想经历",
-      "role": "inclination",
-      "persona_id": "P08",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "待购项长期没有去留决定",
-        "distinct_from_other_items": "具体一次回访仍继续保留备选; 条件已经明朗时是否继续扩大备选",
-        "remaining_risk": "排除了预算与明确促销等待，仍不能据此诊断决策障碍；关注的是未决定的待购项。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 8
+      "orientation": "canonical",
+      "body": "你准备买一台打印机，平时偶尔打印资料。两款功能都够用：\n\n- A款：机器399元，之后每份替换耗材120元。\n- B款：机器699元，之后每份替换耗材40元。\n\n两款每份耗材能打印的页数差不多。",
+      "prompt": "你更想买哪台？",
+      "left": "买A款，399元。",
+      "right": "买B款，699元。",
+      "facet": "购置价与耗材价",
+      "left_observation": "低购置价A款",
+      "right_observation": "低耗材价B款",
+      "boundary": "预计总使用量未给定，A或B都可能更省；这是机型偏好，不证明是否计算了长期成本。单项解读，不进入人格排名。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P09_A",
-      "title": "新东西到货后，你会把第一次使用安排上吗？",
-      "body": "你买了一台料理机准备做早餐，周五已经送到，家里也有食材。周末两天都不赶时间。\n\n两种做法都方便，先试一次大约需要20分钟。",
-      "left": "先放着，哪天想做早餐时再用。",
-      "right": "选一个早上，按原来的想法试着做一次。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "是否主动安排首次使用",
-      "recall": false,
-      "source": 25,
-      "risk": "新鲜感也可能影响，需实际使用题核对。",
-      "legacy_number": 25,
+      "id": "Q11",
       "number": 11,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P09",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "是否主动安排首次使用",
-        "distinct_from_other_items": "到货且有机会时是否实际使用; 首次使用之后是否进入日常",
-        "remaining_risk": "新鲜感也可能影响，需实际使用题核对。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 9
+      "orientation": "canonical",
+      "body": "你刚换了一张喜欢的木色书桌。收拾好以后，发现原来的黑色椅子和白色台灯放在旁边，总有点不协调。",
+      "prompt": "接下来，你更可能怎么想？",
+      "left": "还能用就留着，不搭配也没什么。",
+      "right": "我想慢慢把它们配成一套。",
+      "facet": "搭配完整",
+      "left_observation": "保留能用的旧物",
+      "right_observation": "逐步配套",
+      "boundary": "只能说明本场景愿意为风格协调考虑添置，不推断实际换了所有物品。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P10_A",
-      "title": "自由消费的钱，会比你原先预计更早用完吗？",
-      "body": "回想最近半年你曾安排过一笔自由消费的钱。例如准备让600元用一个月，实际金额和周期按你的经历来。",
-      "left": "通常能用到原先预计的时间或更久。",
-      "right": "不同周期里，不止一次提前用完。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "不同周期是否反复早于预计用完自由预算",
-      "recall": true,
-      "source": 27,
-      "risk": "未设期限可留空，不因收入少而自动得分。",
-      "legacy_number": 27,
+      "id": "Q12",
       "number": 12,
-      "display_context": "回想经历",
-      "role": "inclination",
-      "persona_id": "P10",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "不同周期是否反复早于预计用完自由预算",
-        "distinct_from_other_items": "提前用完是否主要由可选消费引起; 是否把留给后面的自由预算主动前置",
-        "remaining_risk": "未设期限可留空，不因收入少而自动得分。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 10
+      "orientation": "canonical",
+      "body": "朋友快过生日了，你准备花200元左右买礼物。\n\n你找到了一盏朋友之前说过想要的阅读灯，又看到朋友喜欢的IP出了一套周边，两份价格差不多。",
+      "prompt": "最后挑礼物时，你更倾向于哪份？",
+      "left": "就送朋友提过的，知道对方确实想要。",
+      "right": "我想挑那份没被猜到的，让拆礼物的时候有点惊喜。",
+      "facet": "送礼侧重点",
+      "left_observation": "明确表达过的需要",
+      "right_observation": "IP惊喜",
+      "boundary": "两端都照顾朋友喜好，不能说左端没情感或右端不顾收礼者。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P11_A",
-      "title": "开始一个新爱好，你会先添装备吗？",
-      "body": "你想试着跑步，现有鞋和衣服足够安全地轻松跑20分钟。看到一双299元的新跑鞋和一件99元的上衣，你都很喜欢。\n\n这笔钱负担得起，也没有比赛装备要求。",
-      "left": "先买好新装备，再开始第一次跑。",
-      "right": "先用现有装备跑几次，再决定买什么。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "可先尝试时，是否仍倾向先添装备",
-      "recall": false,
-      "source": 29,
-      "risk": "已有装备足够安全使用是必要条件，避免把必要添置误作装备先行；不推断闲置或无法坚持。",
-      "legacy_number": 29,
+      "id": "Q13",
       "number": 13,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P11",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "可先尝试时，是否仍倾向先添装备",
-        "distinct_from_other_items": "过去是否实际先买装备再开始; 可以借到工具时，是否仍重视先拥有自己的装备",
-        "remaining_risk": "已有装备足够安全使用是必要条件，避免把必要添置误作装备先行；不推断闲置或无法坚持。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 11
+      "orientation": "canonical",
+      "body": "朋友发了一家人均180元的餐厅，问这周聚餐去这里怎么样。\n\n你平时和朋友吃饭，人均80到100元就觉得不错。这次180元也付得起，只是比你平常愿意花的多一些。",
+      "prompt": "你更可能怎么回应？",
+      "left": "我会提一家100元左右的店，大家见面一样能聊得开心。",
+      "right": "正好借这个机会和朋友体验下，多花一些也可以。",
+      "facet": "聚会消费弹性",
+      "left_observation": "维持常用价格范围",
+      "right_observation": "加钱体验新店",
+      "boundary": "右端主动体验，不证明迫于人情或从众；不与第4题等同。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P12_A",
-      "title": "心动之后，一个实用理由会让你更容易下单吗？",
-      "body": "你喜欢上一盏199元的蘑菇灯，家里的照明其实够用。正犹豫要不要买时，你想到：“放床头当夜灯也不错。”",
-      "left": "这个用途会让我更容易决定买。",
-      "right": "能不能想到用途，对决定影响不大。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "心动之后的实用理由是否推动决定",
-      "recall": false,
-      "source": 31,
-      "risk": "临时发现有效用途和为欲望补理由都可能认同，须结合实际行为题中的先后顺序理解。",
-      "legacy_number": 31,
+      "id": "Q14",
       "number": 14,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P12",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "心动之后的实用理由是否推动决定",
-        "distinct_from_other_items": "实际回忆中是否先心动、后补用途; 原用途不成立后是否继续寻找其他理由",
-        "remaining_risk": "临时发现有效用途和为欲望补理由都可能认同，须结合实际行为题中的先后顺序理解。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 12
+      "orientation": "canonical",
+      "body": "朋友约你下周末去露营，你还没有帐篷和基础装备。同档次的一套装备，在某鱼上租一天140元，直接买下来要700元。",
+      "prompt": "准备装备时，你更接近哪种想法？",
+      "left": "先租一套，玩过这次再说。",
+      "right": "我想买一套自己的，以后想去就有得用。",
+      "facet": "租用与拥有",
+      "left_observation": "租用这次所需",
+      "right_observation": "买下以后可用",
+      "boundary": "租期和未来次数没有给全，不能判哪端更经济，不能把购买推断为闲置。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P13_A",
-      "title": "钱留在账户里，本身会让你更满足吗？",
-      "body": "你留了300元自由预算，看中一只199元的包，也确实喜欢。想到这笔钱可以继续留在账户里，你更接近哪种感觉？",
-      "left": "保住这笔钱本身就让我满足，会让我更想暂时不买。",
-      "right": "钱留着本身不会让我更满足，主要看我有多想要这个包。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "保留可支配资金本身的满足感",
-      "recall": false,
-      "risk": "场景明确为自由预算；只测对保留资金的偏好，不诊断焦虑或节俭程度。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
+      "id": "Q15",
       "number": 15,
-      "display_context": "代入情境",
-      "role": "inclination",
-      "persona_id": "P13",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "保留可支配资金本身的满足感",
-        "distinct_from_other_items": "实际因偏爱留住钱而放弃买得起且喜欢的东西; 额外收入场景中是否仍偏爱保留资金",
-        "remaining_risk": "场景明确为自由预算；只测对保留资金的偏好，不诊断焦虑或节俭程度。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 13
+      "orientation": "canonical",
+      "body": "你常用的洗衣液平时一瓶40元，现在双十一活动5瓶装160元。家里还有一瓶没开封，大概还能用2个月。",
+      "prompt": "看到这个价格，你更可能怎么做？",
+      "left": "先把家里的用完，快没了再买。",
+      "right": "反正以后也要用，趁便宜先买回来。",
+      "facet": "日用品库存",
+      "left_observation": "用完再补",
+      "right_observation": "促销提前囤",
+      "boundary": "5瓶160元，每瓶32元；原库存加新货约一年用量，但保质期和空间未知，不宣称必然浪费。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P14_A",
-      "title": "已经专程跑了一趟，会让你提高原来的购买上限吗？",
-      "body": "出门前，你准备最多花60元吃一份甜品。坐了40分钟车到店后，发现想吃的那份要98元。菜单内容和之前看过的一样。现在你更接近哪种决定？",
-      "left": "想到已经跑了这一趟，愿意把上限提高到98元，买一份。",
-      "right": "仍按原来的价格上限考虑，可以离开不买。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "已经付出的路程是否推动提高原购买上限",
-      "recall": false,
-      "risk": "左端明确是已付路程影响加价，不把新发现的品质或体验价值误记为沉没成本。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
+      "id": "Q16",
       "number": 16,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "inclination",
-      "persona_id": "P14",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "已经付出的路程是否推动提高原购买上限",
-        "distinct_from_other_items": "实际是否因为既有投入而追加付款; 不可退还的旧支出是否推动新的材料费支出",
-        "remaining_risk": "左端明确是已付路程影响加价，不把新发现的品质或体验价值误记为沉没成本。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 14
+      "orientation": "canonical",
+      "body": "在逛超市时，你已经选好这次要买的日用品。正准备付款，收银员提醒：再买20元，就能用一张减30元的券。",
+      "prompt": "这时候，你更可能怎么做？",
+      "left": "就按原来的清单买，不额外买目前不需要的东西。",
+      "right": "我再去逛一圈，找点东西把这张券用上。",
+      "facet": "满减改变清单",
+      "left_observation": "不加计划外物品",
+      "right_observation": "为优惠寻找加购",
+      "boundary": "再买20减30，恰好加20时总付款少10元；测促销推动清单变化，不计为多花钱、算错账或失控。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "D1",
-      "title": "挑耳机时，你主要靠什么做决定？",
-      "body": "两款无线耳机都是299元：\n\n- 甲款：降噪更强，续航6小时，戴久了有些存在感。\n- 乙款：更轻，续航9小时，但降噪较弱。\n\n两款音质你都能接受。你可以试戴，也有时间看资料。",
-      "left": "综合试戴感受，选整体更合心意的。",
-      "right": "按自己的使用场景，逐项比较后决定。",
-      "target_side": "right",
-      "kind": "axis",
-      "purpose": "整体感受与显式比较",
-      "recall": false,
-      "source": 3,
-      "risk": "选项是判断方式，商品资料卡不能标成回答A/B。",
-      "legacy_number": 3,
+      "id": "Q17",
       "number": 17,
-      "display_context": "代入情境",
-      "role": "axis",
-      "axis_id": "D",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "整体感受与显式比较",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "选项是判断方式，商品资料卡不能标成回答A/B。"
-      },
-      "v08_number": 15
+      "orientation": "canonical",
+      "body": "你买的199元外套到了。尺码合适，穿着也舒服，但照了几次镜子，都觉得效果一般，没有下单时那么喜欢。想要退货但没买运费险，寄回去要自己付18元，还得重新打包、预约取件。",
+      "prompt": "你更可能怎么处理？",
+      "left": "穿着还行就留下，省得再搭18元。",
+      "right": "花18元退掉吧，我想换件更喜欢的。",
+      "facet": "退货成本与满意度",
+      "left_observation": "接受一般效果并留下",
+      "right_observation": "承担18元退货",
+      "boundary": "金额和手续共同影响，留下不必然懒，退掉不必然挑剔；扣除运费后相当于收回181元。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "S1",
-      "title": "自己喜欢的款和朋友常用的款，你更想买哪只？",
-      "body": "两只帆布包都是99元，都能装电脑和水杯，有拉链。\n\n- A：素色款，是你原本更喜欢的风格。\n- B：字母款，几位熟悉的朋友都在用。\n\n朋友没有提供新的质量信息，两款也没有额外优惠。",
-      "left": "自己原本喜欢的素色款。",
-      "right": "朋友都在用的字母款。",
-      "target_side": "right",
-      "kind": "axis",
-      "purpose": "熟人选择对偏好的影响",
-      "recall": false,
-      "source": 4,
-      "risk": "这里排除了新的质量信息，但熟人同款偏好仍不能概括所有外部参照方式。",
-      "legacy_number": 4,
+      "id": "Q18",
       "number": 18,
-      "display_context": "代入情境",
-      "role": "axis",
-      "axis_id": "S",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "熟人选择对偏好的影响",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "这里排除了新的质量信息，但熟人同款偏好仍不能概括所有外部参照方式。"
-      },
-      "v08_number": 16
+      "orientation": "canonical",
+      "body": "你整理柜子，翻出一台半年没用过的空气炸锅。买的时候399元，现在同款二手大概能卖120元，机器还好好的。你暂时没有用它的计划，但也不能确定以后完全用不上。",
+      "prompt": "你更接近哪种想法？",
+      "left": "先留着吧，说不定哪天又想用了。",
+      "right": "120元也可以，卖掉还能腾出一块地方。",
+      "facet": "闲置处置",
+      "left_observation": "保留备用可能",
+      "right_observation": "接受折价转卖",
+      "boundary": "保留可能涉及未来用途、折价感受；不诊断囤积。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "T2",
-      "title": "多付30元提前收到，你愿意吗？",
-      "body": "你已经选好一副199元的耳机，旧耳机还能用。现在有两种配送：\n\n- A：加30元，明天送到。\n- B：免运费，8天后送到。\n\n商品和售后相同，近期也没有急用。",
-      "left": "加30元，明天就收到。",
-      "right": "等8天，省下配送费。",
-      "target_side": "left",
-      "kind": "axis",
-      "purpose": "为提前获得而接受价差",
-      "recall": false,
-      "source": 5,
-      "risk": "包含配送费敏感性，不解释成纯时间折扣。",
-      "legacy_number": 5,
+      "id": "Q19",
       "number": 19,
-      "display_context": "代入情境",
-      "role": "axis",
-      "axis_id": "T",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "为提前获得而接受价差",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "包含配送费敏感性，不解释成纯时间折扣。"
-      },
-      "v08_number": 17
+      "orientation": "canonical",
+      "body": "你安排好了下个月的一次周末旅行，正在订酒店。同一家酒店、同一种房间，有两个价格：\n\n- 360元：订好后不能取消退款。\n- 420元：入住当天18：00前都可以免费取消。",
+      "prompt": "准备付款时，你更接近哪种想法？",
+      "left": "行程都安排好了，省60元，订不能退的。",
+      "right": "还有一个月，多花60元，留个能取消的余地。",
+      "facet": "退改余地",
+      "left_observation": "低价不可退",
+      "right_observation": "多付60可退",
+      "boundary": "可退截止为入住当天18:00；不能套用旧的前一天规则。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P08_B",
-      "title": "上次翻收藏，你有没有决定哪些买、哪些不买？",
-      "body": "回想最近半年，最近一次认真翻自己的待购清单时。那些东西你还感兴趣，买得起，也没在等活动。那次你实际做了什么？",
-      "left": "给不少东西定了去留：买下，或移出备选。",
-      "right": "看了不少，最后大多还是继续留着。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "具体一次回访仍继续保留备选",
-      "recall": true,
-      "source": 24,
-      "risk": "以一次具体经历补充通常倾向，不称长期稳定性的独立证明。",
-      "legacy_number": 24,
+      "id": "Q20",
       "number": 20,
-      "display_context": "回想经历",
-      "revised_in": "0.9",
-      "role": "behavior",
-      "persona_id": "P08",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "具体一次回访仍继续保留备选",
-        "distinct_from_other_items": "待购项长期没有去留决定; 条件已经明朗时是否继续扩大备选",
-        "remaining_risk": "以一次具体经历补充通常倾向，不称长期稳定性的独立证明。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 18
+      "orientation": "canonical",
+      "body": "忙了一周的项目终于收尾。回家路上，你经过常去的甜品店，橱窗里有你最爱吃的小蛋糕，35元。想到这几天总算忙完了，你停下来多看了两眼。",
+      "prompt": "这时候，你更接近哪种想法？",
+      "left": "我还是先回家，今天就不买了。",
+      "right": "这几天辛苦了，买一块庆祝一下。",
+      "facet": "完成任务后的奖励",
+      "left_observation": "不买蛋糕",
+      "right_observation": "用蛋糕庆祝",
+      "boundary": "没有独立测量平常购买频率，不证明所有计划外消费都由情绪引起。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P09_B",
-      "title": "买来准备使用的东西，后来真的用起来了吗？",
-      "body": "回想最近半年为明确用途买的东西，比如看书灯、料理机或收纳盒。到货后已经有使用机会，东西也能正常使用。",
-      "left": "大多很快就按原来的用途用起来了。",
-      "right": "不少先放着，过了一阵才开始用。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "到货且有机会时是否实际使用",
-      "recall": true,
-      "source": 26,
-      "risk": "仅针对为使用而购、已有机会且能正常工作的物品，不评价纯收藏品或尚无使用机会的情况。",
-      "legacy_number": 26,
+      "id": "Q21",
       "number": 21,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P09",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "到货且有机会时是否实际使用",
-        "distinct_from_other_items": "是否主动安排首次使用; 首次使用之后是否进入日常",
-        "remaining_risk": "仅针对为使用而购、已有机会且能正常工作的物品，不评价纯收藏品或尚无使用机会的情况。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 19
+      "orientation": "canonical",
+      "body": "你一直喜欢的一部作品出了新周边，是一个99元的角色摆件。你家里已经有几件这部作品的周边，看到上新的消息，还是点开了详情页。",
+      "prompt": "看着这个新摆件，你心里更接近哪句？",
+      "left": "先看看这次的设计，喜欢这个款才买。",
+      "right": "是我喜欢的角色，这个我也想收。",
+      "facet": "热爱关联与设计",
+      "left_observation": "本次设计要打动自己",
+      "right_observation": "喜欢角色增加收集意愿",
+      "boundary": "不买此款不等于不热爱；右端不代表逢出必买。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     },
     {
-      "id": "P10_B",
-      "title": "提前用完的那些钱，主要花在了什么上？",
-      "body": "回想最近半年，你安排过自由消费的钱，却比原先预计更早用完的那些周期。让钱提前用完的，主要是哪一类开销？",
-      "left": "自己选择的吃喝、购物、演出或出游。",
-      "right": "临时增加的医疗、必要维修等必需开销。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "提前用完是否主要由可选消费引起",
-      "recall": true,
-      "source": 28,
-      "risk": "没有提前用完的周期可选无相关经历；P10_A不支持反复提前用完时，本类不能获得明确支持。",
-      "legacy_number": 28,
-      "revised_in": "0.8",
+      "id": "Q22",
       "number": 22,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P10",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "提前用完是否主要由可选消费引起",
-        "distinct_from_other_items": "不同周期是否反复早于预计用完自由预算; 是否把留给后面的自由预算主动前置",
-        "remaining_risk": "没有提前用完的周期可选无相关经历；P10_A不支持反复提前用完时，本类不能获得明确支持。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 20
-    },
-    {
-      "id": "P11_B",
-      "title": "以前开始新爱好时，你实际先做了什么？",
-      "body": "回想最近半年，有机会尝试运动、烘焙、摄影或手作等新爱好时。当时有现成的东西可以先用，或能借到基础工具。你实际先做了什么？",
-      "left": "先试做，再按实际需要添装备。",
-      "right": "先添装备，再正式开始尝试。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "过去是否实际先买装备再开始",
-      "recall": true,
-      "source": 30,
-      "risk": "没有这类起步机会选无相关经历；一次机会只能说明那次选择，不证明跨活动稳定性。",
-      "legacy_number": 30,
-      "number": 23,
-      "display_context": "回想经历",
-      "revised_in": "0.9",
-      "role": "behavior",
-      "persona_id": "P11",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "过去是否实际先买装备再开始",
-        "distinct_from_other_items": "可先尝试时，是否仍倾向先添装备; 可以借到工具时，是否仍重视先拥有自己的装备",
-        "remaining_risk": "没有这类起步机会选无相关经历；一次机会只能说明那次选择，不证明跨活动稳定性。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 21
-    },
-    {
-      "id": "P12_B",
-      "title": "已经很喜欢一件东西时，你还会给自己补一个实用理由吗？",
-      "body": "回想最近半年那些先让你心动的东西。比如先被一只包的颜色吸引，后来才想到：“正好还能用来装电脑。”",
-      "left": "通常觉得：“我喜欢，就够了。”",
-      "right": "常会再补一句：“正好可以用来……”",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "实际回忆中是否先心动、后补用途",
-      "recall": true,
-      "source": 32,
-      "risk": "核实先心动、后补用途的顺序；补充的用途可以成立，不把寻找用途直接解释成自欺。",
-      "legacy_number": 32,
-      "number": 24,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P12",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "实际回忆中是否先心动、后补用途",
-        "distinct_from_other_items": "心动之后的实用理由是否推动决定; 原用途不成立后是否继续寻找其他理由",
-        "remaining_risk": "核实先心动、后补用途的顺序；补充的用途可以成立，不把寻找用途直接解释成自欺。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 22
-    },
-    {
-      "id": "P13_B",
-      "title": "买得起也喜欢，最后会因为想留住钱而不买吗？",
-      "body": "回想最近半年那些你喜欢、买得起，也没在等优惠的非必需品。真正决定买不买时，你更常怎么做？",
-      "left": "按对东西的喜欢程度决定，通常不会单为保住余额而放弃。",
-      "right": "最后选择不买，因为钱留在手里让我更舒服。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "实际因偏爱留住钱而放弃买得起且喜欢的东西",
-      "recall": true,
-      "risk": "没有类似选择可选无相关经历；不能把生活必需支出不足或买不起算成高分。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
-      "number": 25,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P13",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "实际因偏爱留住钱而放弃买得起且喜欢的东西",
-        "distinct_from_other_items": "保留可支配资金本身的满足感; 额外收入场景中是否仍偏爱保留资金",
-        "remaining_risk": "没有类似选择可选无相关经历；不能把生活必需支出不足或买不起算成高分。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 23
-    },
-    {
-      "id": "P14_B",
-      "title": "前面已经花了时间或钱，后来会让你追加付款吗？",
-      "body": "回想最近半年有类似机会时：排队后才发现餐厅更贵，或买票进场后才发现项目要另加钱。面对原先没准备接受的新增费用，你最后更常怎么做？",
-      "left": "按新增内容和费用决定，通常不会因为前面的投入而改变选择。",
-      "right": "主要因为前面已经花了时间或钱，最后还是追加了付款。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "实际是否因为既有投入而追加付款",
-      "recall": true,
-      "risk": "确认的是实际追加及其自述原因；没有新增费用决策机会选无相关经历，而非否定端。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
-      "number": 26,
-      "display_context": "回想经历",
-      "revised_in": "0.9",
-      "role": "behavior",
-      "persona_id": "P14",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "实际是否因为既有投入而追加付款",
-        "distinct_from_other_items": "已经付出的路程是否推动提高原购买上限; 不可退还的旧支出是否推动新的材料费支出",
-        "remaining_risk": "确认的是实际追加及其自述原因；没有新增费用决策机会选无相关经历，而非否定端。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 24
-    },
-    {
-      "id": "P01_B",
-      "title": "真正遇到想去的活动，你通常多久会安排上？",
-      "body": "回想最近半年你想去的演出、展览或体验课。当近期和以后都有机会、价格也能接受时，你实际更常怎么做？",
-      "left": "先放进计划，过一段时间再安排。",
-      "right": "尽量订近期的场次，早点去体验。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "真实活动的安排时间",
-      "recall": true,
-      "source": 10,
-      "risk": "未遇到可比较机会可留空；不推断超支。",
-      "legacy_number": 10,
-      "number": 27,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P01",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "真实活动的安排时间",
-        "distinct_from_other_items": "机会出现时希望较早兑现体验; 为提前体验接受小幅日程调整",
-        "remaining_risk": "未遇到可比较机会可留空；不推断超支。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 25
-    },
-    {
-      "id": "P02_B",
-      "title": "结算时发现还差一点才能满减，你通常会怎么做？",
-      "body": "回想最近半年购物的经历：原本要买的东西已经选好，结算时看到“再买一些，就能用券”。这时候，你通常更接近哪种做法？",
-      "left": "继续挑原本没准备买的东西，凑够后一起下单。",
-      "right": "就买已经选好的东西，不为用券继续加购。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "实际寻找并下单原计划外的凑单品",
-      "recall": true,
-      "source": 12,
-      "risk": "要求实际加购并下单，单纯浏览凑单商品不算；加购本身可以划算，不评价计算能力。",
-      "legacy_number": 12,
-      "revised_in": "0.8",
-      "number": 28,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P02",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "实际寻找并下单原计划外的凑单品",
-        "distinct_from_other_items": "去掉优惠门槛后，额外商品的吸引力变化; 回看订单时，优惠完成感与商品自身价值的注意焦点",
-        "remaining_risk": "要求实际加购并下单，单纯浏览凑单商品不算；加购本身可以划算，不评价计算能力。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 26
-    },
-    {
-      "id": "P03_B",
-      "title": "还没等到想要的优惠，你通常怎么处理？",
-      "body": "回想最近半年，你准备等降价或促销再买的东西，比如一双不急着穿的鞋。你仍然想要，但预期的优惠还没来。这时，你实际更多是哪种做法？",
-      "left": "继续等优惠，先不下单。",
-      "right": "按当时的价格买下，早点拿到。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "条件未到时实际等待还是提前购买",
-      "recall": true,
-      "source": 14,
-      "risk": "没有等过优惠可选无相关经历；不把不再喜欢或买不起解释成策略等待。",
-      "legacy_number": 14,
-      "revised_in": "0.8",
-      "number": 29,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P03",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "条件未到时实际等待还是提前购买",
-        "distinct_from_other_items": "明确购买条件满足后是否结束等待; 等待目标商品时，是否另买临时替代品",
-        "remaining_risk": "没有等过优惠可选无相关经历；不把不再喜欢或买不起解释成策略等待。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 27
-    },
-    {
-      "id": "P04_B",
-      "title": "买东西做过的比较，你会讲给别人听吗？",
-      "body": "回想最近半年，有机会和别人聊起你研究过的耳机、小家电或其他东西时。比如对方想知道“两款差在哪、哪款适合我”，你实际更常怎样介绍？",
-      "left": "通常只说自己的选择，很少展开讲差别。",
-      "right": "常把比较过的差别和适合谁讲清楚。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "实际向别人解释比较结果",
-      "recall": true,
-      "source": 16,
-      "risk": "未发生相关交流时选无相关经历；不要求别人必须先向你求推荐。",
-      "legacy_number": 16,
-      "number": 30,
-      "display_context": "回想经历",
-      "revised_in": "0.9",
-      "role": "behavior",
-      "persona_id": "P04",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "实际向别人解释比较结果",
-        "distinct_from_other_items": "推荐不一致时是否自己核对依据; 新使用反馈出现后是否更新适配结论",
-        "remaining_risk": "未发生相关交流时选无相关经历；不要求别人必须先向你求推荐。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 28
-    },
-    {
-      "id": "P05_B",
-      "title": "买过一次之后，你通常还会继续买相关的东西吗？",
-      "body": "回想最近半年，你最常买相关商品的那个人或作品。比如买过一支乐队的专辑，过了一段时间，又买了它的演出票或周边。你对这个对象的实际购买更接近哪一种？",
-      "left": "通常买过一次，就没有继续买了。",
-      "right": "之后还会陆续买相关的东西。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "是否在不同时间为同一热爱继续购买",
-      "recall": true,
-      "source": 18,
-      "risk": "是持续习惯的自评，不把圆点分数换算成精确次数；购买机会影响回答。",
-      "legacy_number": 18,
-      "anchor_group": "same_attachment",
-      "anchor_prompt": "始终回想最近半年最常买相关商品的同一个人或作品。",
-      "revised_in": "0.8",
-      "number": 31,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P05",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "是否在不同时间为同一热爱继续购买",
-        "distinct_from_other_items": "去掉情感关联后，商品吸引力如何变化; 没有额外商品回报时，对情感支持型付费的态度",
-        "remaining_risk": "是持续习惯的自评，不把圆点分数换算成精确次数；购买机会影响回答。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 29
-    },
-    {
-      "id": "P06_B",
-      "title": "想用购物安慰或奖励自己时，你通常真的买了吗？",
-      "body": "回想最近半年最容易让你想到消费的那种心情，低落或开心都可以。它出现时，那些原本没准备买、后来想用来安慰或奖励自己的东西，你通常真的买了吗？",
-      "left": "常会真的买下来。",
-      "right": "通常只是想想，实际没有因此买。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "是否因这种心情实际购买",
-      "recall": true,
-      "source": 20,
-      "risk": "核实情绪引出的念头是否实际转为购买，不要求低落和开心两条路径同时发生。",
-      "legacy_number": 20,
-      "anchor_group": "same_mood",
-      "anchor_prompt": "始终回想最近半年最容易让自己想到消费的同一种心情，开心或低落均可。",
-      "revised_in": "0.8",
-      "number": 32,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P06",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "是否因这种心情实际购买",
-        "distinct_from_other_items": "同一种心情是否带来计划外购买念头; 情绪平复后，购买意愿是否随之减弱",
-        "remaining_risk": "核实情绪引出的念头是否实际转为购买，不要求低落和开心两条路径同时发生。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 30
-    },
-    {
-      "id": "P07_A",
-      "title": "因为大家都在用，你真的跟着买过吗？",
-      "body": "回想最近半年，你原本没打算买，后来因为反复看到别人晒同款而买下的东西，比如包、杯子或小摆件。\n\n关键吸引力是“大家都在用”，而不是新发现它更好用。",
-      "left": "通常只是看过，没有因此买。",
-      "right": "不止一次因为大家都在用，后来也买了。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "是否实际因热度购买",
-      "recall": true,
-      "source": 21,
-      "risk": "本题是实际行为证据，使用明确角色映射；购买热门物品但并非受热度推动，不算同一线索。",
-      "legacy_number": 21,
-      "number": 33,
-      "display_context": "回想经历",
-      "role": "behavior",
-      "persona_id": "P07",
-      "measurement_use": "main_score",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "是否实际因热度购买",
-        "distinct_from_other_items": "共同使用本身是否增加吸引力; 热度退出后，原有购买意愿是否保持",
-        "remaining_risk": "本题是实际行为证据，使用明确角色映射；购买热门物品但并非受热度推动，不算同一线索。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 7
-    },
-    {
-      "id": "V2",
-      "title": "旅行结束，你更想带走哪只钥匙扣？",
-      "body": "两只59元的钥匙扣都能牢固挂好钥匙，大小和做工相近：\n\n- 城市名款：带开瓶器，你有时能用上。\n- 街景款：没有开瓶器，但做成了这次旅行中你最喜欢的那条街。",
-      "left": "带开瓶器的城市名款。",
-      "right": "更能留住回忆的街景款。",
-      "target_side": "right",
-      "kind": "axis",
-      "purpose": "基本用途均满足后的附加功能与纪念价值取舍。",
-      "recall": false,
-      "source": 6,
-      "risk": "未旅行者可以代入，不能把陌生场景当成没有情绪价值偏好。",
-      "legacy_number": 6,
-      "number": 34,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "axis",
-      "axis_id": "V",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "基本用途均满足后的附加功能与纪念价值取舍。",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "未旅行者可以代入，不能把陌生场景当成没有情绪价值偏好。"
-      },
-      "v08_number": 32
-    },
-    {
-      "id": "D2",
-      "title": "选酒店时，什么最能帮你定下来？",
-      "body": "你独自旅行，两家酒店都是每晚399元，卫生和退订条件相近：\n\n- 老街店：步行5分钟到景点，18平方米，装修复古。\n- 河边店：坐20分钟地铁到景点，28平方米，有河景。\n\n两家都在预算内，照片你都看过。",
-      "left": "看整体氛围，选更想住进去的。",
-      "right": "结合行程，比较交通和房间条件。",
-      "target_side": "right",
-      "kind": "axis",
-      "purpose": "另一消费场景中的判断方式",
-      "recall": false,
-      "source": 7,
-      "risk": "资料卡不标回答A/B。",
-      "legacy_number": 7,
-      "number": 35,
-      "display_context": "代入情境",
-      "role": "axis",
-      "axis_id": "D",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "另一消费场景中的判断方式",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "资料卡不标回答A/B。"
-      },
-      "v08_number": 33
-    },
-    {
-      "id": "S2",
-      "title": "已经选好的包，朋友不喜欢，你会重新考虑吗？",
-      "body": "你看中一只159元的银色斜挎包，大小和价格都合适。给朋友看照片时，对方说：“我觉得太亮了，黑色更好看。”\n\n朋友只是在说审美，两种颜色的质量和价格相同。",
-      "left": "朋友不喜欢，会让我更想换成黑色。",
-      "right": "我仍更想买自己喜欢的银色。",
-      "target_side": "left",
-      "kind": "axis",
-      "purpose": "他人的审美评价是否改变偏好",
-      "recall": false,
-      "source": 8,
-      "risk": "测评价影响，不再重复询问购买热门同款。",
-      "legacy_number": 8,
-      "number": 36,
-      "display_context": "代入情境",
-      "role": "axis",
-      "axis_id": "S",
-      "persona_id": null,
-      "measurement_use": "axis_only",
-      "recall_window_months": null,
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "他人的审美评价是否改变偏好",
-        "distinct_from_other_items": "独立维度题，不参与人格排名。",
-        "remaining_risk": "测评价影响，不再重复询问购买热门同款。"
-      },
-      "v08_number": 34
-    },
-    {
-      "id": "P04_C",
-      "title": "听到新的使用反馈，你会更新自己的推荐吗？",
-      "body": "你研究并推荐过一款降噪耳机。朋友用后说，它跑步时容易松动；你自己主要坐着使用，一直觉得不错。以后再介绍这款耳机时，你更倾向怎样做？",
-      "left": "主要分享自己亲自用过、感觉满意的部分。",
-      "right": "把这条新反馈纳入比较，说明它可能不适合跑步使用。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "新使用反馈出现后是否更新适配结论",
-      "recall": false,
-      "source": null,
-      "risk": "补充的是更新适配结论，不重复询问分享频率；两端仍可能有社会赞许差异，需访谈核实。",
-      "legacy_number": 36,
-      "number": 37,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "discriminator",
-      "persona_id": "P04",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "新使用反馈出现后是否更新适配结论",
-        "distinct_from_other_items": "推荐不一致时是否自己核对依据; 实际向别人解释比较结果",
-        "remaining_risk": "补充的是更新适配结论，不重复询问分享频率；两端仍可能有社会赞许差异，需访谈核实。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 35
-    },
-    {
-      "id": "P05_D",
-      "title": "没有额外商品回报，你愿意为喜欢的创作者付费支持吗？",
-      "body": "你一直喜欢的一位独立音乐人发布了新歌，歌曲可以免费听，也有一个10元的自愿支持入口。付费不会解锁额外内容或周边。",
-      "left": "愿意付这10元，支持这位音乐人本身就有意义。",
-      "right": "更愿意在有想买的作品或商品时，再为这份喜欢付费。",
-      "target_side": "left",
-      "recall": false,
-      "source": null,
-      "legacy_number": null,
-      "introduced_in": "0.9",
-      "purpose": "没有额外商品回报时，对情感支持型付费的态度",
-      "risk": "不把不愿无回报付费等同于不热爱；本题只能补充区分，不能否定核心情感购买证据。",
-      "role": "discriminator",
-      "persona_id": "P05",
-      "kind": "persona",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "没有额外商品回报时，对情感支持型付费的态度",
-        "distinct_from_other_items": "去掉情感关联后，商品吸引力如何变化; 是否在不同时间为同一热爱继续购买",
-        "remaining_risk": "不把不愿无回报付费等同于不热爱；本题只能补充区分，不能否定核心情感购买证据。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": null,
-      "number": 38,
-      "display_context": "代入情境"
-    },
-    {
-      "id": "P06_C",
-      "title": "心情缓过来以后，刚才想买的东西还那么想要吗？",
-      "body": "回想最近半年最容易让你想到消费的那种心情。你曾因此把原本没准备买的东西放进购物车，后来还没付款，心情已经平复。购买的劲头通常有什么变化？",
-      "left": "通常还是一样想买，心情平复影响不大。",
-      "right": "购买的劲头常会跟着减弱。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "情绪平复后，购买意愿是否随之减弱",
-      "recall": true,
-      "source": null,
-      "risk": "只适用于有缓冲经历者；不要求所有情绪消费都短暂，不诊断调节能力。",
-      "legacy_number": 38,
-      "anchor_group": "same_mood",
-      "anchor_prompt": "始终回想最近半年最容易让自己想到消费的同一种心情，开心或低落均可。",
-      "revised_in": "0.8",
-      "number": 39,
-      "display_context": "回想经历",
-      "role": "discriminator",
-      "persona_id": "P06",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "情绪平复后，购买意愿是否随之减弱",
-        "distinct_from_other_items": "同一种心情是否带来计划外购买念头; 是否因这种心情实际购买",
-        "remaining_risk": "只适用于有缓冲经历者；不要求所有情绪消费都短暂，不诊断调节能力。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 36
-    },
-    {
-      "id": "P07_B",
-      "title": "准备买的那只包，没人晒了还想买吗？",
-      "body": "两周前你把一只89元的绿色帆布包加入购物车，准备周末买：能装电脑、有拉链，样子你也喜欢。\n\n到了周末，已经很少有人晒它。价格、质量和款式没变，也没有新差评。",
-      "left": "少了大家一起买的热闹，我会先缓一缓。",
-      "right": "仍按原安排买，有没有人晒影响不大。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "热度退出后，原有购买意愿是否保持",
-      "recall": false,
-      "source": 22,
-      "risk": "这是意愿证据，不替代P07_A的实际购买证据；不是所有受到热度吸引的人都会因热度退出而改变决定。",
-      "legacy_number": 22,
-      "number": 40,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P07",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "热度退出后，原有购买意愿是否保持",
-        "distinct_from_other_items": "共同使用本身是否增加吸引力; 是否实际因热度购买",
-        "remaining_risk": "这是意愿证据，不替代P07_A的实际购买证据；不是所有受到热度吸引的人都会因热度退出而改变决定。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 31
-    },
-    {
-      "id": "P08_C",
-      "title": "备选只剩一款时，你还会继续收藏新选择吗？",
-      "body": "你想买一盏桌面灯，已经确认199元的一款大小、亮度和样子都合适。预算够，也没准备等优惠。\n\n收藏夹里其他灯已经被你排除了，这一款正常有货。",
-      "left": "选它，或者明确不买，让这次挑选结束。",
-      "right": "还想再逛逛，把新看到的灯继续加入备选。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "条件已经明朗时是否继续扩大备选",
-      "recall": false,
-      "source": null,
-      "risk": "单题不推断决策障碍；不把低分自动算作测评传教士。",
-      "legacy_number": 40,
-      "number": 41,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P08",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "条件已经明朗时是否继续扩大备选",
-        "distinct_from_other_items": "待购项长期没有去留决定; 具体一次回访仍继续保留备选",
-        "remaining_risk": "单题不推断决策障碍；不把低分自动算作测评传教士。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 38
-    },
-    {
-      "id": "P09_C",
-      "title": "新东西让生活方便了一点，你会把它留下来常用吗？",
-      "body": "回想最近半年买来使用的小物或工具。比如收纳盒确实让桌面好整理，料理机也能做出你想要的早餐。\n\n第一次使用顺利，之后仍有同样的使用机会。",
-      "left": "通常会继续用，慢慢进入日常习惯。",
-      "right": "试过后也常放回去，后来用得不多。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "首次使用之后是否进入日常",
-      "recall": true,
-      "source": null,
-      "risk": "区分首次新鲜感与持续用途，不作为必要门槛，不评价纯收藏品。",
-      "legacy_number": 41,
-      "number": 42,
-      "display_context": "回想经历",
-      "role": "discriminator",
-      "persona_id": "P09",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "首次使用之后是否进入日常",
-        "distinct_from_other_items": "是否主动安排首次使用; 到货且有机会时是否实际使用",
-        "remaining_risk": "区分首次新鲜感与持续用途，不作为必要门槛，不评价纯收藏品。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 39
-    },
-    {
-      "id": "P10_C",
-      "title": "很想买眼前的东西时，你会提前用掉留给后面的自由预算吗？",
-      "body": "回想最近半年你安排过的自由消费。比如原本留了一笔钱月底出游，月中看到想去的演出，就先用那笔钱买票。\n\n这里说的是可自行调整的吃喝玩乐安排，生活必需开销已经留好。",
-      "left": "通常保留后面的份额，从当前可用部分安排。",
-      "right": "常把原先留给后面的份额，提前用在眼前的选择上。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "是否把留给后面的自由预算主动前置",
-      "recall": true,
-      "source": null,
-      "risk": "调整计划不等于失控；须P10_A和P10_B共同支持可选消费导致反复提前用完，才能获得明确支持。",
-      "legacy_number": 42,
-      "number": 43,
-      "display_context": "回想经历",
-      "role": "discriminator",
-      "persona_id": "P10",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "是否把留给后面的自由预算主动前置",
-        "distinct_from_other_items": "不同周期是否反复早于预计用完自由预算; 提前用完是否主要由可选消费引起",
-        "remaining_risk": "调整计划不等于失控；须P10_A和P10_B共同支持可选消费导致反复提前用完，才能获得明确支持。"
-      },
-      "recall_window_months": 6,
-      "opportunity_instruction": "请按最近半年有类似机会时的实际经历回答；没有相关机会时选“无相关经历”。",
-      "not_applicable_hint": "最近半年没有题干所述机会，或确实无法回忆时使用；遇到过但没有这种倾向，应选对应的数值位置。",
-      "v08_number": 40
-    },
-    {
-      "id": "P11_C",
-      "title": "装备借得到，你仍想先买一套自己的再开始吗？",
-      "body": "你想试试烘焙。朋友可以借给你干净、齐全的基础工具，用完再还；第一次做饼干的材料也已备好。\n\n你也买得起一套喜欢的新工具，但借用不影响这次体验。",
-      "left": "还是想先买一套自己的，再正式开始。",
-      "right": "先用借来的试一次，再决定要不要买。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "可以借到工具时，是否仍重视先拥有自己的装备",
-      "recall": false,
-      "source": null,
-      "risk": "可能受物品所有权偏好影响，不推断坚持能力。",
-      "legacy_number": 43,
-      "number": 44,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P11",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "可以借到工具时，是否仍重视先拥有自己的装备",
-        "distinct_from_other_items": "可先尝试时，是否仍倾向先添装备; 过去是否实际先买装备再开始",
-        "remaining_risk": "可能受物品所有权偏好影响，不推断坚持能力。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 41
-    },
-    {
-      "id": "P12_C",
-      "title": "一个用途被排除后，你会再找别的实用理由吗？",
-      "body": "你先喜欢上一只199元的包，后来想到“可以装电脑”。仔细看才发现它装不下电脑，你也没有其他缺包的地方，但还是喜欢它的颜色。",
-      "left": "直接按喜欢来决定，不必再找实用理由。",
-      "right": "会继续想一个别的用途，再让自己决定买不买。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "原用途不成立后是否继续寻找其他理由",
-      "recall": false,
-      "source": null,
-      "risk": "高分也可能是认真评估用途，不把任何人描述成自欺。",
-      "legacy_number": 44,
-      "number": 45,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P12",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "原用途不成立后是否继续寻找其他理由",
-        "distinct_from_other_items": "心动之后的实用理由是否推动决定; 实际回忆中是否先心动、后补用途",
-        "remaining_risk": "高分也可能是认真评估用途，不把任何人描述成自欺。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 42
-    },
-    {
-      "id": "P13_C",
-      "title": "收到一笔可以自由花的钱，你更想怎么安排？",
-      "body": "你额外收到500元，这笔钱不用交账单，也没有已经约定的用途。你更接近哪种想法？",
-      "left": "想想有什么值得买或体验的，花在喜欢的事情上也很满足。",
-      "right": "看到可留在手里的钱变多就很满足，更想先存着。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "额外收入场景中是否仍偏爱保留资金",
-      "recall": false,
-      "risk": "不规定投资方式或账户；本题不能单独证明安全感偏好。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
-      "number": 46,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P13",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "额外收入场景中是否仍偏爱保留资金",
-        "distinct_from_other_items": "保留可支配资金本身的满足感; 实际因偏爱留住钱而放弃买得起且喜欢的东西",
-        "remaining_risk": "不规定投资方式或账户；本题不能单独证明安全感偏好。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 43
-    },
-    {
-      "id": "P14_C",
-      "title": "为了用完已买的体验卡，你会再付材料费吗？",
-      "body": "你花300元买的手作体验卡还剩一次，现在使用要另付120元材料费。你对这节课的兴趣已经降低，原来的卡费也退不了。此时你更想怎么做？",
-      "left": "按现在的兴趣决定，不再付材料费，剩下一次不用也可以。",
-      "right": "付材料费把卡用完，这样感觉之前买卡的钱没有白花。",
-      "target_side": "right",
-      "kind": "persona",
-      "purpose": "不可退还的旧支出是否推动新的材料费支出",
-      "recall": false,
-      "risk": "只核实不可退旧支出对新增支出的影响；本来就喜欢课程或觉得新增内容值得，不单凭加钱判为本类。",
-      "source": null,
-      "introduced_in": "0.8",
-      "legacy_number": null,
-      "number": 47,
-      "display_context": "代入情境",
-      "revised_in": "0.9",
-      "role": "discriminator",
-      "persona_id": "P14",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "不可退还的旧支出是否推动新的材料费支出",
-        "distinct_from_other_items": "已经付出的路程是否推动提高原购买上限; 实际是否因为既有投入而追加付款",
-        "remaining_risk": "只核实不可退旧支出对新增支出的影响；本来就喜欢课程或觉得新增内容值得，不单凭加钱判为本类。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 44
-    },
-    {
-      "id": "P01_C",
-      "title": "稍微调整一下安排就能早点去，你愿意吗？",
-      "body": "你想看的一场演出，本周三晚和三周后的周六晚都是128元，内容相同，两天你都有空。\n\n本周去需要把晚饭提前半小时；三周后去则可以慢慢吃完饭再出门。",
-      "left": "选本周，稍微调整安排就能早点体验。",
-      "right": "选三周后的周末，等安排更从容时去。",
-      "target_side": "left",
-      "kind": "persona",
-      "purpose": "为提前体验接受小幅日程调整",
-      "recall": false,
-      "source": null,
-      "risk": "便利成本的感受不同，不评价忙碌或时间管理。",
-      "legacy_number": 33,
-      "number": 48,
-      "display_context": "代入情境",
-      "role": "discriminator",
-      "persona_id": "P01",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "为提前体验接受小幅日程调整",
-        "distinct_from_other_items": "机会出现时希望较早兑现体验; 真实活动的安排时间",
-        "remaining_risk": "便利成本的感受不同，不评价忙碌或时间管理。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": 45
-    },
-    {
-      "id": "P02_D",
-      "title": "回看一笔凑单订单，哪一点更让你觉得满意？",
-      "body": "洗衣液和纸巾原本要付180元。你为了用券，多付19元加了一盒零食，最后一共付199元。回看这次购买，哪一点更能让你觉得这单值得？",
-      "left": "那盒零食本身值不值多付的19元。",
-      "right": "把原本差一点用不到的优惠券用上了。",
-      "target_side": "right",
-      "recall": false,
-      "source": null,
-      "legacy_number": null,
-      "introduced_in": "0.9",
-      "purpose": "回看订单时，优惠完成感与商品自身价值的注意焦点",
-      "risk": "两端是评价焦点，不是数学对错；独立觉得零食值得不否定曾发生凑单。",
-      "role": "discriminator",
-      "persona_id": "P02",
-      "kind": "persona",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "回看订单时，优惠完成感与商品自身价值的注意焦点",
-        "distinct_from_other_items": "去掉优惠门槛后，额外商品的吸引力变化; 实际寻找并下单原计划外的凑单品",
-        "remaining_risk": "两端是评价焦点，不是数学对错；独立觉得零食值得不否定曾发生凑单。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": null,
-      "number": 49,
-      "display_context": "代入情境"
-    },
-    {
-      "id": "P03_D",
-      "title": "等目标商品降价时，你会先买个临时替代品吗？",
-      "body": "你选好一副399元的耳机，准备到329元再买，旧耳机还能正常用。等待期间，你看到一副99元的普通耳机，可以先买来过渡。",
-      "left": "先买普通款用着，目标那款以后再考虑。",
-      "right": "继续用旧耳机，把这次购买留给等着的目标款。",
-      "target_side": "right",
-      "recall": false,
-      "source": null,
-      "legacy_number": null,
-      "introduced_in": "0.9",
-      "purpose": "等待目标商品时，是否另买临时替代品",
-      "risk": "观察等待期间的替代购买，不把所有替代购买解释为缺乏耐心；旧耳机可用是必要条件。",
-      "role": "discriminator",
-      "persona_id": "P03",
-      "kind": "persona",
-      "measurement_use": "tiebreak_and_explanation",
-      "manual_review": {
-        "status": "reviewed_for_cognitive_interview_not_empirically_validated",
-        "facet": "等待目标商品时，是否另买临时替代品",
-        "distinct_from_other_items": "明确购买条件满足后是否结束等待; 条件未到时实际等待还是提前购买",
-        "remaining_risk": "观察等待期间的替代购买，不把所有替代购买解释为缺乏耐心；旧耳机可用是必要条件。"
-      },
-      "recall_window_months": null,
-      "opportunity_instruction": "请代入题干作选择；无法理解或无法代入时可跳过，不必用中立代替。",
-      "not_applicable_hint": "假设情境不要求真实发生过；确实无法代入时使用。",
-      "v08_number": null,
-      "number": 50,
-      "display_context": "代入情境"
+      "orientation": "canonical",
+      "body": "你出发前看了攻略，海边景区的观光船票是50元，想着这个价格可以坐一次。\n\n周末，你坐了一个多小时的车赶到景区。走到售票处才发现，现场船票要120元。",
+      "prompt": "这时候，你更接近哪种想法？",
+      "left": "50元我能接受，120元就算了，不坐了。",
+      "right": "比预想贵，但都专程跑来了，还是坐一次吧。",
+      "facet": "到场后价格变化",
+      "left_observation": "不接受120元",
+      "right_observation": "到场后仍购买",
+      "boundary": "原预期50，现场120，多70；价格锚点和既有路程共同作用，不能将本题独立视为沉没成本因果证明。",
+      "evidence_policy": "bipolar",
+      "type": "scenario_choice"
     }
   ],
-  "axes": {
-    "T": [
-      "T1",
-      "T2"
-    ],
-    "V": [
-      "V1",
-      "V2"
-    ],
-    "D": [
-      "D1",
-      "D2"
-    ],
-    "S": [
-      "S1",
-      "S2"
-    ]
-  },
   "personas": [
     {
-      "id": "P01",
+      "id": "N01",
       "name": "先爽再说",
-      "signals": [
-        "P01_A",
-        "P01_B",
-        "P01_C"
+      "definition": "愿意兑现新体验，也愿意尝试未知口味",
+      "boundary": "不推断不顾预算或所有领域都冒险",
+      "core": [
+        {
+          "item_id": "Q01",
+          "side": "right"
+        },
+        {
+          "item_id": "Q09",
+          "side": "right"
+        }
       ],
-      "claim": "体验安排上较愿意尽早兑现",
-      "boundary": "不推广为所有商品都立即买，不推断超支。",
-      "kind": "specific",
-      "result_title": "本次匹配：先爽再说",
-      "result_description": "“以后再去”在你这里，最好尽快变成一个日期。喜欢的演出、想试的体验，一旦条件合适，你更愿意早点安排，让期待落地。明知道自己想要，还要把快乐挂在待办清单里，多少有点难受。你也会考虑时间和安排，只是眼前已经有期待的选择时，“现在就去”很容易胜出。朋友还在说“有空约”，你已经开始查票了。你的消费态度里有一句潜台词：生活已经够会延期，快乐就别再走审批了。",
-      "exportable": true,
-      "semantic_key": "original_p01",
-      "roles": {
-        "inclination": "P01_A",
-        "behavior": "P01_B",
-        "discriminator": "P01_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“先爽再说”描述的消费模式是：体验安排上较愿意尽早兑现。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "机会出现时希望较早兑现体验",
-        "behavior": "真实活动的安排时间",
-        "discriminator": "为提前体验接受小幅日程调整"
-      }
+      "quote": "快乐不用一直停在预览页。",
+      "description": "看到更喜欢的新体验，你很容易想让它早点进入生活。手机拍照升级得明显，新口味看着也有意思，光在心里种草还不够，你更愿意亲自试一试。你会在价格和喜欢之间做取舍，只是体验变好的那一票，在你这里挺有分量。熟悉的选择让人踏实，新选择则让你觉得今天多了点内容。购物车可以先收藏，生活却不太想一直用试用图。你的快乐，通常希望尽快结束预告片。",
+      "archetype_description": "先爽再说描述的是这样一组消费选择：愿意兑现新体验，也愿意尝试未知口味。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
     },
     {
-      "id": "P02",
+      "id": "N02",
       "name": "满减脑",
-      "signals": [
-        "P02_C",
-        "P02_B",
-        "P02_D"
+      "definition": "促销会改变购买时间或清单内容",
+      "boundary": "凑单可能减少总付款；不声称多花钱、浪费或数学差",
+      "core": [
+        {
+          "item_id": "Q15",
+          "side": "right"
+        },
+        {
+          "item_id": "Q16",
+          "side": "right"
+        }
       ],
-      "claim": "优惠门槛推动原计划外加购",
-      "boundary": "加购可以划算且满意，不评判会不会算账。",
-      "kind": "specific",
-      "result_title": "本次匹配：满减脑",
-      "result_description": "你对一张优惠券的执念，有时比对商品本身还认真。原本要买的已经选好，一句“还差一点就能减”，就能让你重新寻找购买理由。零食、袜子、纸巾，轮流获得临时入选资格。加购可能确实划算，但那件东西成为“需要”的起点，常常是金额还没凑够。你很容易把购物任务，从买齐想要的东西，扩展成把优惠用到位。清单就这样越逛越长。优惠券全程没花钱，却对你买什么很有发言权。",
-      "exportable": true,
-      "semantic_key": "original_p02",
-      "roles": {
-        "inclination": "P02_C",
-        "behavior": "P02_B",
-        "discriminator": "P02_D"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“满减脑”描述的消费模式是：优惠门槛推动原计划外加购。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "去掉优惠门槛后，额外商品的吸引力变化",
-        "behavior": "实际寻找并下单原计划外的凑单品",
-        "discriminator": "回看订单时，优惠完成感与商品自身价值的注意焦点"
-      }
+      "quote": "购物清单写好了，优惠券又加了一行。",
+      "description": "你看到优惠时，想到的常常不只是这件便宜了多少，还会顺手重新安排整张清单。常用品可以趁活动提前补，差一点能用的券也值得回头找找加购。优惠会让原本以后才买、或这次没打算买的东西提前入场。这种调整可能确实省钱，你看重的是把眼前的购买机会用足。别人准备结账，你还在给购物清单安排临时席位。清单有初稿，促销永远保留修改权。",
+      "archetype_description": "满减脑描述的是这样一组消费选择：促销会改变购买时间或清单内容。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
     },
     {
-      "id": "P03",
-      "name": "等等党",
-      "signals": [
-        "P03_C",
-        "P03_B",
-        "P03_D"
-      ],
-      "claim": "为价格或时机设置条件，并实际等待",
-      "boundary": "预算不足、款式未定不算等待策略。",
-      "kind": "specific",
-      "result_title": "本次匹配：等等党",
-      "result_description": "你已经决定要买了，只是还没同意现在这个价格或时机。目标价、促销日，通常会成为你给购买设置的放行条件。东西先放进收藏夹，喜欢照样喜欢，付款可以等等；条件到了，再结束这场观望。喜欢和付款之间，你通常会留下一道价格审核。商品页面再热闹，也得先符合你定好的条件。商家等你忍不住，你等商家降下来。谁先低头，还真不好说。你已经准备好了，轮到价格懂事了。",
-      "exportable": true,
-      "semantic_key": "original_p03",
-      "roles": {
-        "inclination": "P03_C",
-        "behavior": "P03_B",
-        "discriminator": "P03_D"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“等等党”描述的消费模式是：为价格或时机设置条件，并实际等待。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "明确购买条件满足后是否结束等待",
-        "behavior": "条件未到时实际等待还是提前购买",
-        "discriminator": "等待目标商品时，是否另买临时替代品"
-      }
-    },
-    {
-      "id": "P04",
-      "name": "测评传教士",
-      "signals": [
-        "P04_A",
-        "P04_B",
-        "P04_C"
-      ],
-      "claim": "愿意主动核对比较，也实际向别人解释差别",
-      "boundary": "研究多而不分享只保留研究线索。",
-      "kind": "specific",
-      "result_title": "本次匹配：测评传教士",
-      "result_description": "朋友只想知道买哪款，你已经准备先从使用场景讲起。参数、差评、替代款，各有各的区别，一个结论后面常常还跟着比较过程。你愿意花时间弄明白，也会把研究过的东西讲给别人听。别人一句随口的咨询，可能打开你的专题分享。你的建议很有内容，就是听众只预留了三十秒。购物还没开始，产品说明已经讲到第二章。“我简单说两句”，可能是你整场介绍里最不准确的参数。",
-      "exportable": true,
-      "semantic_key": "original_p04",
-      "roles": {
-        "inclination": "P04_A",
-        "behavior": "P04_B",
-        "discriminator": "P04_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“测评传教士”描述的消费模式是：愿意主动核对比较，也实际向别人解释差别。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "推荐不一致时是否自己核对依据",
-        "behavior": "实际向别人解释比较结果",
-        "discriminator": "新使用反馈出现后是否更新适配结论"
-      }
-    },
-    {
-      "id": "P05",
-      "name": "为爱充值",
-      "signals": [
-        "P05_A",
-        "P05_B",
-        "P05_D"
-      ],
-      "claim": "因为同一热爱的情感连接，在不同时间持续买单",
-      "boundary": "不要求旅行纪念偏好，不要求从众或高金额。",
-      "kind": "specific",
-      "result_title": "本次匹配：为爱充值",
-      "result_description": "同样一只杯子，印上那个角色，你就会多看几眼。和喜欢的人物、作品或创作者有关，本身就是购买理由。你会挑款式和用途，也会在不同时间继续为这份喜欢买单。专辑之后还有演出，周边之后还会关注新作品，热爱能把几笔消费连起来。付款记录有时像一份追更记录，记着你什么时候靠近了它。商品介绍写了半天，你心里最重要的卖点，可能只有一句：这是我喜欢的那个。",
-      "exportable": true,
-      "semantic_key": "original_p05",
-      "roles": {
-        "inclination": "P05_A",
-        "behavior": "P05_B",
-        "discriminator": "P05_D"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“为爱充值”描述的消费模式是：因为同一热爱的情感连接，在不同时间持续买单。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "去掉情感关联后，商品吸引力如何变化",
-        "behavior": "是否在不同时间为同一热爱继续购买",
-        "discriminator": "没有额外商品回报时，对情感支持型付费的态度"
-      }
-    },
-    {
-      "id": "P06",
-      "name": "情绪股东",
-      "signals": [
-        "P06_A",
-        "P06_B",
-        "P06_C"
-      ],
-      "claim": "某种心情反复带出计划外购买念头，也实际买下",
-      "boundary": "只在开心或只在低落时发生均可；不诊断情绪问题。",
-      "kind": "specific",
-      "result_title": "本次匹配：情绪股东",
-      "result_description": "你付款时，心情往往已经替商品说完了推荐词。“值得庆祝”“今天太累”“想对自己好一点”，都可能成为购物清单加项的理由。某种心情会反复带出购买念头，你也确实因此下过单。那件东西吸引你的分量里，藏着当时的感受，回看订单时也可能想起那天发生了什么。心情临时起意，订单留下正式记录。你的购物车像聊天窗口，只是表达“我现在需要一点什么”的方式，是点击付款。",
-      "exportable": true,
-      "semantic_key": "original_p06",
-      "roles": {
-        "inclination": "P06_A",
-        "behavior": "P06_B",
-        "discriminator": "P06_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“情绪股东”描述的消费模式是：某种心情反复带出计划外购买念头，也实际买下。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "同一种心情是否带来计划外购买念头",
-        "behavior": "是否因这种心情实际购买",
-        "discriminator": "情绪平复后，购买意愿是否随之减弱"
-      }
-    },
-    {
-      "id": "P07",
-      "name": "全网同款",
-      "signals": [
-        "P07_C",
-        "P07_A",
-        "P07_B"
-      ],
-      "claim": "同款的共同性会增加吸引力，也实际因热度买过东西",
-      "boundary": "不把获得新质量信息、拼单或恰好热门算从众。",
-      "kind": "specific",
-      "result_title": "本次匹配：全网同款",
-      "result_description": "同款出现得越多，“我也想试试”就越容易冒出来。很多人在用、朋友在讨论，会给一件东西增加吸引力，你也因此买过东西。熟悉感、共同话题，还有参与其中的感觉，都可能推动这次决定。商品还是那个商品，围绕它的人越来越多，它在你心里的位置跟着变化。你只想围观一下，购物车却悄悄报名。别人分享的是使用感受，你偶尔接收到的是邀请函：大家都有，你要不要也来一份。",
-      "exportable": true,
-      "semantic_key": "original_p07",
-      "roles": {
-        "inclination": "P07_C",
-        "behavior": "P07_A",
-        "discriminator": "P07_B"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“全网同款”描述的消费模式是：同款的共同性会增加吸引力，也实际因热度买过东西。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "共同使用本身是否增加吸引力",
-        "behavior": "是否实际因热度购买",
-        "discriminator": "热度退出后，原有购买意愿是否保持"
-      }
-    },
-    {
-      "id": "P08",
-      "name": "人类购物车",
-      "signals": [
-        "P08_A",
-        "P08_B",
-        "P08_C"
-      ],
-      "claim": "待购项长期保留，反复浏览仍未决定",
-      "boundary": "不判断已经买到的东西用得好不好。",
-      "kind": "specific",
-      "result_title": "本次匹配：人类购物车",
-      "result_description": "你和一件东西最稳定的关系，是“再看看”。反复点开、比较、收藏，又放回原处，有些商品陪你逛过好几轮，决定还没落地。喜欢一直留着，最后的确认却迟迟没有发生。购物车里的人口持续增加，真正搬进你家的还要另算。你对它们很熟，它们对你家却还一无所知。“先留着”这个动作太顺手，留着留着，候选名单就有了常住居民。别人家的商品等发货，你这里的商品先学会了等消息。",
-      "exportable": true,
-      "semantic_key": "original_p08",
-      "roles": {
-        "inclination": "P08_A",
-        "behavior": "P08_B",
-        "discriminator": "P08_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“人类购物车”描述的消费模式是：待购项长期保留，反复浏览仍未决定。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "待购项长期没有去留决定",
-        "behavior": "具体一次回访仍继续保留备选",
-        "discriminator": "条件已经明朗时是否继续扩大备选"
-      }
-    },
-    {
-      "id": "P09",
-      "name": "买了就用",
-      "signals": [
-        "P09_A",
-        "P09_B",
-        "P09_C"
-      ],
-      "claim": "有使用机会时，愿意安排并较快兑现买来东西的用途",
-      "boundary": "与多少东西没有买、是否偏爱功能款无关。",
-      "kind": "specific",
-      "result_title": "本次匹配：买了就用",
-      "result_description": "你的“喜欢”，通常会继续到拆完快递以后。有使用机会，新鞋会穿出去，工具会拿来试，买来的东西很快开始进入日常。下单和收到货之后，你还愿意完成上手那一步。它可以好看、好玩，也有纪念意义，喜欢的东西用起来，就很有吸引力。你的快递通常不需要太长的欢迎仪式，包装还没收好，工作安排已经到了。你给新东西的蜜月期有点短，入职流程倒是挺快。刚签收，就准备上岗。",
-      "exportable": true,
-      "semantic_key": "original_p09",
-      "roles": {
-        "inclination": "P09_A",
-        "behavior": "P09_B",
-        "discriminator": "P09_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“买了就用”描述的消费模式是：有使用机会时，愿意安排并较快兑现买来东西的用途。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "是否主动安排首次使用",
-        "behavior": "到货且有机会时是否实际使用",
-        "discriminator": "首次使用之后是否进入日常"
-      }
-    },
-    {
-      "id": "P10",
-      "name": "发薪消失术",
-      "signals": [
-        "P10_A",
-        "P10_B",
-        "P10_C"
-      ],
-      "claim": "自由预算在不同周期因可选消费，反复早于原先期限用完",
-      "boundary": "可以准确记账，不能推断负债或生活开销不足。",
-      "kind": "specific",
-      "result_title": "本次匹配：发薪消失术",
-      "result_description": "每一单都解释得通，预算却经常提前下班。想买的东西、想参加的活动安排上，原本准备花到后面的自由预算，就比预计更早用完了。这种节奏在不同周期出现过，有时单笔并不惊人，合在一起却把时间表挤得很紧。你也许记得钱花在哪里，仍会突然发现：还没到原先定的日子，这轮额度就结束了。单笔是“这次也值得”，汇总是“怎么又提前了”。快乐逐单验收，预算负责提前谢幕。",
-      "exportable": true,
-      "semantic_key": "original_p10",
-      "roles": {
-        "inclination": "P10_A",
-        "behavior": "P10_B",
-        "discriminator": "P10_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“发薪消失术”描述的消费模式是：自由预算在不同周期因可选消费，反复早于原先期限用完。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "不同周期是否反复早于预计用完自由预算",
-        "behavior": "提前用完是否主要由可选消费引起",
-        "discriminator": "是否把留给后面的自由预算主动前置"
-      }
-    },
-    {
-      "id": "P11",
-      "name": "新生活启动器",
-      "signals": [
-        "P11_A",
-        "P11_B",
-        "P11_C"
-      ],
-      "claim": "在可先试用的条件下，常先添装备再开始活动",
-      "boundary": "不推断后悔、闲置或无法坚持。",
-      "kind": "specific",
-      "result_title": "本次匹配：新生活启动器",
-      "result_description": "你准备开始一件事时，最先动起来的经常是购物车。想运动，先看装备；想拍照，先研究相机。哪怕手边的东西能先试试，你仍常常添好装备，再正式开始。购买让一个想法有了具体的形状，准备工作也显得更像回事。新计划还在等第一天，新东西已经有了物流单号。你对起步的理解，常常包含一场开箱。别人先试试看，你先把道具备齐。你的新生活，通常先收到快递，再迎来开场。",
-      "exportable": true,
-      "semantic_key": "original_p11",
-      "roles": {
-        "inclination": "P11_A",
-        "behavior": "P11_B",
-        "discriminator": "P11_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“新生活启动器”描述的消费模式是：在可先试用的条件下，常先添装备再开始活动。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "可先尝试时，是否仍倾向先添装备",
-        "behavior": "过去是否实际先买装备再开始",
-        "discriminator": "可以借到工具时，是否仍重视先拥有自己的装备"
-      }
-    },
-    {
-      "id": "P12",
-      "name": "这个真的需要",
-      "signals": [
-        "P12_A",
-        "P12_B",
-        "P12_C"
-      ],
-      "claim": "先因喜欢产生购买欲，随后补充实用理由",
-      "boundary": "不把先有用途后购买或喜欢就买混在一起。",
-      "kind": "specific",
-      "result_title": "本次匹配：这个真的需要",
-      "result_description": "你心里已经点了购买，脑子还在补需求说明。先喜欢上，再想能用在哪里、解决什么问题，这件东西从“好想要”走到了“确实有用”。那些理由可能成立，只是出现顺序很有意思：心动负责提名，实用性负责补材料。你擅长给购买欲找一个说得过去的位置，连使用场景都能想清楚。购物车里的项目经过充分论证，心里那张同意票却往往写得更早。理由终于到齐时，主意可能早定了。",
-      "exportable": true,
-      "semantic_key": "original_p12",
-      "roles": {
-        "inclination": "P12_A",
-        "behavior": "P12_B",
-        "discriminator": "P12_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“这个真的需要”描述的消费模式是：先因喜欢产生购买欲，随后补充实用理由。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "心动之后的实用理由是否推动决定",
-        "behavior": "实际回忆中是否先心动、后补用途",
-        "discriminator": "原用途不成立后是否继续寻找其他理由"
-      }
-    },
-    {
-      "id": "P13",
+      "id": "N03",
       "name": "余额保安",
-      "semantic_key": "retained_money_preference",
-      "claim": "保留可支配资金本身带来满足或踏实感，并实际因此放弃一些买得起且喜欢的非必需品。",
-      "boundary": "不把预算不足、缺少购买需求、等待降价或全中立等同于本类；不诊断焦虑。",
-      "distinction": "等等党等待更合适的购买条件；本类对资金继续留在手里本身就满意。",
-      "quote": "商家最大的竞争对手，是钱还在你账户里。",
-      "signals": [
-        "P13_A",
-        "P13_B",
-        "P13_C"
+      "definition": "保留意外收入，也倾向维持日常聚餐支出范围",
+      "boundary": "不声称因为焦虑而储蓄，不推断收入低",
+      "core": [
+        {
+          "item_id": "Q07",
+          "side": "left"
+        },
+        {
+          "item_id": "Q13",
+          "side": "left"
+        }
       ],
-      "kind": "specific",
-      "exportable": true,
-      "result_title": "本次匹配：余额保安",
-      "result_description": "你舍不得的，往往是付款之后变小的那个数字。东西可以喜欢，优惠也看得懂，但想到钱继续留在账户里，你又觉得暂时不买也挺好。余额本身就能给你满足感：随时有得选，比此刻多拥有一件东西更踏实。收到一笔额外收入，给自己留着，也是一种奖励。你会在心动和付款之间，认真掂量一下保住这笔钱有多舒服。商家以为自己在和同行竞争，其实你的头号竞品是“钱还在”。",
-      "roles": {
-        "inclination": "P13_A",
-        "behavior": "P13_B",
-        "discriminator": "P13_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“余额保安”描述的消费模式是：保留可支配资金本身带来满足或踏实感，并实际因此放弃一些买得起且喜欢的非必需品。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "保留可支配资金本身的满足感",
-        "behavior": "实际因偏爱留住钱而放弃买得起且喜欢的东西",
-        "discriminator": "额外收入场景中是否仍偏爱保留资金"
-      }
+      "quote": "钱到账了，不代表它今天就得出门。",
+      "description": "一笔额外收入到手，你不急着替它找一个离开的理由。先放进可用资金里，之后慢慢安排，对你同样有吸引力。和朋友见面也可以开心，但新餐厅的价格不会自动接管你的消费标准，你愿意提一个自己更舒服的选择。你会为喜欢的东西花钱，只是“刚好多了一笔”和“大家正好想去”未必足以放行。你的账户有自己的节奏，商家热闹归热闹，付款还得等你点头。",
+      "archetype_description": "余额保安描述的是这样一组消费选择：保留意外收入，也倾向维持日常聚餐支出范围。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
     },
     {
-      "id": "P14",
-      "name": "来都来了",
-      "semantic_key": "sunk_cost_spending",
-      "claim": "先前已付出的时间、精力或金钱，使自己更容易接受原本认为不值的新增消费。",
-      "boundary": "不把本来想买、确有新增价值、为爱消费或普通体验偏好算作沉没成本影响。",
-      "distinction": "这个真的需要先喜欢、后补用途；本类先有投入，再更难接受不追加消费。",
-      "quote": "为了不让上一笔钱白花，你又搭进去下一笔。",
-      "signals": [
-        "P14_A",
-        "P14_B",
-        "P14_C"
+      "id": "N04",
+      "name": "省事股东",
+      "definition": "愿意付配送费免跑腿，也可能接受一般的衣服以省去退货费用和步骤",
+      "boundary": "退货选择也受18元影响，不推断懒惰或所有事情都愿意付费",
+      "core": [
+        {
+          "item_id": "Q08",
+          "side": "right"
+        },
+        {
+          "item_id": "Q17",
+          "side": "left"
+        }
       ],
-      "kind": "specific",
-      "exportable": true,
-      "result_title": "本次匹配：来都来了",
-      "result_description": "你最容易松口的时刻，是已经付出之后。跑了很远、排了很久、买了门票，接下来遇到加钱项目，脑子里就会弹出“都到这一步了”。原本单独看觉得不值的东西，接在前面的花费后面，突然就多了一个购买理由。空手离开，仿佛之前全白忙；继续花钱，至少还能带点什么走。商家负责把你带到现场，你负责说服自己买单。前面的钱已经花了，你还得给它找几个同伴。",
-      "roles": {
-        "inclination": "P14_A",
-        "behavior": "P14_B",
-        "discriminator": "P14_C"
-      },
-      "core_weights": {
-        "inclination": 40,
-        "behavior": 60
-      },
-      "reference_description": "“来都来了”描述的消费模式是：先前已付出的时间、精力或金钱，使自己更容易接受原本认为不值的新增消费。这是类型本身的介绍，不代表本次答卷已经确认了这些行为。",
-      "facets": {
-        "inclination": "已经付出的路程是否推动提高原购买上限",
-        "behavior": "实际是否因为既有投入而追加付款",
-        "discriminator": "不可退还的旧支出是否推动新的材料费支出"
-      }
+      "quote": "少跑一趟，确实也算买到了东西。",
+      "description": "你的账本里，来回跑、重新打包和再处理一次，也都占着位置。多付一点让饭送到家，你买到的是不用出门；衣服穿着还行时，你也可能接受它，省去退货费和后续手续。你未必没有算价格，只是做决定时会顺带算一下：这件事还要我处理几遍。有些钱花在商品上，有些选择换来流程早点结束。别人看见八块配送费，你看见的是今天少了一趟出门。",
+      "archetype_description": "省事股东描述的是这样一组消费选择：愿意付配送费免跑腿，也可能接受一般的衣服以省去退货费用和步骤。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N05",
+      "name": "安心买家",
+      "definition": "愿意为明确售后和可退改安排支付溢价",
+      "boundary": "不推断对所有风险保守，也不说明更贵一定更好",
+      "core": [
+        {
+          "item_id": "Q03",
+          "side": "left"
+        },
+        {
+          "item_id": "Q19",
+          "side": "right"
+        }
+      ],
+      "quote": "价格高了一点，后路也多了一条。",
+      "description": "你会留意价格，也会留意付款之后出了问题怎么办。游戏机有退货和保修，酒店能在规定时间内取消，这些条款会真实地增加一个选项的价值。便宜很吸引人，但省下来的钱要换掉多少保障，你也会算进决定。你希望商品和计划都有一点回旋空间，事情变化时不用完全自己扛。别人先看优惠了多少，你还会往下翻售后那一栏。花出去的钱里，有一部分是在给未来留门。",
+      "archetype_description": "安心买家描述的是这样一组消费选择：愿意为明确售后和可退改安排支付溢价。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N06",
+      "name": "买断派",
+      "definition": "偏爱一次结清付款，也愿意拥有之后可自行使用的装备",
+      "boundary": "不推断比租用或分期更经济，也不推断无负债",
+      "core": [
+        {
+          "item_id": "Q06",
+          "side": "right"
+        },
+        {
+          "item_id": "Q14",
+          "side": "right"
+        }
+      ],
+      "quote": "钱付明白，东西归我，后面省一段安排。",
+      "description": "你喜欢把一笔消费安排得有头有尾：耳机一次付清，之后不用每个月再惦记；装备买成自己的，以后需要时能直接拿出来。比起不断续着一段付款或使用关系，你更偏爱一次完成、长期可用的感觉。这不代表每次买下都比租用划算，而是拥有和结清本身对你有吸引力。你想减少的是后续还得重新安排的那一部分。东西一旦到位，下一次出发最好只差你拿起它。",
+      "archetype_description": "买断派描述的是这样一组消费选择：偏爱一次结清付款，也愿意拥有之后可自行使用的装备。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N07",
+      "name": "用完散伙",
+      "definition": "按次获得使用权，并愿意出售长期闲置物品",
+      "boundary": "不等于极简生活，也不保证所有租赁都省钱",
+      "core": [
+        {
+          "item_id": "Q14",
+          "side": "left"
+        },
+        {
+          "item_id": "Q18",
+          "side": "right"
+        }
+      ],
+      "quote": "拥有过可以，长期占着就得再商量。",
+      "description": "你对一件东西的关系，可以到“这次用得上”为止。露营先租装备，把眼前这趟玩明白；很久没用的机器，也可以接受折价卖掉，让它离开柜子。你不会因为曾经买过，就默认它有永久居住权。使用价值、占用空间和之后还会不会用，都可以重新谈。东西陪你完成一段事情，已经算发挥过作用。别人问以后万一用到呢，你更容易想到：那就等真的需要时，再安排一次。",
+      "archetype_description": "用完散伙描述的是这样一组消费选择：按次获得使用权，并愿意出售长期闲置物品。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N08",
+      "name": "备用仓库",
+      "definition": "偏爱拥有可随时取用的装备，并保留未来可能用到的物品",
+      "boundary": "不称囤积，不假定全部会用或全部浪费",
+      "core": [
+        {
+          "item_id": "Q14",
+          "side": "right"
+        },
+        {
+          "item_id": "Q18",
+          "side": "left"
+        }
+      ],
+      "quote": "现在用不上，不妨碍它先有个编制。",
+      "description": "你很看重“需要的时候我这里就有”。装备买一套自己的，以后再去可以直接拿；暂时没用的机器，也值得为下一次可能留下位置。东西在手里，意味着未来少一步重新寻找和购买。你不会只按今天用不用得上来决定去留，脑子里往往还留着一个“以后也许”的窗口。柜子里的每件东西，似乎都拿着一张未来用途说明。它们未必每天上班，但你愿意让其中一些先保留岗位。",
+      "archetype_description": "备用仓库描述的是这样一组消费选择：偏爱拥有可随时取用的装备，并保留未来可能用到的物品。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N09",
+      "name": "审美甲方",
+      "definition": "倾向坚持自己的颜色喜好，也愿意逐步实现搭配完整",
+      "boundary": "不推断喜欢奢侈品、爱炫耀或不听任何建议",
+      "core": [
+        {
+          "item_id": "Q04",
+          "side": "left"
+        },
+        {
+          "item_id": "Q11",
+          "side": "right"
+        }
+      ],
+      "quote": "最终验收标准，是我自己看着顺眼。",
+      "description": "你对“看着喜欢”有自己的标准。朋友觉得另一种颜色更合适，你仍可能选镜子里自己更喜欢的那件；新桌子摆好了，旁边的椅子和灯是否协调，也会继续占着你的注意力。东西能用是一个条件，整个画面顺眼又是另一个条件。你的消费里有一部分是在把日常环境慢慢调成自己喜欢的样子。别人的建议可以进入讨论，但最终验收的人还是你。购物清单，有时也是你的改稿意见。",
+      "archetype_description": "审美甲方描述的是这样一组消费选择：倾向坚持自己的颜色喜好，也愿意逐步实现搭配完整。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N10",
+      "name": "宝贝保管员",
+      "definition": "愿意珍惜使用心爱物品，也容易被喜爱角色的新周边吸引",
+      "boundary": "不说买了不用，不要求所有喜欢的东西都收藏",
+      "core": [
+        {
+          "item_id": "Q02",
+          "side": "right"
+        },
+        {
+          "item_id": "Q21",
+          "side": "right"
+        }
+      ],
+      "quote": "喜欢的东西，使用日程也想安排得郑重一点。",
+      "description": "有些东西对你来说，除了功能，还有“这是我喜欢的那个”的分量。心仪的手表可以留在聚会或约会时戴，喜欢的角色出了新摆件，也会让你想给收藏再留一个位置。你对这些物品的满足感，不必全部靠每天使用来证明，拥有、保存和挑一个合适的时候拿出来，本身也有意思。你的宝贝可能有不同出场频率，但都不只是随机放进柜子的东西。别人安排日常用品，你偶尔还要安排宝贝的出场。",
+      "archetype_description": "宝贝保管员描述的是这样一组消费选择：愿意珍惜使用心爱物品，也容易被喜爱角色的新周边吸引。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N11",
+      "name": "情绪股东",
+      "definition": "完成项目或获得奖金时，更愿意用喜欢的消费作奖励",
+      "boundary": "不推断情绪失控，不证明奖金比劳动收入更易花掉",
+      "core": [
+        {
+          "item_id": "Q20",
+          "side": "right"
+        },
+        {
+          "item_id": "Q07",
+          "side": "right"
+        }
+      ],
+      "quote": "好消息到了，购物车也想分一口蛋糕。",
+      "description": "忙完一段辛苦的事情，你愿意给这一天加一点甜；意外拿到奖金，收藏夹里的心愿也可能终于轮到兑现。消费对你可以是一种庆祝方式，让“终于结束了”和“今天运气不错”留下更具体的记号。蛋糕和鞋子本来就喜欢，眼前这个时刻又给了它们一个上场机会。你不必每次心情变化都买东西，但奖励自己的那一步，在这些场景里很顺手。好消息刚发来，购物车已经开始看自己有没有份。",
+      "archetype_description": "情绪股东描述的是这样一组消费选择：完成项目或获得奖金时，更愿意用喜欢的消费作奖励。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N12",
+      "name": "为爱充值",
+      "definition": "愿意为心仪对象持续攒钱，也看重喜爱角色带来的收集意义",
+      "boundary": "不把不同对象当成同一热爱，不把右端含糊回答判为不愿储蓄",
+      "core": [
+        {
+          "item_id": "Q05",
+          "side": "left"
+        },
+        {
+          "item_id": "Q21",
+          "side": "right"
+        }
+      ],
+      "quote": "喜欢一旦认领，预算就想给它留个位置。",
+      "description": "有些东西一旦被你认定，就不会很快从心愿里退场。喜欢的包暂时买不到，你愿意按月给它留钱；喜欢的角色出了新周边，关联本身也能增加吸引力。你愿意为特定对象保留一段时间和一部分预算，让喜欢逐渐变成可以拥有的东西。这里重要的是“我就喜欢这个”，未必能被另一个更便宜的选项轻易替代。你的心愿单里，有的商品已经获得了长期席位，只是在等待预算正式到岗。",
+      "archetype_description": "为爱充值描述的是这样一组消费选择：愿意为心仪对象持续攒钱，也看重喜爱角色带来的收集意义。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N13",
+      "name": "气氛赞助商",
+      "definition": "送礼偏爱惊喜，也愿意为与朋友的新体验提高当次支出",
+      "boundary": "不说为了面子或迫于社交压力，不等同于普遍慷慨",
+      "core": [
+        {
+          "item_id": "Q12",
+          "side": "right"
+        },
+        {
+          "item_id": "Q13",
+          "side": "right"
+        }
+      ],
+      "quote": "钱花出去，也想让这次见面多一点内容。",
+      "description": "你会把一次消费放进人与人相处的画面里。礼物拆开时的惊喜，让你愿意认真挑选；朋友提议试一家新的餐厅，多花一点也可以成为共同体验的一部分。对你来说，东西和饭菜之外，那次见面怎么被记住，同样有价值。你愿意给普通安排添一点内容，让生日和聚餐不只是完成事项。别人列预算时写着礼物、餐费，你的心里还留着两行：对方看到会不会开心，我们这次能不能多一点新鲜感。",
+      "archetype_description": "气氛赞助商描述的是这样一组消费选择：送礼偏爱惊喜，也愿意为与朋友的新体验提高当次支出。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    },
+    {
+      "id": "N14",
+      "name": "来都来了",
+      "definition": "到场后或朋友提出新体验时，愿意接受高于原习惯或预期的价格",
+      "boundary": "第22同时包含价格变化，不能说已验证沉没成本效应或明知不值仍买",
+      "core": [
+        {
+          "item_id": "Q22",
+          "side": "right"
+        },
+        {
+          "item_id": "Q13",
+          "side": "right"
+        }
+      ],
+      "quote": "预算到了现场，有时还会再开一次会。",
+      "description": "你会给一次已经靠近的体验留一点预算弹性。到了景区，船票比攻略贵，你仍可能把这次坐船完成；朋友想试的新店超过平时标准，你也愿意顺着这次机会去体验。原先的价格预期对你有作用，但不会永远锁死现场的决定。有时你更在意这次想做的事情能否落地，愿意为它重新衡量多出来的那笔钱。行程已经出发，预算也可能跟着调整。它带着初稿出门，回来时有了现场修订版。",
+      "archetype_description": "来都来了描述的是这样一组消费选择：到场后或朋友提出新体验时，愿意接受高于原习惯或预期的价格。这类模式把相应的取舍放在一起，呈现一种消费风格。具体选择仍以本次每道题的回答为准。",
+      "evidence_kind": "two_scene_composite",
+      "legacy_artwork": "unassigned"
+    }
+  ],
+  "axes": [
+    {
+      "id": "A",
+      "name": "支出弹性",
+      "low_label": "保留额度",
+      "high_label": "愿意花在当次选择",
+      "low_letter": "H",
+      "high_letter": "S",
+      "items": [
+        {
+          "item_id": "Q07",
+          "side": "right"
+        },
+        {
+          "item_id": "Q08",
+          "side": "right"
+        },
+        {
+          "item_id": "Q13",
+          "side": "right"
+        },
+        {
+          "item_id": "Q20",
+          "side": "right"
+        }
+      ],
+      "anchor_item": "Q07",
+      "neutral_letter": "H",
+      "meaning": "场景选择的等权摘要；非潜在心理因子、人格概率或人群百分位。"
+    },
+    {
+      "id": "B",
+      "name": "附加价值",
+      "low_label": "明确用途和具体款式",
+      "high_label": "意义与整体感受",
+      "low_letter": "F",
+      "high_letter": "M",
+      "items": [
+        {
+          "item_id": "Q11",
+          "side": "right"
+        },
+        {
+          "item_id": "Q12",
+          "side": "right"
+        },
+        {
+          "item_id": "Q21",
+          "side": "right"
+        }
+      ],
+      "anchor_item": "Q11",
+      "neutral_letter": "F",
+      "meaning": "场景选择的等权摘要；非潜在心理因子、人格概率或人群百分位。"
+    },
+    {
+      "id": "C",
+      "name": "持有方式",
+      "low_label": "按需取用和流转",
+      "high_label": "提前拥有和保留",
+      "low_letter": "L",
+      "high_letter": "K",
+      "items": [
+        {
+          "item_id": "Q14",
+          "side": "right"
+        },
+        {
+          "item_id": "Q15",
+          "side": "right"
+        },
+        {
+          "item_id": "Q18",
+          "side": "left"
+        }
+      ],
+      "anchor_item": "Q14",
+      "neutral_letter": "L",
+      "meaning": "场景选择的等权摘要；非潜在心理因子、人格概率或人群百分位。"
+    },
+    {
+      "id": "D",
+      "name": "购置与后续",
+      "low_label": "优先初始价格",
+      "high_label": "兼顾后续条件",
+      "low_letter": "P",
+      "high_letter": "G",
+      "items": [
+        {
+          "item_id": "Q03",
+          "side": "left"
+        },
+        {
+          "item_id": "Q10",
+          "side": "right"
+        },
+        {
+          "item_id": "Q19",
+          "side": "right"
+        }
+      ],
+      "anchor_item": "Q03",
+      "neutral_letter": "P",
+      "meaning": "场景选择的等权摘要；非潜在心理因子、人格概率或人群百分位。"
     }
   ],
   "policy": {
-    "core_weights": {
-      "inclination": 40,
-      "behavior": 60
-    },
-    "core_unit_weights": {
-      "inclination": 4,
-      "behavior": 6
-    },
-    "contradiction_max": 2,
     "supported_min": 4,
-    "tentative_min": 3,
-    "pool_order": [
-      "supported",
-      "tentative",
-      "partial",
-      "unassessed",
-      "all_contradicted"
+    "contradiction_max": 2,
+    "core_weights": [
+      1,
+      1
     ],
-    "partial_order": [
-      "behavior_observed",
-      "behavior_score",
-      "inclination_score"
-    ],
-    "discriminator": "仅完整核心候选主分并列，且全部并列者有补充题答案时比较；否则整组跳过。",
-    "tie_digest": {
-      "algorithm": "SHA-256",
-      "canonical": "JSON compact [version, [[sorted_finalist_id, inclination, behavior, discriminator], ...]]; target values are integers or null; no statuses, axes, time or account data.",
-      "selection": "选择sha256(canonical+\"|\"+persona_id)十六进制值最大的ID；仅摘要碰撞时取字典序最小ID。"
-    },
-    "reference": "暂定、部分信息、未评估、全部反证、技术决胜均标记reference_only，不计入证据支持结果数。",
-    "valid_submission": {
-      "all_items_processed": true,
-      "minimum_numeric_core_answers": 1
-    },
-    "result_card_count": 1,
-    "axes_independent_scoring": true,
-    "extra_tiebreak_questions": false,
-    "empirical_status": "40/60和门槛是统一起始规则；未经过真人标定，程序一致性不等于心理测量效度。"
+    "all_processed_required": true,
+    "at_least_one_numeric_persona_item": true,
+    "tie": "sha256_of_sorted_finalists_and_their_effective_core_answers",
+    "website_copy": "直接显示一个类型；不展示参考类型、置信度提示或候选标签。证据不足时用第三人称类型介绍和逐题事实，不断言未测得行为。",
+    "special_question": "Q05 canonical 4/5 treated as ambiguous, not a negative or a positive; original response retained.",
+    "no_scoring_roles": "不再区分倾向题/实际行为题；所有题均为场景自报选择。",
+    "q10": "参与购置与后续切面，同时单独解释机型选择；不用于给任何人格加分，不声称选择B证明计算过总成本。"
   },
-  "scope": "50题、14种可共存的消费模式，展示一个有证据支持的突出模式或明确标记的参考类型。",
-  "base_version": "0.8",
-  "artifact_status": "offline_candidate_not_deployed_see_validation_report",
-  "response_scale": {
-    "1": "完全偏左",
-    "2": "比较偏左",
-    "3": "中立/两边差不多",
-    "4": "比较偏右",
-    "5": "完全偏右",
-    "missing": "无相关经历/跳过不等于中立；保留null。"
+  "legacy_axis_migration": {
+    "T": "不迁移：新题没有独立的相同体验等待比较",
+    "V": "不迁移：新B是场景组合摘要，非旧功能/情感量表",
+    "D": "不迁移：选择某台机器不能证明是否逐项比较",
+    "S": "不迁移：仅Q04直接询问朋友审美影响，单独保留观察"
   },
-  "axis_display": {
-    "T": {
-      "high": "N",
-      "low": "L",
-      "high_name": "即刻兑现",
-      "low_name": "接受等待",
-      "primary_item": "T1",
-      "neutral_letter": "N"
+  "normalization_log": [
+    "Q09：将“不确定。合不合”修正为“不确定合不合”，没有改变语义。"
+  ],
+  "axis_copy": {
+    "A": {
+      "low": "你更倾向于让每次花钱都有一个明确的位置。奖金到手，可以先留着；吃饭和聚会，也可以维持自己原来舒服的价格范围。对你来说，多一个购买机会，并不自动意味着这次就要花出去。你可能愿意走一段路取餐，也可能提议另一家餐厅，让想做的事情继续进行，同时保留一点额度。这样的取舍关注的是当次支出有没有必要增加，并不等于不愿享受生活。具体到某一件特别喜欢的东西，你仍然可能舍得投入；这里呈现的是这些场景合在一起的选择方向。",
+      "high": "你更愿意把一部分钱花在眼前有价值的选择上。少跑一趟、和朋友试一家新店、忙完之后吃块蛋糕，都可能让这笔支出变得值得。你看见的不只有商品本身，也有这次安排带来的便利和感受。你未必每一项都愿意加钱，只是在这些场景里，留下额度常常需要和当下的收获一起比较。这种选择不说明你会超支，也不说明不存钱；它描述的是当有具体理由出现时，你愿意给消费多少弹性。不同项目上的答案可以不一致，那些区别也是你自己的花钱标准。",
+      "all_neutral": "在“支出弹性”涉及的题目里，你都选择了中间，两端保持50%和50%。这表示这些题里没有明显偏好，不意味着你同时强烈赞成两边。",
+      "opposing": "你在“支出弹性”的不同场景里选了不同方向。比如某件事值得多花一点，另一件事仍想保留原安排，这些选择可以同时成立。两端百分比汇总了答案，具体理由要看下面每一题，不能把总数当成所有场景统一的态度。",
+      "balanced": "“支出弹性”的合并数值恰好是50%和50%。两边都不占优势，显示的字母只为保持格式一致，实际解释仍以具体场景选择为准。",
+      "no_data": "本次没有“支出弹性”的数值答案，因此这一面不生成百分比或方向字母。"
     },
-    "V": {
-      "high": "E",
-      "low": "U",
-      "high_name": "情绪意义",
-      "low_name": "功能实用",
-      "primary_item": "V1",
-      "neutral_letter": "U"
+    "B": {
+      "low": "你更倾向于先看一个选择具体能带来什么。朋友提过想要的礼物，可以直接回应需要；角色周边也要看这次的款式是否打动自己；旧椅子和台灯还能用，未必急着为了配套更换。你对喜欢和情感并不迟钝，只是它们往往需要落在具体物品或需求上，才更容易推动决定。这样的消费标准，会让你在同一个品牌或作品里仍然挑挑选选。一个名字、一层关系或一套风格，都可以增加好感，但是否买下，还得看看眼前这一件。你的认可，通常需要落实到具体选择。",
+      "high": "你会把物品之外的意义一起放进选择里。搭配完整后的舒服、礼物拆开时的惊喜、喜欢角色带来的连接，都可以成为值得付费的部分。它们不一定增加功能，却可能增加你拥有或送出这件东西时的满足感。你未必在所有场景都选这一端，但这些感受确实会参与判断。这样的偏好不等于只看外表，也不代表每次都买联名；具体设计、价格和用途仍可能影响决定。这里表达的是：一件东西带来的感觉和意义，在你的消费里有自己的位置，能够与实用价值一起被考虑。",
+      "all_neutral": "在“附加价值”涉及的题目里，你都选择了中间，两端保持50%和50%。这表示这些题里没有明显偏好，不意味着你同时强烈赞成两边。",
+      "opposing": "你在“附加价值”的不同场景里选了不同方向。比如某件事值得多花一点，另一件事仍想保留原安排，这些选择可以同时成立。两端百分比汇总了答案，具体理由要看下面每一题，不能把总数当成所有场景统一的态度。",
+      "balanced": "“附加价值”的合并数值恰好是50%和50%。两边都不占优势，显示的字母只为保持格式一致，实际解释仍以具体场景选择为准。",
+      "no_data": "本次没有“附加价值”的数值答案，因此这一面不生成百分比或方向字母。"
+    },
+    "C": {
+      "low": "你更倾向于让物品随着需要流动。只用一次的装备可以租，日用品快用完再补，很久没用的机器也可以折价转卖。比起把所有可能都提前准备好，你更愿意在真正需要的时候安排。这样的选择会让家里少一些等待上场的东西，也让空间和资金保持一点灵活。不过，这不表示租用永远划算，或你对任何物品都容易放手；喜欢的收藏和高频使用的工具，可能有自己的例外。这个切面只说明在租借、补货和闲置处置中，你更偏好怎样安排物品留在生活里的时间。",
+      "high": "你更倾向于让一些未来的需要提前有着落。装备买成自己的，下次可以直接拿；常用品趁便宜补一些，或者把暂时没用的机器留下，都能保留一种随时可用的可能。你考虑去留时，不只看今天，也会给以后的使用留位置。这样的安排不一定意味着东西很多，更不能直接等同于浪费；是否合适，还与空间、保质期和实际使用频率有关。这个切面表达的是你对拥有和备用的偏好。东西已经在手里，往往能减少未来重新寻找、比较和安排的步骤，这一点对你可能有吸引力。",
+      "all_neutral": "在“持有方式”涉及的题目里，你都选择了中间，两端保持50%和50%。这表示这些题里没有明显偏好，不意味着你同时强烈赞成两边。",
+      "opposing": "你在“持有方式”的不同场景里选了不同方向。比如某件事值得多花一点，另一件事仍想保留原安排，这些选择可以同时成立。两端百分比汇总了答案，具体理由要看下面每一题，不能把总数当成所有场景统一的态度。",
+      "balanced": "“持有方式”的合并数值恰好是50%和50%。两边都不占优势，显示的字母只为保持格式一致，实际解释仍以具体场景选择为准。",
+      "no_data": "本次没有“持有方式”的数值答案，因此这一面不生成百分比或方向字母。"
     },
     "D": {
-      "high": "A",
-      "low": "I",
-      "high_name": "逐项比较",
-      "low_name": "整体感受",
-      "primary_item": "D1",
-      "neutral_letter": "I"
-    },
-    "S": {
-      "high": "O",
-      "low": "S",
-      "high_name": "外部参照",
-      "low_name": "个人偏好",
-      "primary_item": "S1",
-      "neutral_letter": "S"
+      "low": "你更倾向于先控制这一次付出去的价格。接受二手的售后限制、选择购置价较低的机器，或预订不能取消的房间，都可能让眼前的付款更轻一些。你并非一定没想过后续，而是可能觉得使用频率、行程确定程度或价差，让较低的初始价格更合适。这里不能据此判断哪个方案总成本最低，因为问卷没有给出所有未来情况。你的选择说明的是在这些具体交易里，愿意接受多少后续限制来换当前的价格优势。不同场景有不同答案，也可能正好反映了你对条件的逐项取舍。",
+      "high": "你更愿意把付款之后的条件也放进价格比较。新机的保修和退货、打印机之后的耗材价格、酒店还能取消的余地，都可能让较高的初始报价变得可以接受。你买下的不只是眼前拿到的东西，也可能包括之后使用和调整时的条件。不过，选择贵一点并不能证明一定更省，选择低耗材机型也不等于已经算过总账。这个切面只描述这些场景里的取舍。你可能愿意在某一项上加钱，却在另一项上选择便宜方案；要理解你的标准，仍需要一起看具体是哪一种后续条件打动了你。",
+      "all_neutral": "在“购置与后续”涉及的题目里，你都选择了中间，两端保持50%和50%。这表示这些题里没有明显偏好，不意味着你同时强烈赞成两边。",
+      "opposing": "你在“购置与后续”的不同场景里选了不同方向。比如某件事值得多花一点，另一件事仍想保留原安排，这些选择可以同时成立。两端百分比汇总了答案，具体理由要看下面每一题，不能把总数当成所有场景统一的态度。",
+      "balanced": "“购置与后续”的合并数值恰好是50%和50%。两边都不占优势，显示的字母只为保持格式一致，实际解释仍以具体场景选择为准。",
+      "no_data": "本次没有“购置与后续”的数值答案，因此这一面不生成百分比或方向字母。"
     }
-  },
-  "migration": {
-    "accepted_version": "0.9",
-    "old_versions": [
-      "0.7",
-      "0.8"
-    ],
-    "silent_reuse": false,
-    "persona_identity": [
-      "version",
-      "id"
-    ],
-    "frontend_session_key": "payti:0.9:answers",
-    "action": "历史结果保留版本；新版重新答固定50题，不复制旧答案冒充新作答。"
-  },
-  "change_log": {
-    "previous_count": 47,
-    "new_count": 50,
-    "new_ids": [
-      "P02_D",
-      "P03_D",
-      "P05_D"
-    ],
-    "retired_ids_still_absent": [
-      "P02_A",
-      "P03_A",
-      "P05_C"
-    ],
-    "reworded_ids": [
-      "P04_B",
-      "P04_C",
-      "P08_B",
-      "P11_B",
-      "P14_A",
-      "P14_B",
-      "P14_C",
-      "T1",
-      "V1",
-      "V2"
-    ],
-    "website_changed": false,
-    "v08_unchanged": true
-  },
-  "instructions": {
-    "scale": "从左到右选五档；中间只表示中立或两边差不多。",
-    "recall": "经历题统一回想最近半年、有类似机会时的实际做法；只有一次机会就按那次回答。",
-    "missing": "无经历、跳过和未处理分别记录，均不补中立分。",
-    "completion": "50题全部处理，且至少一道人格核心题有数值回答，才能提交和分享。"
   }
 }

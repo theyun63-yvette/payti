@@ -1,10 +1,6 @@
-/* Offline v0.9. No dependencies, requests, account data or clock use. */
+/* Payti 0.10 offline engine. No network, storage, account identifiers or clock. */
 (function(root){
 'use strict';
-const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
-const exact=(x,keys)=>object(x)&&Object.keys(x).sort().join('|')===[...keys].sort().join('|');
-const allowed=new Set(['answered','unanswered','skipped','not_applicable']);
-const roles=['inclination','behavior','discriminator'];
 function sha256(text){
  const bytes=new TextEncoder().encode(text),size=Math.ceil((bytes.length+9)/64)*64;
  const data=new Uint8Array(size);data.set(bytes);data[bytes.length]=128;
@@ -26,119 +22,175 @@ function sha256(text){
  }
  return H.map(x=>x.toString(16).padStart(8,'0')).join('');
 }
+const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+const exact=(x,keys)=>object(x)&&Object.keys(x).sort().join('|')===[...keys].sort().join('|');
+const cmp=(a,b)=>{for(let i=0;i<a.length;i++)if(a[i]!==b[i])return a[i]-b[i];return 0;};
+const states=new Set(['answered','unanswered','skipped','not_applicable']);
+function validateSpec(data){
+ if(data.version!=='0.10'||data.form_id!=='payti-22-2026-11-05')throw Error('Wrong specification version');
+ if(data.items.length!==22||data.personas.length!==14||data.axes.length!==4)throw Error('Unexpected specification size');
+ const ids=new Set(data.items.map(q=>q.id));
+ if(ids.size!==22||new Set(data.personas.map(p=>p.id)).size!==14||new Set(data.axes.map(a=>a.id)).size!==4)throw Error('Duplicate ID');
+ for(const q of data.items)if(!['canonical','reversed'].includes(q.orientation))throw Error('Invalid orientation');
+ for(const p of data.personas){
+  if(p.core.length!==2||new Set(p.core.map(r=>r.item_id)).size!==2)throw Error('Two distinct core items required');
+  for(const r of p.core)if(!ids.has(r.item_id)||!['left','right'].includes(r.side))throw Error('Invalid persona reference');
+ }
+ for(const a of data.axes){
+  if(!a.items.length||new Set(a.items.map(r=>r.item_id)).size!==a.items.length)throw Error('Invalid axis items');
+  for(const r of a.items)if(!ids.has(r.item_id)||!['left','right'].includes(r.side))throw Error('Invalid axis reference');
+  if(!a.items.some(r=>r.item_id===a.anchor_item))throw Error('Unknown axis anchor');
+ }
+ return true;
+}
 function decode(data,payload){
- if(data.version!=='0.9'||!exact(payload,['version','answers'])||payload.version!==data.version||!object(payload.answers))throw new Error('Expected v0.9 answer envelope');
- const ids=new Set(data.items.map(q=>q.id)),values={},states={};
- for(const k of Object.keys(payload.answers))if(!ids.has(k))throw new Error('Unknown item');
+ if(!exact(payload,['version','form_id','answers'])||payload.version!==data.version||payload.form_id!==data.form_id||!object(payload.answers))throw Error('Expected a new v0.10 answer envelope');
+ const ids=new Set(data.items.map(q=>q.id)),canonical={},effective={},status={};
+ for(const id of Object.keys(payload.answers))if(!ids.has(id))throw Error('Unknown item '+id);
  for(const q of data.items){
   const a=Object.hasOwn(payload.answers,q.id)?payload.answers[q.id]:{status:'unanswered',value:null};
-  if(!exact(a,['status','value'])||!allowed.has(a.status))throw new Error('Invalid answer record');
+  if(!exact(a,['status','value'])||!states.has(a.status))throw Error('Invalid answer record '+q.id);
   if(a.status==='answered'){
-   if(!Number.isInteger(a.value)||a.value<1||a.value>5)throw new Error('Invalid answer value');
-   values[q.id]=q.target_side==='left'?6-a.value:a.value;
-  }else{if(a.value!==null)throw new Error('Missing answer must be null');values[q.id]=null;}
-  states[q.id]=a.status;
+   if(!Number.isInteger(a.value)||a.value<1||a.value>5)throw Error('Position must be integer 1–5');
+   canonical[q.id]=q.orientation==='reversed'?6-a.value:a.value;
+  }else{
+   if(a.value!==null)throw Error('Non-answer must have a null value');
+   canonical[q.id]=null;
+  }
+  effective[q.id]=q.evidence_policy==='left_support_only'&&canonical[q.id]>3?null:canonical[q.id];
+  status[q.id]=a.status;
  }
- return {values,states};
+ return {canonical,effective,status};
 }
-function profile(data,p,v){
- const rv=Object.fromEntries(roles.map(r=>[r,v[p.roles[r]]]));const [a,b,c]=roles.map(r=>rv[r]);
- const negative=['inclination','behavior'].filter(r=>rv[r]!==null&&rv[r]<=data.policy.contradiction_max).map(r=>p.roles[r]);
- const complete=a!==null&&b!==null;
- const state=negative.length?'contradicted':complete?(Math.min(a,b)>=data.policy.supported_min?'supported':'tentative'):(a!==null||b!==null?'partial':'unassessed');
- const units=complete?['inclination','behavior'].reduce((sum,r)=>sum+data.policy.core_unit_weights[r]*(rv[r]-1),0):null;
- return {state,roles:p.roles,role_scores:rv,target_scores:Object.fromEntries(roles.map(r=>[p.roles[r],rv[r]])),
-  contradiction_items:negative,core_complete:complete,core_units:units,main_score:complete?units*2.5:null,
-  missing_core:['inclination','behavior'].filter(r=>rv[r]===null).map(r=>p.roles[r]),
-  partial_key:state==='partial'?[Number(b!==null),b??0,a??0]:null,
-  discriminator_state:c===null?'missing':c>=4?'aligns':c===3?'neutral':'differs'};
+const toward=(r,values)=>values[r.item_id]===null?null:r.side==='left'?6-values[r.item_id]:values[r.item_id];
+function profile(p,values){
+ const signals=p.core.map(r=>({item_id:r.item_id,side:r.side,score:toward(r,values)}));
+ const known=signals.map(r=>r.score).filter(v=>v!==null),complete=known.length===2;
+ const negative=signals.filter(r=>r.score!==null&&r.score<=2).map(r=>r.item_id);
+ const state=negative.length?'contradicted':complete?(known.every(v=>v>=4)?'supported':'tentative'):known.length?'partial':'unassessed';
+ return {id:p.id,state,signals,known_count:known.length,contradiction_items:negative,
+  main_score:complete?(known.reduce((s,v)=>s+v-1,0))*12.5:null,
+  score_units:complete?known.reduce((s,v)=>s+v-1,0):null,
+  observed_average:known.length?known.reduce((s,v)=>s+v,0)/known.length:null,
+  weakest:known.length?Math.min(...known):null};
 }
-const compare=(a,b)=>{for(let i=0;i<a.length;i++)if(a[i]!==b[i])return a[i]-b[i];return 0;};
-function stableChoice(finalists,profiles,version){
- const ids=[...finalists].sort(),rows=ids.map(pid=>[pid,...roles.map(r=>profiles[pid].role_scores[r])]);
- const canonical=JSON.stringify([version,rows]),digests=Object.fromEntries(ids.map(pid=>[pid,sha256(canonical+'|'+pid)]));
- const maximum=Object.values(digests).sort().at(-1),same=ids.filter(p=>digests[p]===maximum);
- return {primary:same[0],digest:{algorithm:'SHA-256',canonical,digests,digest_collision:same.length>1}};
+function stableChoice(ids,profiles,version){
+ const sorted=[...ids].sort();
+ const rows=sorted.map(id=>[id,profiles[id].signals.map(r=>[r.item_id,r.side,r.score]).sort((a,b)=>a[0].localeCompare(b[0]))]);
+ const canonical=JSON.stringify([version,rows]);
+ const digests=Object.fromEntries(sorted.map(id=>[id,sha256(canonical+'|'+id)]));
+ const best=Object.values(digests).sort().at(-1);
+ return {primary:sorted.filter(id=>digests[id]===best)[0],canonical,digests};
 }
-function select(data,profiles){
- const ids=Object.keys(profiles).sort();let bucket=null,pool=[];
- for(const state of ['supported','tentative','partial','unassessed']){pool=ids.filter(p=>profiles[p].state===state);if(pool.length){bucket=state;break;}}
- if(!pool.length){bucket='all_contradicted';pool=ids;}
- let leaders=[...pool],decision='single_candidate';
- if(bucket==='supported'||bucket==='tentative'){
-  const maximum=Math.max(...pool.map(p=>profiles[p].core_units));leaders=pool.filter(p=>profiles[p].core_units===maximum);
-  if(pool.length>1)decision='core_score';
- }else if(bucket==='partial'){
-  const maximum=pool.map(p=>profiles[p].partial_key).reduce((a,b)=>compare(a,b)>0?a:b);
-  leaders=pool.filter(p=>compare(profiles[p].partial_key,maximum)===0);if(pool.length>1)decision='partial_evidence';
+function select(profiles,version){
+ const ids=Object.keys(profiles).sort();let pool=[],basis;
+ for(const state of ['supported','tentative','partial']){
+  pool=ids.filter(id=>profiles[id].state===state);
+  if(pool.length){basis=state;break;}
  }
- const before=[...leaders];let used=false,skip=leaders.length===1?'no_tie':'incomplete_core_pool';
- if(leaders.length>1&&(bucket==='supported'||bucket==='tentative')){
-  if(leaders.every(p=>profiles[p].role_scores.discriminator!==null)){
-   used=true;skip=null;const maximum=Math.max(...leaders.map(p=>profiles[p].role_scores.discriminator));
-   leaders=leaders.filter(p=>profiles[p].role_scores.discriminator===maximum);decision='discriminator';
-  }else skip='missing_for_at_least_one_leader';
+ if(!pool.length){
+  pool=ids.filter(id=>profiles[id].known_count>0);
+  if(pool.length)basis='closest_observed';
+  else {pool=ids;basis='no_interpretable_signal';}
  }
- const technical=leaders.length>1;let primary=leaders[0],digest=null;
- if(technical){({primary,digest}=stableChoice(leaders,profiles,data.version));decision='stable_digest';}
- return {primary,bucket,decision_by:decision,technical_tiebreak:technical,pool,core_leaders:before,finalists:leaders,
-  discriminator_used:used,discriminator_skip_reason:skip,digest};
+ let finalists=[...pool],decision='single_candidate';
+ if(basis!=='no_interpretable_signal'){
+  const key=id=>basis==='supported'||basis==='tentative'
+   ?[profiles[id].score_units,profiles[id].weakest]
+   :[profiles[id].observed_average,profiles[id].weakest,profiles[id].known_count];
+  const best=pool.map(key).reduce((a,b)=>cmp(a,b)>=0?a:b);
+  finalists=pool.filter(id=>cmp(key(id),best)===0);
+  if(pool.length>1)decision=basis==='supported'||basis==='tentative'?'equal_core_score':'observed_signals';
+ }
+ let primary=finalists[0],digest=null;const technical=finalists.length>1;
+ if(technical){digest=stableChoice(finalists,profiles,version);primary=digest.primary;decision='stable_digest';}
+ return {primary,basis,decision_by:decision,pool,finalists,technical_tiebreak:technical,digest};
 }
-function axisResult(data,axis,ids,v){
- const d=data.axis_display[axis],known=ids.map(k=>v[k]).filter(x=>x!==null);
- if(!known.length)return {state:'insufficient',answered:0,percentages:null,letter:null,letter_basis:'no_data',pattern:'no_data',difference:null,interpretation:'本维没有有效回答，暂不生成百分比或方向。'};
- const high=(known.reduce((s,x)=>s+x,0)/known.length-1)*25,low=100-high;
- let letter,basis,pattern,note;
- if(high>50){letter=d.high;basis='greater_percentage';}
- else if(high<50){letter=d.low;basis='greater_percentage';}
- else{const x=v[d.primary_item];if(x!==null&&x!==3){letter=x>3?d.high:d.low;basis='primary_item_tiebreak';}else{letter=d.neutral_letter;basis='fixed_tiebreak';}}
- if(known.length===1){pattern='single_item';note='本维仅有1/2题有效回答，百分比只反映这一道题。';}
- else if(known.every(x=>x===3)){pattern='both_neutral';note='两题都选择中立，本维没有明显方向；50/50不代表两种强倾向同时存在。';}
- else if(Math.min(...known)<3&&Math.max(...known)>3){pattern='opposing';note='两种场景的选择方向不同，百分比是合并换算；不能据此认定每个场景都倾向中间。';}
- else if(known.includes(3)){pattern='partly_neutral';note='一道题偏向一端，另一道中立；百分比反映这两个场景的合并倾向。';}
- else{pattern='consistent';note='两种场景的选择方向一致；百分比是答案换算，不是概率或准确率。';}
- if(high===50)note+=' 两端保持50/50，显示字母仅用于本维同分处理。';
- return {state:known.length===2?'complete':'partial',answered:known.length,percentages:{[d.high]:high,[d.low]:low},
-  letter,letter_basis:basis,pattern,difference:known.length===2?pattern==='opposing':null,interpretation:note};
+function axisResult(a,values){
+ const signals=a.items.map(r=>({item_id:r.item_id,score:toward(r,values)}));
+ const known=signals.filter(r=>r.score!==null),n=known.length;
+ if(!n)return {id:a.id,name:a.name,answered:0,total:a.items.length,percentages:null,letter:null,letter_basis:'no_data',pattern:'no_data',signals,dominant:null};
+ const sum=known.reduce((s,r)=>s+r.score-1,0),raw=100*sum/(4*n),high=Math.round(raw*10)/10,low=Number((100-high).toFixed(1));
+ let letter,letterBasis,dominant;
+ if(sum>2*n){letter=a.high_letter;letterBasis='greater_percentage';dominant='high';}
+ else if(sum<2*n){letter=a.low_letter;letterBasis='greater_percentage';dominant='low';}
+ else {
+  const anchor=signals.find(r=>r.item_id===a.anchor_item).score;
+  letter=anchor!==null&&anchor!==3?(anchor>3?a.high_letter:a.low_letter):a.neutral_letter;
+  letterBasis=anchor!==null&&anchor!==3?'anchor_at_exact_tie':'fixed_at_exact_tie';dominant='balanced';
+ }
+ let pattern;
+ if(n===1)pattern='single_item';
+ else if(known.every(r=>r.score===3))pattern='all_neutral';
+ else if(known.some(r=>r.score<3)&&known.some(r=>r.score>3))pattern='opposing';
+ else if(known.some(r=>r.score===3))pattern='partly_neutral';
+ else pattern='consistent';
+ return {id:a.id,name:a.name,answered:n,total:a.items.length,percentages:{low,high},raw_high_percent:raw,letter,letter_basis:letterBasis,pattern,signals,dominant};
+}
+function fact(q,canonical){
+ const v=canonical[q.id];
+ if(v===null)return null;
+ if(v===3)return {item_id:q.id,side:'middle',strength:'neutral',text:'这道题没有明显偏向。'};
+ const side=v<3?'left':'right';
+ // Option text is screen-order-dependent; canonical option direction is semantic.
+ const screenSide=q.orientation==='reversed'?(side==='left'?'right':'left'):side;
+ return {item_id:q.id,side,strength:v===1||v===5?'strong':'moderate',text:q[screenSide],
+  interpretation:q.evidence_policy==='left_support_only'&&side==='right'?'verbatim_only':'choice_only'};
+}
+function axisNarrative(a,result,data,decoded,p,selectedProfile){
+ const copy=data.axis_copy&&data.axis_copy[a.id];
+ let intro='';
+ if(copy){
+  if(result.dominant===null)intro=copy.no_data;
+  else if(result.pattern==='all_neutral')intro=copy.all_neutral;
+  else if(result.pattern==='opposing')intro=copy.opposing;
+  else intro=copy[result.dominant]||copy.balanced;
+ }
+ const byId=Object.fromEntries(data.items.map(q=>[q.id,q]));
+ const facts=a.items.map(r=>fact(byId[r.item_id],decoded.canonical)).filter(Boolean);
+ const ownItems=new Set(a.items.map(r=>r.item_id));
+ const bridgeFacts=selectedProfile&&selectedProfile.state==='supported'
+  ?p.core.filter(r=>!ownItems.has(r.item_id)).map(r=>fact(byId[r.item_id],decoded.canonical)).filter(Boolean):[];
+ // No fixed four-axis conclusion is ever inferred from a persona name.
+ const bridge=bridgeFacts.length?`你在其他场景还选了“${bridgeFacts[0].text}”。这些选择可以同时成立，描述的是你在不同事情上的取舍。`:'';
+ const coverage=result.answered&&result.answered<result.total?`这一面有${result.answered}/${result.total}题提供了数值选择。`:'';
+ return {general:intro,choice_facts:facts,persona_connection:bridge,coverage};
 }
 function score(data,payload){
- const {values:v,states}=decode(data,payload),personas=Object.fromEntries(data.personas.map(p=>[p.id,p]));
- const ids=Object.keys(personas).sort(),profiles=Object.fromEntries(ids.map(pid=>[pid,profile(data,personas[pid],v)]));
- const selected=select(data,profiles),pid=selected.primary,p=personas[pid],winner=profiles[pid];
- const answered=Object.values(states).filter(x=>x==='answered').length,processed=Object.values(states).filter(x=>x!=='unanswered').length;
- const coreIds=new Set(data.personas.flatMap(p=>[p.roles.inclination,p.roles.behavior]));
- const coreAnswered=[...coreIds].filter(k=>v[k]!==null).length,total=data.items.length,ready=processed===total&&coreAnswered>=1;
- const reference=winner.state!=='supported'||selected.technical_tiebreak,reasons=[];
- if(processed<total)reasons.push('unprocessed_items');if(coreAnswered<1)reasons.push('no_numeric_core_answer');
- let note;
- if(!ready)note='答卷尚未达到提交条件，后台预计算不展示为已完成测评，也不可分享。';
- else if(selected.bucket==='all_contradicted')note='本次没有测到符合这些类型的核心行为，以下仅供参考，不代表这些行为已经得到确认。';
- else if(selected.technical_tiebreak&&winner.state==='supported')note='多种模式在现有证据上并列，本次按稳定规则提供一个参考类型，不代表它比其他并列模式更突出。';
- else if(selected.technical_tiebreak)note='本次回答不足以区分唯一的突出模式，以下仅提供一个参考类型，不代表已经测得相应行为。';
- else if(winner.state==='tentative')note='本次回答相对接近这一类型，但核心倾向仍不够明确，以下为参考介绍。';
- else if(winner.state==='partial')note='部分核心经历尚未提供，以下依据有限的回答提供参考类型，不代表完整判定。';
- else if(winner.state==='unassessed')note='本次没有关于这一类型的核心有效答案，以下仅为类型参考，不代表测得了这些行为。';
- else note='本次回答对这种模式的核心倾向和实际行为均有支持。';
- const title=(reference?'本次参考类型：':'本次匹配：')+p.name;
- const card={id:pid,name:p.name,title,description:reference?p.reference_description:p.result_description,
-  description_mode:reference?'type_reference':'personalized',reference_only:reference,evidence_note:note,
-  scope:`本次已作答${answered}/${total}题，已处理${processed}/${total}题`,can_share:ready,display_as_result:ready,
-  share_caption:ready?title+'\n'+note:null};
- const axes=Object.fromEntries(['T','V','D','S'].map(a=>[a,axisResult(data,a,data.axes[a],v)]));
- return {version:data.version,status:'assigned',primary:pid,can_submit:ready,support_level:winner.state,
-  selection_basis:selected.bucket,decision_by:selected.decision_by,reference_only:reference,
-  technical_tiebreak:selected.technical_tiebreak,counts_as_supported_result:ready&&!reference,
-  result_cards:[card],axes,axis_code:['T','V','D','S'].map(a=>axes[a].letter??'—').join(''),
-  coverage:{answered,processed,total,core_answered:coreAnswered,core_total:28},
-  submission:{ready,reasons,unprocessed_ids:Object.keys(states).filter(k=>states[k]==='unanswered').sort()},
-  answer_states:states,missing_questions:Object.keys(v).filter(k=>v[k]===null).sort(),
-  audit:{profiles,selection:selected,excluded_ids:ids.filter(pid=>profiles[pid].state==='contradicted'),
-   note:'参考分配不计入证据支持结果数；证据支持结果数也不是已验证的人格识别准确率。'}};
+ validateSpec(data);
+ const decoded=decode(data,payload);
+ const profiles=Object.fromEntries(data.personas.map(p=>[p.id,profile(p,decoded.effective)]));
+ const coreIds=new Set(data.personas.flatMap(p=>p.core.map(r=>r.item_id)));
+ const pending=data.items.filter(q=>decoded.status[q.id]==='unanswered').map(q=>q.id);
+ const numericCore=[...coreIds].filter(id=>decoded.status[id]==='answered').length;
+ const canSubmit=pending.length===0&&numericCore>0;
+ const rawAxes=data.axes.map(a=>axisResult(a,decoded.effective));
+ const base={version:data.version,form_id:data.form_id,can_submit:canSubmit,can_share:canSubmit,
+  submission:{processed:data.items.length-pending.length,total:data.items.length,pending,numeric_persona_items:numericCore,
+   reason:pending.length?'unfinished_items':!numericCore?'no_numeric_persona_item':null},
+  primary:null,result_cards:[],share:null,support_level:null,selection_basis:null,reference_only:null,technical_tiebreak:false,counts_as_supported_result:false};
+ const selected=canSubmit?select(profiles,data.version):null;
+ const p=selected?data.personas.find(p=>p.id===selected.primary):null;
+ const selectedProfile=selected?profiles[selected.primary]:null;
+ const axes=rawAxes.map((r,i)=>({...r,interpretation:axisNarrative(data.axes[i],r,data,decoded,p,selectedProfile)}));
+ const observations=data.items.map(q=>fact(q,decoded.canonical)).filter(Boolean);
+ if(selected){
+  const supported=selectedProfile.state==='supported';
+  base.primary=selected.primary;base.support_level=selectedProfile.state;base.selection_basis=selected.basis;
+  base.technical_tiebreak=selected.technical_tiebreak;
+  base.reference_only=!supported||selected.technical_tiebreak;
+  base.counts_as_supported_result=!base.reference_only;
+  const description=supported?p.description:p.archetype_description;
+  base.result_cards=[{persona_id:p.id,name:p.name,title:'你的消费人格：'+p.name,
+   description,description_mode:supported?'supported_scene_description':'archetype_description',quote:supported?p.quote:null}];
+  base.share={title:'我的消费人格：'+p.name,description,version:data.version};
+ }
+ return {...base,axes,axis_code:axes.map(a=>a.letter||'—').join(''),observations,
+  audit:{canonical_answers:decoded.canonical,effective_answers:decoded.effective,statuses:decoded.status,profiles,selection:selected,
+   ambiguous_items:data.items.filter(q=>decoded.canonical[q.id]!==null&&decoded.effective[q.id]===null).map(q=>q.id),
+   statistical_note:'Internal support flags are not accuracy, population percentile or psychological validation.'}};
 }
-function validSession(data,s){
- if(!object(s)||s.version!==data.version||!Number.isInteger(s.index)||s.index<0||s.index>=data.items.length)return false;
- try{decode(data,{version:s.version,answers:s.answers});return true;}catch{return false;}
-}
-const api={score,decode,validSession,sha256,displayValue:(_q,v)=>v??null,displayEndpoints:q=>({left:q.left,right:q.right})};
-if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.PaytiV09Engine=api;
-})(typeof window!=='undefined'?window:globalThis);
+const api={score,validateSpec,sha256};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;
+else root.PaytiV010Engine=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
