@@ -89,23 +89,11 @@ function finish(){
  }
  s.completedAt=new Date().toISOString();navigate('result');
 }
-function axisMeta(a){
- const pieces=[];
- if(a.pattern==='no_data')return '这一面还没有数值选择。';
- if(a.pattern==='all_neutral')pieces.push('相关问题都选了中间，两边没有明显偏向。');
- else if(a.pattern==='opposing')pieces.push('不同场景里，你的选择有时偏左，有时偏右。');
- else if(a.pattern==='single_item')pieces.push('目前只有一道题提供了数值选择。');
- else if(a.pattern==='partly_neutral')pieces.push('有些场景有偏好，也有些场景选了中间。');
- else pieces.push('这些场景里的选择偏向同一侧。');
- if(a.percentages.low===50)pieces.push('两端各占50%，没有明显偏向。');
- if(a.answered<a.total&&a.answered!==1)pieces.push(`依据其中${a.answered}/${a.total}道题。`);
- return pieces.join('');
-}
+function axisMeta(a){return a.interpretation.headline||a.interpretation.general;}
 function axisCard(a){
  const d=axes[a.id],has=a.percentages!==null,n=a.interpretation;
  const ends=[['low',d.low_letter,d.low_label],['high',d.high_letter,d.high_label]];
- const facts=n.choice_facts.filter(f=>f.side!=='middle');
- return `<article class="axis-card" data-axis="${a.id}" data-pattern="${a.pattern}"><div class="axis-title"><span>${esc(d.name)}</span><b>${a.letter||'—'}</b></div><div class="axis-endpoints">${ends.map(([side,letter,name])=>`<div class="${has&&a.percentages[side]>50?'dominant':''}"><span>${letter} · ${esc(name)}</span><strong>${has?`${a.percentages[side]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages.low}%"></span></div>`:'<div class="axis-no-data">这一项暂时留空。</div>'}<p class="axis-state">${esc(axisMeta(a))}</p><p class="axis-long">${esc(n.general)}</p>${facts.length?`<div class="axis-facts"><h3>你在这些场景里的选择</h3>${facts.map(f=>`<p>“${esc(f.text)}”</p>`).join('')}</div>`:''}${n.persona_connection?`<p class="axis-connection">${esc(n.persona_connection)}</p>`:''}</article>`;
+ return `<article class="axis-card" data-axis="${a.id}" data-pattern="${a.pattern}"><div class="axis-title"><span>${esc(d.name)}</span><b>${a.letter||'—'}</b></div><div class="axis-endpoints">${ends.map(([side,letter,name])=>`<div class="${has&&a.percentages[side]>50?'dominant':''}"><span>${letter} · ${esc(name)}</span><strong>${has?`${a.percentages[side]}<small>%</small>`:'—'}</strong></div>`).join('')}</div>${has?`<div class="axis-meter" aria-hidden="true"><span style="width:${a.percentages.low}%"></span></div>`:'<div class="axis-no-data">这一项暂时留空。</div>'}<div class="axis-narrative" data-copy="${esc(n.copy_key)}">${n.headline?`<h3 class="axis-headline">${esc(n.headline)}</h3>`:''}<p class="axis-long">${esc(n.general)}</p></div></article>`;
 }
 function result(){
  const r=score(),p=D.personas.find(x=>x.id===r.primary),card=r.result_cards[0];

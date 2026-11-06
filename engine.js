@@ -139,22 +139,16 @@ function fact(q,canonical){
 }
 function axisNarrative(a,result,data,decoded,p,selectedProfile){
  const copy=data.axis_copy&&data.axis_copy[a.id];
- let intro='';
- if(copy){
-  if(result.dominant===null)intro=copy.no_data;
-  else if(result.pattern==='all_neutral')intro=copy.all_neutral;
-  else if(result.pattern==='opposing')intro=copy.opposing;
-  else intro=copy[result.dominant]||copy.balanced;
- }
+ // Presentation follows the unrounded score direction, never the answer pattern
+ // or the tie-format letter. Every exact tie uses the approved full dual copy.
+ const copyKey=result.dominant===null?'no_data':result.dominant;
+ const intro=copy?copy[copyKey]||'':'';
+ const headline=copy&&copy.headlines?copy.headlines[copyKey]||'':'';
  const byId=Object.fromEntries(data.items.map(q=>[q.id,q]));
  const facts=a.items.map(r=>fact(byId[r.item_id],decoded.canonical)).filter(Boolean);
- const ownItems=new Set(a.items.map(r=>r.item_id));
- const bridgeFacts=selectedProfile&&selectedProfile.state==='supported'
-  ?p.core.filter(r=>!ownItems.has(r.item_id)).map(r=>fact(byId[r.item_id],decoded.canonical)).filter(Boolean):[];
- // No fixed four-axis conclusion is ever inferred from a persona name.
- const bridge=bridgeFacts.length?`你在其他场景还选了“${bridgeFacts[0].text}”。这些选择可以同时成立，描述的是你在不同事情上的取舍。`:'';
  const coverage=result.answered&&result.answered<result.total?`这一面有${result.answered}/${result.total}题提供了数值选择。`:'';
- return {general:intro,choice_facts:facts,persona_connection:bridge,coverage};
+ // Keep source observations for audits only; never splice them into the prose.
+ return {headline,general:intro,copy_key:copyKey,copy_version:data.axis_copy_version||null,choice_facts:facts,persona_connection:'',coverage};
 }
 function score(data,payload){
  validateSpec(data);
